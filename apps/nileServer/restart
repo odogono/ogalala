@@ -1,0 +1,81 @@
+#!/bin/bash
+#$Id: restart,v 1.9 1999/04/29 14:57:10 jim Exp $
+
+# files should be created with group "misc"
+newgrp misc
+
+# configuration
+SERVERHOME=/misc/nileServer
+SERVERPORT=1930
+MUAAPP=test
+THISFILE=/home/agatha/restart.server
+JAVADOCDIR=/usr/local/apache/share/htdocs/docs/mua
+ATOMDOCDIR=/usr/local/apache/share/htdocs/docs/mua/atom
+
+# log file names
+LOGDIR=/misc/log
+LOG=`date +$LOGDIR/agatha.$SERVERPORT.%d%b%y`
+SERVER_COMMAND_LOG=server_log
+
+# set up environment for invoked processes
+export PATH=/usr/local/java/bin:/usr/local/bin:/bin:/usr/bin
+export CLASSPATH=.:/usr/local/java/lib/classes.zip:/usr/local/share/kaffe/klasses.zip:/usr/local/share/kaffe/classes.zip
+export CVSROOT=/misc/cvsroot
+export JAVA_HOME=/usr/local/java
+export KAFFEHOME=/usr/local/share/kaffe
+export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib
+
+# kill the previous process, if any
+kill `ps aux | grep "[a]gatha.*/java/bin" | awk '{print $2}'`
+
+# move to the relevant directory
+cd $SERVERHOME
+
+# Preserve previous game data
+mkdir -p backup
+if test -f $MUAAPP.db
+then
+  cp -b -Vt $MUAAPP.db backup
+fi
+if test -f $MUAAPP.state
+then
+  cp -b -Vt $MUAAPP.state backup
+fi
+
+# Remove previous game data
+rm -f $MUAAPP.db
+
+# Preserve performance log files
+if test -f $SERVER_COMMAND_LOG
+then
+  cp -b -Vt $SERVER_COMMAND_LOG $LOGDIR
+fi
+if test -f $MUAAPP.event_log
+then
+  cp -b -Vt $MUAAPP.event_log $LOGDIR
+fi
+
+# make clean *before* updating
+make clean
+
+# update source code
+cvs up -d
+
+# totally rebuild the system - now requires only one pass!
+make
+
+# make documentation
+make doc
+
+# install documentation
+cp -f docs/*.html $JAVADOCDIR
+cp -f docs/atom/*.html $ATOMDOCDIR
+
+# restart the server, dumping output to a log file
+./run -port:$SERVERPORT -log:SERVER_COMMAND_LOG &>$LOG
+
+# update this script
+mv $THISFILE ${THISFILE}.1
+cp ${SERVERHOME}/restart $THISFILE
+chown agatha $THISFILE
+chgrp misc $THISFILE

@@ -1,0 +1,443 @@
+#source test_place.odl
+#date Tue Jul 13 09:58:29 GMT 1999
+#copyright Ogalala Ltd
+#import LIMBO PLACE ROOM NOUN_MAN MALE NPC_TEST NOUN_MARVIN SEAT TOAD RICHARD_BARTLE CLAY_SHOOTER SHOTGUN BULLET SWAMP JUG SUBSTANCE_WATER BOWL EATABLE PORTABLE NOUN_PIE ILLUMINATABLE SWITCHABLE NOUN_LIGHT NOUN_SWITCH NOUN_BOOK READABLE NOUN_BOARD ERASEABLE CHALK NOUN_BLACKBOARD THING NOUN_MARKER WRITING_IMPLEMENT NOUN_MAGIC ERASER NOUN_RUBBER SHELF BOX NOUN_SHOE NOUN_DISPLAY NOUN_CASE OPENABLE CONTAINER DIAMOND ROCK SUBSTANCE_HAIR CIGARETTE_PACKET CIGARETTE_FACTORY BLACKSUN_PASS
+#export TEST_PLACE ENTRANCE_ROOM NPC_TEST_2 CUPBOARD SEAT_1 TEST_TOAD COMBAT_ROOM TEST_RICHARD_BARTLE SHOOTING_ROOM CLAY_SHOOTER_1 SHOTGUN_1 BULLET_1 SWAMP_ROOM DRINKING_ROOM JUG_1 BOWL_1 EATING_ROOM PIE SWITCHING_ROOM SPOTLIGHT DESKLAMP LIGHT_SWITCH READING_ROOM BOOK BLACKBOARD CHALK_1 MAGIC_MARKER BOARD_RUBBER VISIBILITY_ROOM SHELF_1 SHOE_BOX DISPLAY_CASE DIAMOND_1 ROCK_1 HUMAN_HAIR_1 DIAMOND_2 ROCK_2 HUMAN_HAIR_2 DIAMOND_3 ROCK_3 HUMAN_HAIR_3 MECHANICS_ROOM CIGARETTE_PACKET_1 CIGARETTE_FACTORY_1 BLACKSUN_CLUB BLACKSUN_PASS_1
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go limbo
+# $Id: test_place.odl,v 1.40 1999/04/29 09:42:08 alex Exp $
+# Generic Word definitions
+# James Fryer, 11 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+!new test_place place
+!set test_place.name "test place"
+!set test_place.description "a place to test all sorts of things"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Test Room ---------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new entrance_room room
+!set entrance_room.name "entrance hall"
+!set entrance_room.description "the general purpose entrance hall into the game. It is suggested that players depart South to the East Side of Waterloo place."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go entrance_room
+
+## An actual NPC
+!new npc_test_2 npc_test noun_man noun_marvin male
+!set npc_test_2.name "Marvin"
+
+!set npc_test_2.walk_scripts null
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go test_place
+
+!new cupboard room
+!set cupboard.name "Cupboard"
+!set cupboard.description "A small but not uncomfortable cupboard. A good place to go to quickly test something new."
+!set cupboard.is_unique false
+!set cupboard.go "There is only one way out."
+!set cupboard.look_far "You see the plywood wall of the cupboard."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go entrance_room
+
+!new seat_1 seat
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go entrance_room
+
+!new test_toad toad
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#-------------------------------- Combat room --------------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new combat_room room
+!set combat_room.name "combat foyer"
+!set combat_room.description "a room for duffing up people."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go combat_room
+
+!new test_richard_bartle richard_bartle
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go test_place
+
+
+#-----------------------------------------------------------------------------------------#
+#------------------------------- The Clay Pigeon Range -----------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new shooting_room room
+!set shooting_room.name "shooting room"
+!set shooting_room.description "A place for shooting things."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shooting_room
+
+!new clay_shooter_1 clay_shooter
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shooting_room
+
+
+!new shotgun_1 shotgun
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shooting_room
+
+!new bullet_1 bullet
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go test_place
+!new swamp_room swamp
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Drinking Room -----------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new drinking_room room
+!set drinking_room.name "drinking room"
+!set drinking_room.description "a room for pouring, drinking and getting sloshed in"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go drinking_room
+
+
+!new jug_1 jug
+!set jug_1.name "jug"
+!set jug_1.description "A lovely jug."
+
+!set jug_1.liquid_volume 4
+!set jug_1.max_volume 10
+!set jug_1.liquid_type $substance_water
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go drinking_room
+
+
+!new bowl_1 bowl
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Eating Room -------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new eating_room room
+!set eating_room.name "eating room"
+!set eating_room.description "a room for eating things."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go eating_room
+
+!new pie portable noun_pie eatable
+!set pie.name "pie"
+!set pie.description "A lovely pie."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Switching Room ----------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new switching_room room
+!set switching_room.name "switching room"
+!set switching_room.description "a room for switching things on and off"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go switching_room
+
+!new spotlight illuminatable
+!set spotlight.name "spotlight"
+!set spotlight.description "a spotlight"
+
+!set spotlight.is_quiet true
+
+#Initially the light is off
+!set spotlight.state false
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go switching_room
+
+!new desklamp illuminatable
+!set desklamp.name "desklamp"
+!set desklamp.description "a desklamp"
+!set desklamp.light_emitted 30
+
+!set desklamp.is_quiet false
+
+#Initially the light is off
+!set desklamp.state false
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go switching_room
+
+!new light_switch switchable noun_light noun_switch
+!set light_switch.name "light switch"
+!set light_switch.description "a light switch"
+!set light_switch.light_emitted 60
+
+!set light_switch.switch_msg "You switch {-t name}."
+!set light_switch.switch_omsg "{-ut actor.name} switches {-t name}."
+
+!set light_switch.listeners [ $spotlight $desklamp ]
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Reading Room ------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new reading_room room
+!set reading_room.name "reading room"
+!set reading_room.description "a room for reading and writing"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go reading_room
+
+!new book portable readable noun_book
+!set book.name "book"
+!set book.description "A story book"
+
+!set book.text "Consult the book to read the story.(But not yet)"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go reading_room
+
+!new blackboard thing eraseable noun_blackboard noun_board
+!set blackboard.name "blackboard"
+!set blackboard.description "A large school blackboard"
+
+!set blackboard.implement $chalk
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go reading_room
+
+!new chalk_1 chalk
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go reading_room
+
+!new magic_marker writing_implement noun_magic noun_marker
+!set magic_marker.name "magic marker"
+!set magic_marker.description "a standard size magic marker. looks as if it might be red"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go reading_room
+
+!new board_rubber eraser noun_board noun_rubber
+!set board_rubber.name "board rubber"
+!set board_rubber.description "slightly furry on one side"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Visibility Room ---------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new visibility_room room
+!set visibility_room.name "visibility room"
+!set visibility_room.description "a room for viewing things"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go visibility_room
+
+
+!new shelf_1 shelf
+!set shelf_1.visibility 100
+!set shelf_1.concealment 90
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go visibility_room
+
+!new shoe_box box noun_shoe
+!set shoe_box.visibility 100
+!set shoe_box.concealment 50
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go visibility_room
+
+!new display_case container portable openable noun_display noun_case
+!set display_case.name "display case"
+!set display_case.description "a intricate and stunningly appealing display case"
+!set display_case.is_revealing true
+!set display_case.size 500
+!set display_case.weight 2000
+!set display_case.capacity 10
+!set display_case.concealment 10
+!set display_case.visibility 100
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go visibility_room
+
+
+
+!new diamond_1 diamond
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go visibility_room
+
+!new rock_1 rock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go visibility_room
+
+!new human_hair_1 portable substance_hair
+!set human_hair_1.name "hair"
+!set human_hair_1.description "a human hair"
+
+!set human_hair_1.visibility 1
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shelf_1
+
+
+!new diamond_2 diamond
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shelf_1
+
+!new rock_2 rock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go shelf_1
+
+!new human_hair_2 portable substance_hair
+!set human_hair_2.name "hair"
+!set human_hair_2.description "a human hair"
+
+!set human_hair_2.visibility 1
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shoe_box
+
+!new diamond_3 diamond
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go shoe_box
+
+!new rock_3 rock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go shoe_box
+
+!new human_hair_3 portable substance_hair
+!set human_hair_3.name "hair"
+!set human_hair_3.description "a human hair"
+
+!set human_hair_3.visibility 1
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- Mechanics Room --------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!new mechanics_room room
+!set mechanics_room.name "mechanics room"
+!set mechanics_room.description "a room for testing mechanics"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go mechanics_room
+
+!new cigarette_packet_1 cigarette_packet
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go cigarette_packet_1
+
+!new cigarette_factory_1 cigarette_factory
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go test_place
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Blacksun ----------------------------------------#
+#-----------------------------------------------------------------------------------------#
+## a place to test memberships
+!new blacksun_club room
+!set blacksun_club.name "BlackSun"
+!set blacksun_club.description "You are standing in testWorlds first and most exclusive club."
+!set blacksun_club.proprietor "Hiro Protagonist"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go entrance_room
+
+!new blacksun_pass_1 blacksun_pass
+

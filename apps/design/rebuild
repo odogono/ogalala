@@ -1,0 +1,42 @@
+#!/bin/bash
+#$Id: rebuild,v 1.3 1998/11/25 15:39:34 agatha Exp $
+
+# files should be created with group "misc"
+# and group write permission
+newgrp misc
+umask 002
+
+# configuration
+TOOLSHOME=/misc/designTools
+THISFILE=/home/agatha/rebuild.tools
+WIPWWW=/usr/local/apache/share/htdocs/wip
+WIPFTP=/home/ftp/pub/wip
+
+# set up environment for invoked processes
+export PATH=/usr/local/java/bin:/usr/local/bin:/bin:/usr/bin
+export CLASSPATH=.:/usr/local/java/lib/classes.zip
+export CVSROOT=/misc/cvsroot
+export JAVA_HOME=/usr/local/java
+export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib
+
+# move to the relevant directory
+cd $TOOLSHOME
+
+# make clean *before* updating
+make clean
+
+# update source code
+cvs up -d
+
+# totally rebuild the system - now requires only one pass!
+make clean
+make build.zip
+
+# install tools for WWW and FTP access
+cp -f build.zip $WIPWWW
+cp -f build.zip $WIPFTP
+
+# update this script
+mv $THISFILE ${THISFILE}.1
+cp ${TOOLSHOME}/rebuild $THISFILE
+chown agatha.misc $THISFILE

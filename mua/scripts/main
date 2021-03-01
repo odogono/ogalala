@@ -1,0 +1,26 @@
+# $Id: main,v 1.18 1999/07/08 14:38:07 jim Exp $
+# File Create script for game world
+# James Fryer, 21 July 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+# The script files below become increasingly specific to a particular game.
+# First we set up the global commands and inner core.
+!run commands
+!run game_commands
+!run inner_core
+
+# Generic Word Types. ie. direction,article
+!run generic
+
+# All Verbs and their templates
+!run verbs
+
+# The 'world' script is generated at build-time from the ODL files.
+!run world
+!run game_world
+
+# Freeze the database
+!FREEZE ALL
+
+# Report the Vocabulary Status
+!Status

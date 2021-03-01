@@ -1,0 +1,623 @@
+#source nouns.odl
+#date Tue Jul 13 16:29:06 GMT 1999
+#copyright Ogalala Ltd
+#import ROOT
+#export NOUN NOUN_APARTMENT NOUN_ADMIN NOUN_ALEXANDER NOUN_BED NOUN_BIRD NOUN_BLACKBOARD NOUN_BLACKSUN NOUN_BOARD NOUN_BOOK NOUN_BOWL NOUN_BOX NOUN_BRASS NOUN_BULLET NOUN_BUTT NOUN_CARD NOUN_CAMERA NOUN_CASE NOUN_CHAIR NOUN_CHALK NOUN_CHEST NOUN_CIGAR NOUN_CIGARETTE NOUN_CLAY NOUN_CLIP NOUN_CLOTH NOUN_CLUB NOUN_DIAMOND NOUN_DISPLAY NOUN_DOOR NOUN_FLAT NOUN_GUN NOUN_HAIR NOUN_HANDRAIL NOUN_ICE NOUN_JAMES NOUN_JUG NOUN_KEY NOUN_LIGHT NOUN_LORI NOUN_LOCK NOUN_MAGIC NOUN_MAILBOX NOUN_MAN NOUN_MARVIN NOUN_MARBLE NOUN_MARKER NOUN_MASTER NOUN_MESSAGE NOUN_METAL NOUN_MAT NOUN_MATTHEW NOUN_PACKET NOUN_PADLOCK NOUN_PAPER NOUN_PARROT NOUN_PASS NOUN_PENCIL NOUN_PICTURE NOUN_PIE NOUN_PIGEON NOUN_PHOTOGRAPH NOUN_POISON NOUN_POLLY NOUN_RAIL NOUN_RALPH NOUN_RICHARD NOUN_ROCK NOUN_ROOM NOUN_RUBBER NOUN_SEAT NOUN_SHELF NOUN_SHOE NOUN_SHOOTER NOUN_SHOTGUN NOUN_STEVE NOUN_STONE NOUN_SWITCH NOUN_TELEPHONE NOUN_TOAD NOUN_TRAVELLER NOUN_VIRUS NOUN_WATER NOUN_WEAPON NOUN_WILLIAM NOUN_WINE NOUN_WOOD NOUN_WOMAN
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# $Id: nouns.odl,v 1.25 1999/04/29 09:45:01 jim Exp $
+# Central Nouns Store
+# Alexander Veenendaal, 26th November 1998
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+#---------------------------------------------------#
+#  N     N     O O     U     U   N     N     S S S  #
+#  N N   N   O     O   U     U   N N   N   S        #
+#  N  N  N   O     O   U     U   N  N  N     S S    #
+#  N   N N   O     O   U     U   N   N N         S  #
+#  N     N     O O       U U     N     N   S S S    #
+#---------------------------------------------------#
+
+## The superclass for all noun placeholder atoms
+!atom noun root
+!noun thing;portable noun
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- A ----------------------------------#
+#=======================================================================#
+!atom noun_apartment noun
+!noun apartment noun_apartment
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_admin noun
+!noun admin noun_admin
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_alexander noun
+!noun alx;alex;alexander noun_alexander
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- B ----------------------------------#
+#=======================================================================#
+!atom noun_bed noun
+!noun bed noun_bed
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_bird noun
+!noun bird noun_bird
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_blackboard noun
+!noun blackboard noun_blackboard
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_blacksun noun
+!noun blacksun noun_blacksun
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_board noun
+!noun board noun_board
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_book noun
+!noun book noun_book
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_bowl noun
+!noun bowl noun_bowl
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_box noun
+!noun box noun_box
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_brass noun
+!noun brass noun_brass
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_bullet noun
+!noun bullet noun_bullet
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!atom noun_butt noun
+!noun butt;stub noun_butt
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- C ----------------------------------#
+#=======================================================================#
+!atom noun_card noun
+!noun card noun_card
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom noun_camera noun
+!noun camera noun_camera
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_case noun
+!noun case noun_case
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_chair noun
+!noun chair noun_chair
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_chalk noun
+!noun chalk noun_chalk
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_chest noun
+!noun chest noun_chest
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_cigar noun
+!noun cigar noun_cigar
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_cigarette noun
+!noun cigarette;cig;ciggie;fag noun_cigarette
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_clay noun
+!noun clay noun_clay
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_clip noun
+!noun clip noun_clip
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_cloth noun
+!noun cloth noun_cloth
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_club noun
+!noun club noun_club
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- D ----------------------------------#
+#=======================================================================#
+!atom noun_diamond noun
+!noun diamond noun_diamond
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_display noun
+!noun display noun_display
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_door noun
+!noun door noun_door
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#=======================================================================#
+#---------------------------------- E ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- F ----------------------------------#
+#=======================================================================#
+!atom noun_flat noun
+!noun flat noun_flat
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- G ----------------------------------#
+#=======================================================================#
+!atom noun_gun noun
+!noun gun noun_gun
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- H ----------------------------------#
+#=======================================================================#
+
+!atom noun_hair noun
+!noun hair noun_hair
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_handrail noun
+!noun handrail noun_handrail
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- I ----------------------------------#
+#=======================================================================#
+!atom noun_ice noun
+!noun ice noun_ice
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- J ----------------------------------#
+#=======================================================================#
+!atom noun_james noun
+!noun james;jim noun_james
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_jug noun
+!noun jug noun_jug
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- K ----------------------------------#
+#=======================================================================#
+!atom noun_key noun
+!noun key noun_key
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- L ----------------------------------#
+#=======================================================================#
+!atom noun_light noun
+!noun light noun_light
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_lori noun
+!noun lori noun_lori
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_lock noun
+!noun lock noun_lock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- M ----------------------------------#
+#=======================================================================#
+!atom noun_magic noun
+!noun magic noun_magic
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_mailbox noun
+!noun mailbox noun_mailbox
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_man noun
+!noun man noun_man
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_marvin noun
+!noun marvin noun_marvin
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_marble noun
+!noun marble noun_marble
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_marker noun
+!noun marker noun_marker
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_master noun
+!noun master noun_master
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_message noun
+!noun message noun_message
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_metal noun
+!noun metal noun_metal
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_mat noun
+!noun mat noun_mat
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_matthew noun
+!noun matt;mathew;matthew;maty noun_matthew
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- N ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- O ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- P ----------------------------------#
+#=======================================================================#
+!atom noun_packet noun
+!noun packet;pack noun_packet
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_padlock noun_lock
+!noun padlock noun_padlock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_paper noun
+!noun paper noun_paper
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_parrot noun
+!noun parrot noun_parrot
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_pass noun
+!noun pass noun_pass
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_pencil noun
+!noun pencil noun_pencil
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_picture noun
+!noun picture noun_picture
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_pie noun
+!noun pie noun_pie
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_pigeon noun
+!noun pigeon noun_pigeon
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_photograph noun
+!noun photo;photograph noun_photograph
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_poison noun
+!noun poison noun_poison
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_polly noun
+!noun polly noun_polly
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- Q ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- R ----------------------------------#
+#=======================================================================#
+!atom noun_rail noun
+!noun rail noun_rail
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_ralph noun
+!noun ralph;ralphie noun_ralph
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_richard noun
+!noun richard;rich;dick noun_richard
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_rock noun
+!noun rock noun_rock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_room noun
+!noun room noun_room
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_rubber noun
+!noun rubber noun_rubber
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- S ----------------------------------#
+#=======================================================================#
+!atom noun_seat noun
+!noun seat noun_seat
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_shelf noun
+!noun shelf noun_shelf
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_shoe noun
+!noun shoe noun_shoe
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_shooter noun
+!noun shooter noun_shooter
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_shotgun noun
+!noun shotgun noun_shotgun
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_steve noun
+!noun steve;stevey;steven noun_steve
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_stone noun
+!noun stone noun_stone
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_switch noun
+!noun switch noun_switch
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- T ----------------------------------#
+#=======================================================================#
+!atom noun_telephone noun
+!noun telephone;phone noun_telephone
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_toad noun
+!noun toad noun_toad
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_traveller noun
+!noun traveller;traveler noun_traveller
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- U ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- V ----------------------------------#
+#=======================================================================#
+
+!atom noun_virus noun
+!noun virus noun_virus
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- W ----------------------------------#
+#=======================================================================#
+!atom noun_water noun
+!noun water noun_water
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_weapon noun
+!noun weapon noun_weapon
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_william noun
+!noun william;will noun_william
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_wine noun
+!noun wine noun_wine
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_wood noun
+!noun wood noun_wood
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_woman noun
+!noun woman noun_woman
+

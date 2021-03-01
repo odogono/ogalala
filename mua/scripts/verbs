@@ -1,0 +1,301 @@
+# $Id: verbs,v 1.52 1999/04/29 09:37:01 alex Exp $
+# Verb/Adverb/Rawverb definitions
+# Alexander Veenendaal, 30 September 98
+# Copyright (C) HotGen Studios Ltd <www.hotgen.com>
+
+#--------------------------------- A --------------------------------------
+# You don't neccesarily have to be able to get something in order to
+#  turn it on
+!Verb		"activate"					\
+		"current(See)>switch"
+
+!Verb		"attack"					\
+		"current(See)>attack"				\
+		"thing with current(Inv)>attack"		\
+		"thing at current(Inv)>attack"
+
+#--------------------------------- B --------------------------------------
+
+!RawVerb 	"!book"
+
+!Verb		"beat"						\
+		"current>beat"					\
+		"current with thing>beat"
+
+!RawVerb 	"brief,superbrief"
+
+!Verb		"burn"						\
+		"current>burn"					\
+		"current with thing(Inv)>burn"			
+
+#--------------------------------- C --------------------------------------
+!RawVerb 	"capacity"
+
+!Verb		"close,shut"					\
+		"current(see){!is_closed}>close"		\
+		"current{!is_closed} with thing>close_with"	\
+		"direction(see){!is_closed}>close"
+
+#--------------------------------- D --------------------------------------
+
+!RawVerb	"date" _gamedate !ReportDate
+
+!Adverb		"drink + from > drink"
+
+!Verb 		"drink"						\
+		"current>drink"
+
+!Verb		"drop"						\
+		"current(inv)(touch)>drop"					
+
+#--------------------------------- E --------------------------------------
+!Verb		"eat"						\
+		"current>eat"
+
+!Verb		"emote,act,rp,:"				\
+		"communicative>emote"
+
+!Verb		"enter"						\
+		"current(Room)(see)>go_in"
+
+!Verb		"erase,wipe"					\
+		"current(See)>erase"				\
+		"current(See) with thing(Inv)>erase"
+
+!Verb		"ex,exam,examine"				\
+		"none(see)>examine"				\
+		"current(see)>examine"				\
+		"direction(see)>look_far"
+
+!Verb		"exit"						\
+		"current(see)>go_out"
+
+!RawVerb 	"logout,bye"
+
+
+#--------------------------------- F --------------------------------------
+!Verb 		"feel"						\
+		"current(see)>feel"
+
+!Verb		"fill"						\
+		"current(Inv) with thing>fill"			\
+		"current(Inv) from thing>fill"
+
+#--------------------------------- G --------------------------------------
+!Adverb		"pick + up > pickup"
+
+!Adverb		"get + up  > stand"
+
+!Verb	(Guest)	"get,carry"					\
+		"current(Room)>get"				\
+		"numeric>get"
+
+!Verb	(User)	"give"						\
+		"current(Inv) to thing>give"
+
+!AdVerb		"go + random > go_random"
+
+!Verb		"gorandom,go_random,random"			\
+		"none>go_random"
+
+!Verb	(User)	"go"						\
+		"direction(Room)>go"				\
+		"numeric>numeric_go"				\
+		"current(Room)>go_in"				\
+		"to current(Room)>go_in"
+
+!AdVerb		"go + out > out"
+
+#--------------------------------- H --------------------------------------
+!Verb		"home,h"					\
+		"none>home"
+
+
+#--------------------------------- I --------------------------------------
+!Verb		"inventory,i,inv"				\
+		"none>inventory"
+
+!Verb		"invite"					\
+		"thing(see) with current(Inv)>invite"
+
+
+#--------------------------------- J --------------------------------------
+
+#--------------------------------- K --------------------------------------
+
+#--------------------------------- L --------------------------------------
+!Verb		"lick"						\
+		"current(see)>lick"
+
+!Verb		"light,ignite"					\
+		"current(inv)(touch)>ignite"
+
+!Verb		"listen,eavesdrop"				\
+		"direction>listen_dir"				\
+
+!Verb		"load"						\
+		"current(Inv)>load"				\
+		"current(Inv) with thing(Inv)>load"		\
+		"thing(Inv) into current(Inv)>load"
+
+!Verb	(User)	"lock"						\
+		"current>lock"					\
+		"current with thing(Inv)>lock"
+
+!AdVerb		"look + up > consult"
+
+!Verb	(Guest)	"look,l,peer,peek,spy,gaze"			\
+		"none(see)>look"				\
+		"current(see)>examine"				\
+		"at current(see)>examine"			\
+		#"in current(see)>look_in"			\
+		#"inside current(see)>look_in"			\
+		"direction(see)>look_far"
+
+!AdVerb 	"loudly + say > shout"
+
+#--------------------------------- M --------------------------------------
+!Verb		"murder"					\
+		"current>murder"				\
+		"current with thing>murder"
+
+#--------------------------------- N --------------------------------------
+
+#--------------------------------- O --------------------------------------
+!Verb		"open"						\
+		"current(see){is_closed}>open"		\
+		"current{is_closed} with thing>open_with"	\
+		"direction(touch){is_closed}>open"
+
+!Verb		"out"						\
+		"none>go_out"
+
+#--------------------------------- P --------------------------------------
+!Verb		"photograph"					\
+		"current(see)>photograph"			\
+		"thing(see) with current>photograph"
+
+!Verb		"pickpocket,pick,pp"				\
+		"none>pickpocket"				\
+		"current(see)>pickpocket"
+
+!Verb		"pour"						\
+		"current(Inv)>pour"				\
+		"current(Inv) on thing>pour"			\
+		"current(Inv) into thing>pour"
+
+!Verb		"put,place"					\
+		"current>put_in"				\
+		"current on thing>put_in"			\
+		"current in thing>put_in"			\
+		"current into thing>put_in"			\
+		"current under thing>put_in"
+
+#--------------------------------- R --------------------------------------
+!AdVerb		"read + about > consult"
+
+!Verb		"read"						\
+		"current(see)>read"					
+#		"thing in current(see)>read_in"
+
+!Verb		"register"					\
+		"current(Inv)>register"
+
+!RawVerb 	"reroll,create,new,quit,heir,die"
+
+!Verb		"rub"						\
+		"current(see)>rub"					
+
+#--------------------------------- S --------------------------------------
+!Verb		"say" 						\
+		"communicative(Room)>say"					
+
+!Verb		"sell"						\
+		"current to thing for numeric>sell_to_for"		
+
+!Verb		"shoot,fire"					\
+		"current(Room)>shoot"				\
+		"current(Inv) at thing(Room)>shoot"		\
+		"thing(Room) with current(Inv)>shoot"			
+
+!Verb		"shout"						\
+		"communicative>shout"				
+
+!Adverb		"down + sit > sit"
+
+!Verb		"sit"						\
+		"none(See)(Room)>sit"				\
+		"current(See)(Room)>sit_on"			\
+		"on current(See)(Room)>sit_on"
+
+!Verb		"sps"						\
+		"current(See)(Room)>sps"
+
+!Verb		"stand"						\
+		"none>stand"
+
+!Verb		"smell"						\
+		"current(see)>smell"
+
+!Verb		"sniff"						\
+		"current(see)>sniff"
+
+!Verb		"strike"					\
+		"current>strike"				\
+		"current with thing>strike"
+
+!Verb		"stroke"					\
+		"current(see)>stroke"
+
+# You don't neccesarily have to be able to get something in order to
+#  turn it on
+!Verb		"switch"					\
+		"current(See)>switch"				
+
+!AdVerb		"switch + on > switch"
+!AdVerb		"switch + off > switch"
+
+#--------------------------------- T --------------------------------------
+
+!Verb 	(Guest) "take"						\
+		"current(Room)>get"
+#		"thing of thing with current>photograph"
+
+!RawVerb	"time,t" _gametime !ReportTime
+
+!Verb 		"taste"						\
+		"current(see)>taste"
+
+!Verb		"think"						\
+		"communicative>think"
+
+!AdVerb		"turn + on > switch"
+
+!AdVerb		"turn + off > switch"
+
+!Verb 		"touch"						\
+		"current(see)>touch"
+
+#--------------------------------- U --------------------------------------
+!Verb	(User)	"unlock"					\
+		"current>unlock"				\
+		"current with thing(Inv)>unlock"
+
+!Verb  		"unregister"					\
+		"current(Inv)>unregister"
+
+#--------------------------------- V --------------------------------------
+
+#--------------------------------- W --------------------------------------
+
+!Verb 		"whisper"					\
+		"communicative(Room)>whisper"
+
+#!Adverb	"write + on > write"
+
+!Verb		"write"						\
+		"current(See)>write"				\
+		"string on current(See)>write"			\
+		"on current(See)>write"				\
+		"string on current(See) with thing(Inv)>write"
+

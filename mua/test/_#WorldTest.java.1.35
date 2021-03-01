@@ -1,0 +1,255 @@
+// $Id: WorldTest.java,v 1.35 1998/11/30 19:58:52 alex Exp $
+// Test driver for Atom database
+// James Fryer, 9 June 98
+// Copyright (C) Ogalala Ltd. <info@ogalala.com>
+
+package com.ogalala.test.mua;
+
+import java.io.*;
+import java.util.*;
+import com.ogalala.util.*;
+import com.ogalala.mua.*;
+
+public class WorldTest
+    {
+    private static void sendDebugCommands()
+        {
+//###            world.parseCommand("x", player);
+/*
+        // Try out the exit table
+        ExitTable et = new ExitTable();
+        et.addExit(et.toDirection("South"), "You are going south");
+        et.addExit(et.toDirection("nw"), "You are going " + et.toString(et.DIR_NORTHWEST));
+        System.out.println("S: " + et.getExit(et.DIR_SOUTH));
+        System.out.println("NW: " + et.getExit(et.DIR_NORTHWEST));
+        System.out.println("N: " + et.getExit(et.DIR_NORTH));
+*/        
+        }
+
+    private static final String VERSION = "0.1";
+    private static String fileName = null;
+    private static World world = new World();
+    private static Parser parser;
+    private static Atom player;
+    private WorldTestFe fe = new WorldTestFe(); 
+    // store the command history
+    private Vector commands = new Vector( 30, 30 );
+    // index into command history
+    private int idx = 0;
+
+    public WorldTest(String args[])
+        throws IOException, AtomException, ParserException
+        {
+            
+        // Print a banner message
+        System.out.println("Ogalala World Database test front end. Version " + VERSION);
+        System.out.println("Copyright (C) 1998 Ogalala Ltd. <www.ogalala.com>");
+        System.out.println("Running java " + System.getProperty("java.version") + 
+                " on " + System.getProperty("java.vendor"));
+        
+        // Get the arguments
+        try {
+            fileName = args[0];
+            world.addPath(args[1]);
+            
+            }
+        catch (ArrayIndexOutOfBoundsException e)
+            {
+            System.err.println("Usage: WORLDTEST filename paths");
+            System.exit(1);
+            }
+
+        // Create or open the database, get the player mobile and parser
+        loadDatabase(fileName);
+        parser = world.newParser();
+        player = world.getAtom(world.ADMIN_ID);
+
+        // display the gui fe
+        fe.show();
+
+        sendDebugCommands();
+        
+        // Send commands to the cli
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in), 1);
+        String s;
+
+        while ((s = in.readLine()) != null )
+            {
+			commands.addElement( s );
+            world.parseCommand(s, player, parser);
+            }
+
+        world.close();
+        waitForKeypress();
+        }
+    
+    public static void main(String args[])
+        throws IOException, AtomException, ParserException
+        {
+        // Set up debug stuff
+        Debug.logWithDate(true);
+        
+        Debug.logToFile(true);
+        Debug.logToConsole(true);
+        Debug.setAsserts(true);
+        Debug.logExceptions(true);
+        
+        new WorldTest( args );
+        }
+
+    private static void waitForKeypress()
+        {
+        System.out.println("Press Return");
+        try {
+            System.in.read();
+            }
+        catch ( Exception e )
+            {
+            Debug.printStackTrace( e );
+            }
+        }
+        
+    public static void warning(String msg)
+        {
+        System.err.println("Warning: " + msg); 
+        }
+
+    public static void fatal(String msg)
+        {
+        System.err.println("Fatal error: " + msg);
+        System.exit(1);
+        }
+
+    public static void loadDatabase(String fileName)
+        throws IOException, AtomException, ParserException
+        {
+        // Close existing db
+        world.close();
+        
+        // Remember the file name
+        WorldTest.fileName = fileName;
+
+        // Create or open the database
+        if (!world.exists(fileName))
+            {
+            world.create(fileName);
+            System.out.println("Created world: " + world.getFileName());
+            }
+        else {
+            world.open(fileName);
+            System.out.println("Opened world: " + world.getFileName());
+            }
+        }
+
+
+        // Inner classes for the Gui Frontend.
+        
+    class WorldTestFe extends java.awt.Frame
+        {
+        java.awt.TextField textIn;
+        GuiAction guiAction = new GuiAction();
+        GuiKeyListener keyListener = new GuiKeyListener();
+
+        public WorldTestFe()
+            {
+            super( "Console in" );
+            
+        	SymWindow aSymWindow = new SymWindow();
+	    	this.addWindowListener( aSymWindow );
+
+            //setLayout(new BorderLayout(0,0));
+            
+            textIn = new java.awt.TextField();
+            textIn.addActionListener( guiAction );
+            textIn.addKeyListener( keyListener );
+            add( textIn );
+            setSize(400,50);
+
+            }
+
+        /** pass the command to the world parser
+        */
+        public void executeCommand( String command )
+            {
+            commands.addElement( command );
+            textIn.selectAll();
+            idx = commands.size();
+			world.parseCommand( command , player );
+            }
+        
+        
+        private void prevCommand()
+            {
+            if ( idx <= 0 || commands == null )
+                return;
+                
+            idx--;
+            
+            textIn.setText( commands.elementAt(idx).toString() );
+            }
+            
+        private void lastCommand()
+            {
+            if ( ( idx >= commands.size() - 1 ) || commands == null )
+                return;
+
+            idx++;
+
+            textIn.setText( commands.elementAt(idx).toString() );
+            }
+        
+        class GuiAction implements java.awt.event.ActionListener
+        	{
+    		public void actionPerformed( java.awt.event.ActionEvent event )
+    	    	{
+                String commandline = textIn.getText();
+                executeCommand( commandline );
+    		    }
+        	}
+
+         // recieve window eventd
+         class SymWindow extends java.awt.event.WindowAdapter
+        	{
+    		public void windowClosing(java.awt.event.WindowEvent event)
+    	    	{
+    			Object object = event.getSource();
+    			if ( object == WorldTestFe.this )
+    				WindowClosing(event);
+        		}
+        	} 
+        	
+        // catch up / down 
+        class GuiKeyListener extends java.awt.event.KeyAdapter
+        	{
+            public void keyPressed( java.awt.event.KeyEvent e )
+                {
+                if ( e.getKeyCode() == 38 )
+                    {
+                    prevCommand();
+                    }
+                else if ( e.getKeyCode() == 40 )
+                    {
+                    lastCommand();
+                    }
+                else super.keyPressed( e );
+                }
+        	}
+        
+        void WindowClosing(java.awt.event.WindowEvent event)
+        	{
+    		hide();		 // hide the Frame
+			try 
+				{
+		        world.close();
+			    }
+		   	catch ( IOException e ) 
+			   	{
+		   		System.err.println("IO error while closing DB (WorldTest/244)");
+                Debug.printStackTrace( e );
+		   		}
+		   
+    		System.exit(1);
+    	    } 
+        } 
+    }
+

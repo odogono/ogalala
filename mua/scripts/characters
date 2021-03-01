@@ -1,0 +1,38 @@
+# $Id: characters,v 1.7 1999/04/15 11:14:15 jim Exp $
+# Built-in characters
+# Richard Morgan, 12 August 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+!go limbo
+
+!new steve male character noun_steve
+!set steve.name Steve
+!set steve.description "A dead-ringer for Salman Rushdie."
+!set steve.start_container $charterhouse_square_room
+
+!new jim male character noun_james
+!set jim.name Jim
+!set jim.description "A friendly looking chap."
+!set jim.start_container $charterhouse_square_room
+
+!new matt male character noun_matthew
+!set matt.name Matt
+!set matt.description "A friendly looking chap."
+!set matt.start_container $charterhouse_square_room
+
+!new alex male character noun_alexander
+!set alex.name Alex
+!set alex.description "A funny looking chap."
+!set alex.start_container $charterhouse_square_room
+
+!new lori female character noun_lori
+!set lori.name Lori
+!set lori.description "A friendly looking gal."
+!set lori.start_container $charterhouse_square_room
+
+
+!new will male character noun_william
+!set will.name Will
+!set will.description "A friendly looking chap"
+!set will.start_container $charterhouse_square_room
+

@@ -1,0 +1,137 @@
+## Fixtures and fittings for the Travellers Club
+
+## noun boot
+
+atom noun_boot: noun
+{
+	_nouns = [ boot ]
+}
+
+## noun scraper
+
+atom noun_scraper: noun
+{
+	_nouns = [ scraper ]
+}
+
+## a generic bootscraper
+
+atom bootscraper : thing metal noun_boot noun_scraper
+{
+	name = "bootscraper"
+	description = "Something what you scrape your boots on."
+
+}
+
+## travellers club steps bootscraper
+
+thing bootscraper1 : bootscraper
+{
+	name = "black bootscraper"
+	is_quiet = true
+	description = "A big black metal bootscraper with some nasty looking lions heads on either end."
+	_where = $travellers_steps_room
+}
+
+## noun sofa
+
+atom noun_sofa : noun
+{
+	_nouns = [ sofa/couch ]
+}
+
+
+## a generic sofa
+
+atom sofa : thing noun_sofa seat
+{
+	name = "sofa"
+	description = "A bog standard sofa."
+}
+
+
+##  noun chesterfield
+
+atom noun_chesterfield : noun
+{
+	_nouns = [chesterfield]
+}
+
+## a generic chesterfield sofa
+
+atom chesterfield : sofa noun_chesterfield
+{
+	name = "chesterfield"
+	description = "A large overstuffed heavily buttoned sofa."
+}
+
+## Travellers Club morning room chesterfield
+
+thing chesterfield1 : thing sofa chesterfield
+{
+	name = "red chesterfield"
+	description = "Shiny with bottoms and buttons and creaking with the smell of new leather."
+	is_quiet = true
+	_where = $travellers_morndoor_room
+}
+
+## noun tapestry
+
+atom noun_tapestry : noun
+{
+	_nouns = [ tapestry ]
+}
+
+## a generic tapestry
+
+atom tapestry : thing noun_tapestry
+{
+	name = "tapestry"
+	description = "A woven hanging."
+	is_quiet = true
+}
+
+
+## Travellers Club morning room tapestry
+
+thing tapestry1 : tapestry
+{
+	name = "The Archibald MacLeish Memorial Hunting Tapestry"
+	description = "In the foreground a clutch of liver spotted hounds rip the throat out of a white stag, while in the background a group of knights, courtiers and their ladies laugh and eat sweetmeats."
+	_where = $travellers_morntap_room 
+}
+
+## The telephone in the cabinet at the travellers club
+
+thing telephone1 : telephone 
+{
+	name = "telephone"
+	description = "The latest bakelite wall mounted model. Unfortunately, it doesn't appear to be working."
+	_where = $travellers_phone_room
+}
+
+
+## The brass handrail in the Traveller's club
+
+thing handrail1 :  handrail noun_brass metal
+
+{
+	name = "brass handrail"
+	description = "A smooth highly polished brass rail." 
+	is_quiet = true
+	_where = $travellers_stair_room 
+}
+
+## The plaque next to the handrail on the stairs
+
+
+thing plaque2 : plaque
+{
+	description = "A small brass plaque attached to the stair bannisters."
+	text = "This rail was attached to the balustrade for the use of Prince Tallyrand-Perigord Ambassador of France 1830-1834 during which time he was a member of the club."
+	_where = $travellers_stair_room 
+}
+
+
+
+

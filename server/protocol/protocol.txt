@@ -1,0 +1,172 @@
+// $Id: protocol.txt,v 1.1 1998/06/08 16:26:18 rich Exp $
+// Description of the login protocol
+// Matthew Caldwell, 28 May 1998
+// Copyright (c) Ogalala Ltd <info@ogalala.com>
+
+This document describes the protocol used to establish an initial user
+connection between a client program and the generic ogalala server. It
+does not specify any transactions beyond the initial login.
+
+Version
+-------
+This is version 0.1 of the login protocol. As it's the first one, life
+is relatively easy for now. This version is fairly unforgiving and has
+no fancy features.
+
+Later versions can be expected to conform to this version as far as is
+necessary to allow endpoints using different versions to recognize the
+difference and gracefully handle it. The nature of that handling is up
+to the implementors. For this version at least, all other versions are
+considered alien and unusable and connections to them will be dropped.
+
+Messages
+--------
+All messages are text strings terminated by a linefeed character '\n'.
+Leading and trailing whitespace is ignored. Message tokens aren't case
+sensitive.
+
+Unknown Messages
+----------------
+Messages that aren't part of the protocol are ignored. Implementations
+may do something with them (log them, print them to the console, etc),
+but they do not affect the protocol state.
+
+Timeout
+-------
+The login process aborts if it hasn't been completed after 30 seconds.
+This timeout is implemented by the server side, which simply drops the
+un-logged-in connection. No notification message is sent.
+
+Retries
+-------
+The server may allow several login attempts before closing the network
+connection. If the client receives the initial "LOGIN\n" message again
+at any time during the login, it must start again. The server does not
+have to allow multiple login attempts; after sending a failure message
+it may simply drop the connection.
+
+
+The Protocol
+------------
+The full login transaction is as follows:
+
+
+		Server							Client
+ --------------------------------------------------------------------------
+	
+  1		LOGIN
+  
+  		This is sent by the server
+  		as soon as the client makes
+  		a connection to the listening
+  		port to prompt the client to
+  		begin the login process. The
+  		server may prepend a banner
+  		message before this, which the
+  		client may use as it sees fit;
+  		it has no effect on the login.
+
+ --------------------------------------------------------------------------
+ 	
+  2										PROTOCOL <version>
+  
+  										Once the LOGIN message has been
+  										received, the client specifies
+  										the login protocol version it
+  										is using. This version of the
+  										protocol is "0.1" so the whole
+  										message is "PROTOCOL 0.1\n".
+
+ --------------------------------------------------------------------------
+ 		
+  3		PROTOCOL <reply>
+  
+  		The server either accepts
+  		the client's protocol version
+  		or not. If the former, <reply>
+  		is "OK", and the transaction
+  		proceeds to step 4. Otherwise,
+  		<reply> is the version of the
+  		protocol which the server will
+  		accept (eg "0.1") and the login
+  		attempt aborts.
+  		
+  		If the server allows multiple
+  		login attempts, it may then
+  		return to step 1, allowing the
+  		client a chance to login with
+  		the acceptable protocol;
+  		otherwise, the connection is
+  		dropped without further ado.
+
+ --------------------------------------------------------------------------
+ 	
+  4 									USER <userID>
+  
+  										Having agreed on this login
+  										protocol, the client announces
+  										the user account to which it
+  										wants to connect. <userID> is
+  										the account ID. This is taken to
+  										be everything from the first
+  										non-whitespace character after
+  										"USER " to the last non-whitespace
+  										character before the terminating
+  										newline.
+  										
+  										For the purposes of this protocol
+  										<userID> may contain internal space
+  										characters, though a specific
+  										server application may be more
+  										restrictive.
+
+ --------------------------------------------------------------------------
+ 		
+  5		INVALID USER
+  		SEED <seed>
+  		
+  		If the userID is invalid,
+  		the server sends "INVALID USER"
+  		and the login attempt aborts.
+  		If the server allows multiple
+  		login attempts, it may return
+  		to step 1. Otherwise, it closes
+  		the connection.
+  		
+  		If the userID is valid, the
+  		server sends "SEED <seed>",
+  		where <seed> is a random
+  		40-character hex string to be
+  		hashed with the password.
+
+ --------------------------------------------------------------------------
+ 		
+  6 									PASS <hash>
+  
+  										The client hashes the server
+  										seed with the entered
+  										password using the Secure
+  										Hash Algorithm (SHA). <hash>
+  										is the result as another
+  										40-character hex string.
+ 
+ --------------------------------------------------------------------------
+
+  7		CONNECT <success>
+  
+  		The server performs locally
+  		the same hash as the client and
+  		compares the result with what
+  		the client sent. If the two
+  		match, <success> is "OK" and
+  		the login is complete.
+  		
+  		Otherwise <success> is "FAILED"
+  		and the login aborts. If the
+  		server supports multiple login
+  		attempts, it may return to
+  		step 1. Otherwise, it closes
+  		the connection.
+
+ --------------------------------------------------------------------------
+ 	

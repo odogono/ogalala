@@ -1,0 +1,885 @@
+// $Id: World.java,v 1.88 1998/12/04 14:37:31 jim Exp $
+// The World in which a game takes place
+// James Fryer, 17 July 98
+// Copyright (C) Ogalala Ltd <info@ogalala.com>
+
+package com.ogalala.mua;
+
+import java.util.*;
+import java.io.*;
+import com.ogalala.util.*;
+
+/** The World manages all the various data objects that are needed to 
+    run a game: atom database, event handler, parser, vocabulary, etc.
+    <p>
+    There are several groups of functions:
+    <ul>
+    <li> World creation and management (<code>create</code> etc.)
+    <li> Atom creation and management (<code>newAtom</code>, <code>moveAtom</code>, etc.)
+    <li> Event creation and dispatch (<code>newEvent</code>, <code>postEvent</code>, etc.)
+    <li> Utilities (<code>save</code>, etc.)
+    </ul>
+    To create a world, call the 'create' function. To open an existing world,
+    call 'open'. These calls must eventually be followed by a call to 'close'.
+    <p>
+    Atoms and Things are created with 'newAtom' and 'newThing'. They are 
+    deleted with 'deleteAtom'. 
+    <p>
+    Events are handled in one of the following ways:
+    <ul>
+    <li> Called: the event is processed immediately
+    <li> Posted: the event is placed on the event queue and processed when it 
+        reaches the head of the queue
+    <li> Timed: the event is placed on a timer queue and posted when it 
+        reaches the head of the queue.
+    </ul>
+*/
+public class World
+    {
+    /** Readfile names
+    */
+    public static final String CREATE_SCRIPT_NAME = "main".intern();
+    public static final String OPEN_SCRIPT_NAME = "on_open".intern();
+    
+    /** The ID of the administrator mobile, used to boot the system.
+    */
+    public static final String ADMIN_ID = "admin".intern();
+    
+    /** IDs of properties called and used
+    */
+    public static final String ON_CREATE = "on_create".intern();
+    public static final String ON_DESTROY = "on_destroy".intern();
+    public static final String ON_START = "on_start".intern();
+    public static final String ON_STOP = "on_stop".intern();
+    public static final String ON_RESET = "on_reset".intern();
+    public static final String ON_TIMER = "on_timer".intern();
+    public static final String DEPENDENTS = "dependents".intern();
+    public static final String DESTINATION = "destination".intern();
+    public static final String OTHER_SIDE = "other_side".intern();
+    
+    /** The base file name (also the application ID)
+    */
+    private String fileName;
+    
+    /** The paths
+    */
+    PathList pathList;
+    
+    /** The atom database
+    */
+    private AtomDatabase database;
+
+    /** The event processor
+    */
+    private EventProcessor eventProcessor;
+    
+    /** The game timer
+    */
+    Timer timer;
+
+    /** The default parser, used if no other parser is supplied
+    */
+    private Parser defaultParser;
+    
+    /** The vocabulary 
+        ### This really belongs to the parser
+    */
+    private Vocabulary vocabulary;
+    
+    /** The event stack
+    */
+    private Stack eventStack;
+    
+    public World()
+        {
+        pathList = new PathList();
+        database = new AtomDatabase(this);
+        eventProcessor = new EventProcessor(this);
+        vocabulary = new Vocabulary();
+        defaultParser = newParser();
+        timer = new Timer(this);
+        eventStack = new Stack();
+        }
+
+    /** Create a new world
+    */
+    public void create(String fileName)
+        throws IOException
+        {
+        // Create the database
+        database.create(getFile(fileName).toString());
+        
+        // Create the required atoms
+        createRequiredAtoms();
+        
+        // Start the event processors and default Watchers
+        startWatchers();
+        startEvents();
+        
+        // Initialise the vocabulary
+        initVocabulary();
+        
+        // Run the startup scripts
+        execAdminScript(CREATE_SCRIPT_NAME);
+        execAdminScript(OPEN_SCRIPT_NAME);
+        
+        // Remember file name
+        this.fileName = fileName;
+        }
+
+    /** Open an existing world in read-write mode
+    */
+    public void open(String fileName)        
+        throws IOException
+        {
+        open(fileName, false);
+        }
+        
+    /** Open an existing world
+    */
+    public void open(String fileName, boolean isReadOnly)
+        throws IOException
+        {
+        // Open the database
+        database.open(getFile(fileName).toString(), isReadOnly);
+        
+        // Ensure that the required objects are present
+        if (!checkRequiredAtoms())
+            throw new IOException("Not a valid Game World: " + fileName);
+            
+        // Start the event processors and default Watchers
+        startWatchers();
+        startEvents();
+
+        // Initialise the vocabulary
+        loadVocabulary(fileName);
+        
+        // Send 'on_start' messages
+        startAtoms();
+        
+        // Run the startup script
+        execAdminScript(OPEN_SCRIPT_NAME);
+        
+        // Remember file name
+        this.fileName = fileName;
+        }
+
+    /** Close this world
+    */
+    public void close()
+        throws IOException
+        {
+        if (isOpen())
+            {
+            // Send 'on_stop' messages
+            stopAtoms();
+            
+            // Stop the event processors
+            stopEvents();
+            
+            // Save the vocabulary (if required)
+            if (!isReadOnly())
+                saveVocabulary(fileName);
+            
+            // Close the database
+            database.close();
+            
+            // Clear file name
+            fileName = null;
+            }
+        }
+    
+    /** Is this world open?
+    */
+    public boolean isOpen()        
+        {
+        // The world is open if the database is open
+        return database.isOpen();
+        }
+
+    /** If this function returns true, changes made while the world is open will not 
+        be comitted to disk.
+    */
+    public boolean isReadOnly()
+        {
+        return database.isReadOnly();
+        }
+
+    /** Remove a world
+        (USE WITH CARE!)
+    */
+    public void delete(String fileName)
+        {
+        // Delete the database
+        //### Implementation omitted to thwart the careless
+        }
+
+    /** Does a world exist?
+    */
+    public boolean exists(String fileName)
+        {
+        fileName = getFile(fileName).toString();
+        return AtomDatabase.exists(fileName) && Vocabulary.exists(fileName);
+        }
+
+    /** Get the world's base filename
+    */
+    public String getFileName()
+        {
+        return fileName;
+        }
+
+    /** Commit the world to disk
+    */
+    public synchronized void save()
+        throws IOException
+        {
+        if (isReadOnly())
+            throw new AtomException("Can't save: world is open in read-only mode.");
+        System.out.println("Saving MUA world: " + fileName);
+        saveVocabulary(fileName);
+        database.flush();
+        }
+        
+    /** Create the required atoms
+    */
+    protected void createRequiredAtoms()
+        {
+        // Create the administrator mobile 
+        newThing(ADMIN_ID, getAtom(AtomDatabase.MOBILE_ID));
+        //### Any more???
+        
+        Debug.assert(checkRequiredAtoms(), "(World/197)");
+        }
+
+    /** Are the required atoms created?
+    */
+    protected boolean checkRequiredAtoms()
+        {
+        //###
+        if (getAtom(ADMIN_ID) == null)
+            return false;
+
+        return true;
+        }
+
+    /** Initialise the vocabulary
+        <p>
+        This function initalises verbs which must exist before any input can be understood.
+    */
+    protected void initVocabulary()
+        {
+        defaultParser.addRawVerb( Privilege.DEFAULT, "!SET", "_set", AtomData.parse("!ModSet", this));
+        defaultParser.addRawVerb( Privilege.DEFAULT, "!CLEAR", "_clear", AtomData.parse("!ModClear", this));
+        defaultParser.addRawVerb( Privilege.DEFAULT, "!NOUN", "_add_noun", AtomData.parse("!ModAddNoun", this));
+        }
+        
+    /** Load the vocabulary file
+    */
+    protected void loadVocabulary(String fileName)
+        throws IOException
+        {
+        // If the vocab already exists, read it in.
+        File f = getFile(fileName);
+        vocabulary.read(f.toString(), this);
+        }
+        
+    /** Save the vocabulary
+    */
+    protected void saveVocabulary(String fileName)
+        throws IOException
+        {
+        File f = getFile(fileName);
+        vocabulary.write(f.toString());
+        }
+        
+    /** Get the vocabulary
+    */
+    public final Vocabulary getVocabulary()
+        {
+        return vocabulary;
+        }
+        
+    /** Run a script as administrator. Any error in the script will cause the world 
+        to stop processing events.
+    */
+    protected void execAdminScript(String fileName)
+        throws IOException
+        {
+        // Get the qualified file name and check it exists. No exception is thrown
+        //  if the file doesn't exist.
+        File f = findFile(fileName);
+        if (!f.exists())
+            {
+            System.err.println("Script file not found: " + f);
+            return;
+            }
+        
+        // Get the administrator mobile
+        Atom actor = getAtom(ADMIN_ID);
+        
+        // Execute the script
+        try {
+            execScript(fileName, actor);
+            }
+        catch (RuntimeException e)
+            {
+            // Kill the events and rethrow 
+            stopEvents();
+            throw e;
+            }
+        catch (Throwable e)
+            {
+            // Kill the events and convert to IO exception
+            stopEvents();
+            throw new IOException(e.getMessage());
+            }
+        }
+
+    /** Run a script. 
+    */
+    public void execScript(String fileName, Atom actor)
+        throws IOException
+        {
+            
+        // Open the file and execute each command
+        File f = findFile(fileName);
+        BufferedReader in = new BufferedReader(new FileReader(f));
+        String s;
+        while ((s = in.readLine()) != null)
+            {
+            // Note we do not use 'parseCommand' from this class because we want 
+            //  to stop processing the script if there is an error 
+            defaultParser.parseSentence(s, actor);
+            }
+        in.close();
+        }
+
+    /** Create the default Watchers
+    */
+    protected void startWatchers()
+        {
+        Atom admin = getAtom(ADMIN_ID);
+        admin.addWatcher(new ConsoleWatcher(admin, false));
+        }
+        
+    /** Start the event processor and timer
+    */
+    protected void startEvents()
+        {
+        eventProcessor.start();
+        timer.start();
+        }
+
+    /** Stop the event processor and timer
+    */
+    protected void stopEvents()
+        {
+        eventProcessor.stop();
+        timer.stop();
+        }
+
+    /** Send startup messages
+    */
+    protected void startAtoms()
+        {
+        Atom actor = getAtom(ADMIN_ID);
+        Enumeration atoms = getAtoms();
+        while (atoms.hasMoreElements())
+            {
+            Atom atom = (Atom)atoms.nextElement();
+            if (atom instanceof Thing)
+                callEvent(actor, ON_START, atom);
+            }
+        }
+        
+    /** Send stop messages
+    */
+    protected void stopAtoms()
+        {
+        Atom actor = getAtom(ADMIN_ID);
+        Enumeration atoms = getAtoms();
+        while (atoms.hasMoreElements())
+            {
+            Atom atom = (Atom)atoms.nextElement();
+            if (atom instanceof Thing)
+                callEvent(actor, ON_STOP, atom);
+            }
+        }
+        
+    /** Create a parser
+    */
+    public Parser newParser()
+        {
+        return new Parser(this);
+        }
+        
+    /** Parse a command using the default parser
+    */
+    public final void parseCommand(String command, Atom actor)
+        {
+        parseCommand(command, actor, defaultParser);
+        }
+        
+    /** Parse a command
+    */
+    public void parseCommand(String command, Atom actor, Parser parser)
+        {
+        try {
+            parser.parseSentence(command, actor);
+            }
+            
+        // No errors are allowed to get past this point!
+        //###
+        catch (Throwable e)
+            {
+            outputError(e, actor);
+            }
+        }
+        
+    /** Send an error message to the user
+    */
+    private void outputError(Throwable e, Atom actor)
+        {
+        try {
+            String msg = e.getMessage();
+            if (msg == null)
+                msg = "Unknown error";
+            if (actor != null)
+                {
+                OutPkt output = new OutPkt("error");
+                output.addField("msg", msg);
+
+                // get clean stack trace and add clean crs out
+                String stackTrace = StringUtil.crsToHTML( Debug.printStackTrace( e ) );
+                output.addField( "debug", stackTrace );
+                actor.output(output);
+                }
+            }   
+        
+        // If we get here, an exception has been thrown in the error output code.
+        //  Give up attempting to report to the user, write it to the console instead.
+        catch (Throwable e2)
+            {
+            Debug.println("Error sending output to user: " + e2);
+            Debug.printStackTrace( e2 );
+            }
+        }
+        
+    /** Get the number of seconds the game has been running
+    */
+    public long getTime()
+        {
+        return timer.getTime();
+        }
+    
+    /** Create an Event
+    */
+    public Event newEvent(Atom actor, String id, Atom current, Object args[])
+        {
+        return new Event(this, actor, id, current, args);
+        }
+
+    /** Create an Event with no args
+    */
+    public Event newEvent(Atom actor, String id, Atom current)
+        {
+        return new Event(this, actor, id, current, null);
+        }
+
+    /** Put an event on the queue
+    */
+    public void postEvent(Event event)
+        {
+        eventProcessor.put(event);
+        }
+        
+    /** Request an event to be sent in 'delay' seconds
+    */
+    public void timerEvent(Event event, int delay)
+        {
+        timer.timerEvent(event, delay);
+        }
+        
+    /** Request a timer event to be sent to 'current' in 'delay' seconds
+    */
+    public void timerEvent(Atom actor, Atom current, int delay)
+        {
+        timer.timerEvent(newEvent(actor, ON_TIMER, current, null), delay);
+        }
+        
+    /** Request a named timer event to be sent to 'current' in 'delay' seconds
+    */
+    public void timerEvent(Atom actor, String id, Atom current, int delay)
+        {
+        timer.timerEvent(newEvent(actor, id, current, null), delay);
+        }
+        
+    /** Call an event 
+    */
+    public boolean callEvent(Atom actor, String id, Atom current, Object args[])
+        {
+        return callEvent(newEvent(actor, id, current, args));
+        }
+        
+    /** Call an event with no args
+    */
+    public boolean callEvent(Atom actor, String id, Atom current)
+        {
+        return callEvent(newEvent(actor, id, current, null));
+        }
+        
+    /** Call an event with no current
+    */
+    public boolean callEvent(Atom actor, String id, Object args[])
+        {
+        return callEvent(newEvent(actor, id, null, args));
+        }
+        
+    /** Call an event with no current or args
+    */
+    public boolean callEvent(Atom actor, String id)
+        {
+        return callEvent(newEvent(actor, id, null, null));
+        }
+        
+    /** Call an event. Return true if the event is handled.
+    */
+    public /*synchronized*/ boolean callEvent(Event event)
+        {
+        boolean result = false;
+        
+        // Clear the event result
+        event.clearResult();
+        
+        // Get the current object, or root
+        Atom current = event.getCurrent();
+        if (current == null)        //### Should be redundant with new parser
+            current = getRoot();
+        
+        // Get the property for this event
+        Object value = current.getRawProperty(event.getID());
+
+        // If it is null, we can go no further
+        if (value == null || database.isNullProperty(value))
+            return result;
+        
+        try {
+            // Push the event onto the event stack, making it the current event.
+            pushEvent(event);
+                
+            // If it's an action, call it and get its result
+            if (value instanceof Action)
+                {
+                Action action = (Action)value;
+                result = action.execute(event);
+                }
+                
+            // Else If it's a bool or int, return it as the result
+            else if (value instanceof Boolean)
+                result = ((Boolean)value).booleanValue();
+            else if (value instanceof Integer)
+                result = ((Integer)value).intValue() != 0;
+                
+            // Else, set the event result to the value of the atom property. This 
+            //  allows the event to format the packet as it wishes.
+            else {
+                //### This is temporary !! Should call the default action.
+    //###            event.setResult(AtomData.toString(value));
+                event.getActor().output(AtomData.toString(value));
+                result = true;  //###
+                }
+            }
+            
+        // Catch and rethrow any exceptions, using a finally block to clean up the event stack.
+        catch (RuntimeException e)
+            {
+            throw e;
+            }
+        finally
+            {
+            // Remove the event from the stack
+            popEvent();
+            }
+        
+        return result;
+        }
+        
+    /** Get the current event (possibly null).
+    */
+    public Event getCurrentEvent()
+        {
+        if (eventStack.empty())
+            return null;
+        else
+            return (Event)eventStack.peek();
+        }
+        
+    /** Push an event onto the stack
+    */
+    public void pushEvent(Event event)
+        {
+        eventStack.push(event);
+        }
+        
+    /** Pop an event from the stack
+    */
+    public void popEvent()
+        {
+        eventStack.pop();
+        }
+        
+    /** Construct a fully-qualified file name. Use this for files you intend
+        to create.
+    */
+    public final File getFile(String name)
+        {
+        return pathList.getFile(name);
+        }
+
+    /** Construct a fully-qualified file name. Use this for files you expect to 
+        exist already. If the file doesn't exist, the effect is the same as 'getFile'.
+    */
+    public final File findFile(String name)
+        {
+        return pathList.findFile(name);
+        }
+
+    /** Add directories to the search path
+    */
+    public final void addPath(String path)
+        {
+        pathList.addPath(path);
+        }
+
+
+// Atom manipulation functions
+    
+    /** Create a new Atom
+    */
+    public final Atom newAtom(String id, Atom parent)
+        {
+        Atom result = database.newAtom(id, parent);
+        return result;
+        }
+
+    /** Create a new Thing, Container, etc. depending on the type of the parent
+        <p>
+        This implies that the parent must be of the highest static type the 
+        Thing needs to be. I.e. if you want a Java Container, 'parent' must be at 
+        least a container atom.
+    */
+    public final Atom newThing(String id, Atom parent)
+        {
+        // Determine the static type to create
+        String className = AtomDatabase.THING_ID;
+        if (parent.isDescendentOf(getAtom(AtomDatabase.MOBILE_ID)))
+            className = AtomDatabase.MOBILE_ID;
+        else if (parent.isDescendentOf(getAtom(AtomDatabase.ROOM_ID)))
+            className = AtomDatabase.ROOM_ID;
+        else if (parent.isDescendentOf(getAtom(AtomDatabase.CONTAINER_ID)))
+            className = AtomDatabase.CONTAINER_ID;
+        
+        Atom result = database.newAtom(id, parent, className);
+        Atom actor = getAdmin();
+        callEvent(actor, ON_CREATE, result);
+        callEvent(actor, ON_START, result);
+        //### Update world model
+        return result;
+        }
+
+    /** Create a copy of an existing Atom
+        <p>
+        The new atom has the same fields and inheritance as the existing one,
+        but is created in Limbo and if it is a container then it will be created
+        empty.
+    */
+    public final Atom cloneAtom(Atom atom)
+        {
+        Atom result = database.cloneAtom(atom);
+        Atom actor = getAdmin();
+        if (atom instanceof Thing)
+            {
+            callEvent(actor, ON_CREATE, result);
+            callEvent(actor, ON_START, result);
+            }
+        //### Update world model
+        return result;
+        }
+        
+    /** Delete a named atom from the database
+    */
+    public final void deleteAtom(String id)
+        {
+        Atom atom = getAtom(id);
+        if (atom == null)
+            throw new AtomException("Can't find atom: " + id);
+        deleteAtom(atom);
+        }
+
+    /** Delete an atom from the database
+    */
+    public final void deleteAtom(Atom atom)
+        {
+        Atom actor = getAdmin();
+        if (atom instanceof Thing)
+            {
+            callEvent(actor, ON_STOP, atom);
+            callEvent(actor, ON_DESTROY, atom);
+            }
+        database.deleteAtom(atom);
+        }
+
+    /** Move an atom to a new location
+    */
+    public final void moveAtom(Atom atom, Atom newContainer)
+        {
+        //### Update world model
+        newContainer.putIn(atom);
+        }
+
+    /** Replace an atom with another. The original atom is moved to Limbo.
+    */
+    public final void replaceAtom(Atom atomToBeReplaced, Atom newAtom)
+        {
+        Atom container = atomToBeReplaced.getContainer();
+        moveAtom(atomToBeReplaced, getLimbo());
+        moveAtom(newAtom, container);
+        }
+
+    /** Reset an atom and its dependents
+    */
+    public final void resetAtom(Atom atom)
+        {
+        Atom actor = getAdmin();
+        callEvent(actor, ON_RESET, atom);
+        
+        // Propagate the reset to the dependents if any
+        Object o = atom.getRawProperty(DEPENDENTS);
+        if (o != null && o instanceof Vector)
+            {
+            Enumeration dependents = ((Vector)o).elements();
+            while (dependents.hasMoreElements())
+                resetAtom((Atom)dependents.nextElement());
+            }
+        }
+
+    /** Add an exit between two containers
+        <p>
+        This function sets up the exit data structures.
+    */
+    public final void addExit(int direction1, Atom container1, Atom exit1, int direction2, Atom container2, Atom exit2)
+        {
+        // Link this side to the other side
+        exit1.setProperty(DESTINATION, container2);
+        exit1.setProperty(OTHER_SIDE, exit2);
+        exit2.setProperty(DESTINATION, container1);
+        exit2.setProperty(OTHER_SIDE, exit1);
+        
+        // Add the exits to the container
+        container1.addExit(direction1, exit1);
+        container2.addExit(direction2, exit2);
+        }
+        
+    /** Add a one-way exit between two containers
+    */
+    public final void addExit(int direction1, Atom container1, Atom exit1, Atom container2)
+        {
+        // Link this side to the other side
+        exit1.setProperty(DESTINATION, container2);
+        
+        // Add the exit to the container
+        container1.addExit(direction1, exit1);
+        }
+        
+    /** Add an exit message to a container
+    */
+    public final void addExit(int direction, Atom container, String msg)
+        {
+        container.addExit(direction, msg);
+        }
+        
+    /** Remove an exit
+        <p>
+        This function removes and deletes the exit atom and its opposite.
+    */
+    public final void removeExit(int direction, Atom container1)
+        {
+        // Get the exit on this side. Ignore if it doesn't exist
+        Object exitObject = container1.getExit(direction);
+        if (exitObject == null)
+            return;
+            
+        // If the exit is a string, simply remove it
+        if (exitObject instanceof String)    
+            container1.removeExit(exitObject);
+            
+        // Else, must unravel the exit data structure and keep the other side
+        //  consistent with this one.
+        else {            
+            Atom exit1 = (Atom)exitObject;
+            
+            // Get the destination and other side exit
+            Atom container2 = exit1.getAtom(DESTINATION);
+            Atom exit2 = exit1.getAtom(OTHER_SIDE);
+            
+            // Remove and delete the exits. Note that the other side can be null if this is a one-way exit.
+            container1.removeExit(exit1);
+            deleteAtom(exit1);
+            if (exit2 != null)
+                {
+                container2.removeExit(exit2);
+                deleteAtom(exit2);
+                }
+            }
+        }
+        
+    /** Enumerate all the atoms in the world
+    */
+    public final Enumeration getAtoms()
+        {
+        return database.getAtoms();
+        }
+
+    /** Get an existing Atom
+    */
+    public final Atom getAtom(String id)
+        {
+        return database.getAtom(id);
+        }
+
+    /** Get the atom at the root of the inheritance hierarchy
+    */
+    public final Atom getRoot()
+        {
+        return database.getRoot();
+        }
+
+    /** Get the "limbo" container
+    */
+    public final Atom getLimbo()
+        {
+        return database.getLimbo();
+        }
+
+    /** Get the administrator mobile
+    */
+    public final Atom getAdmin()
+        {
+        return getAtom(ADMIN_ID);
+        }
+        
+    /** Create an ID unique in the database, prefixed with the 'base' argument
+    */
+    public final String getUniqueID(String base)
+        {
+        return database.getUniqueID(base);
+        }
+
+    /** Get the atom database
+    */
+    public final AtomDatabase getAtomDatabase()
+        {
+        return database;
+        }
+    }

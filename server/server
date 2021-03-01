@@ -1,0 +1,8 @@
+#! /bin/bash
+# $Id: server,v 1.5 1998/07/07 11:17:39 rich Exp $
+# Script file for Session Server
+# James Fryer, 3 July 98
+# Copyright (C) Ogalala ltd <info@ogalala.com>
+
+jre -cp Server.jar:/misc/ODI/pse.jar com.ogalala.server.Main $* &
+

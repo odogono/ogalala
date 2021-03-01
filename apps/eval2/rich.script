@@ -1,0 +1,29 @@
+# $Id: rich.script,v 1.6 1998/08/21 14:42:56 rich Exp $
+# Rich's script file
+# James Fryer, 4 Aug 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+#################################################################################
+############################## rom ###############################
+#################################################################################
+
+#!container rom room
+
+!set rom.name "Richards Office"
+!set rom.description "Richards Office full of stuff."
+!set rom.long_description "This room is very untidy. Books and paper cover the table. Between the junk on the floor you can see what *might* be a carpet, but you cannot be sure. Shortcuts from here: n hall_room, e ball_room, s drawing_room, w library_room, ne dining_room, nw conservatory_room, sw hallroom, se back_passage_room"
+!set rom.go_n $hall_room
+!set rom.go_e $ball_room
+!set rom.go_s $drawing_room
+!set rom.go_w $library_room
+!set rom.go_ne $dining_room
+!set rom.go_nw $conservatory_room
+!set rom.go_sw $hall_room
+!set rom.go_se $back_passage_room
+
+!go rom
+
+!container * drawing_room_sofa
+!mobile * matt
+!thing * letter_opener
+!thing * candlestick

@@ -1,0 +1,36 @@
+#source characters.odl
+#date Thu Mar 11 16:00:12 GMT+00:00 1999
+#copyright Ogalala Ltd
+#import NOUN_ADMIN NOUN_STEVE CHARTERHOUSE_SQUARE_ROOM CHARACTER NOUN_LORI NOUN_WILLIAM
+#export STEVE LORI WILL
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# $Id: characters.odl,v 1.2 1999/02/24 17:25:46 alex Exp $
+# Admin Mobile definitions
+# Alexander Veenendaal, 22nd Feburary 1998
+# Copyright (C) HotGen Ltd <www.hotgen.com>
+
+#----------------------------------- Admin Characters ----------------------------#
+!new steve character noun_steve noun_admin
+!set steve.name "steve"
+
+!set steve.home_container $charterhouse_square_room
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!new lori character noun_lori noun_admin
+!set lori.name "lori"
+
+!set lori.home_container $charterhouse_square_room
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!new will character noun_william noun_admin
+!set will.name "will"
+
+!set will.home_container $charterhouse_square_room
+

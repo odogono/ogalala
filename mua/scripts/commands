@@ -1,0 +1,49 @@
+# $Id: commands,v 1.33 1999/07/08 14:38:07 jim Exp $
+# Raw commands script
+# James Fryer, 21 July 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+# Vocabulary commands
+
+# Atom manipulation commands
+# (!set and !clear are added in the program)
+!rawverb !ATOM _new_atom !ModNewAtom
+!rawverb !NEW _new_thing !ModNewThing
+!rawverb "!DELETE;!DEL" _delete !ModDelete
+!rawverb !EXAM _exam !ModExam
+!rawverb !INHERIT _inherit !ModInherit
+!rawverb !UNINHERIT _uninherit !ModUninherit
+!rawverb !CLONE _clone !ModClone
+!rawverb !CALL _call !ModCall
+!rawverb !MOVE _move !ModMove
+!rawverb !REMOVENOUN _remove_noun !RemoveNoun
+!rawverb !FREEZE _freeze !FreezeDatabase
+
+# Admin commands
+!rawverb !RUN _run !ModRun
+!rawverb !SAVE _save !ModSave
+!rawverb !TIME _time !ModTime
+!rawverb !STATUS _status  !Status
+!rawverb !WORDTYPE _wordtype !WordType
+
+# Moderator commands
+!rawverb !GO _go !ModGo
+!rawverb !GET _get !ModGet
+!rawverb !DROP _drop !ModDrop
+!rawverb !SAY _say !ModSay
+!rawverb "!WHISPER,!WH" _whisper !ModWhisper
+!rawverb !DICE _dice !ModRollDice
+
+# Exit commands
+!rawverb !DIG _dig !ModDig
+!rawverb !UNDIG _undig !ModUnDig
+
+# User commands
+!rawverb "HELP;?" _help !Help
+
+# Residential Commands
+!rawverb "!GENERATEATRIUM;!GENATRIUM" _gen_atrium !ModGenerateAtrium
+!rawverb "!REMOVEATRIUM;!DELATRIUM" _del_atrium !ModRemoveAtrium
+!rawverb "!CREATEHOME;!CRTHOME;!CRTFLAT" _crt_home !ModCreateHome
+
+

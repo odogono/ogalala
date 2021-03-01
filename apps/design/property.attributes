@@ -1,0 +1,23 @@
+# $Id: property.attributes,v 1.1 1999/03/15 13:56:07 matt Exp $
+# Standard property attributes file for AtomBuilder
+# Matthew Caldwell, 15 March 1999
+# Copyright (c) Ogalala Ltd, <info@ogalala.com>
+#
+# name and description should always come first
+#
+name.priority=A
+description.priority=B
+#
+# properties associated with exits should not be editable
+#
+direction.immutable=true
+destination.immutable=true
+other_side.immutable=true
+#
+# they should also be tucked away out of sight at the bottom
+# of the list - dunno if this use of unicode escape sequences
+# will work, though
+#
+direction.priority=\uffff
+destination.priority=\uffff
+other_side.priority=\uffff

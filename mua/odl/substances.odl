@@ -1,0 +1,183 @@
+# $Id: substances.odl,v 1.7 1999/03/26 17:06:54 alex Exp $
+# Substance definitions
+# James Fryer, 30 Oct 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## The root for all substances and materials
+atom substance : thing
+{
+    	## The name of this substance.
+    	substance 		= "stuff"
+
+	## What the substance feels like.
+    	touch_msg 		= "It feels like {substance}."
+
+	## What the substance smells like.
+    	smell_msg 		= "It smells of {substance}."
+
+	## What the substance tastes like.
+    	taste_msg 		= "It tastes of {substance}."
+}
+
+
+atom substance_chalk : substance noun_chalk
+{
+	substance		= "chalk"
+}
+
+atom substance_cloth : substance noun_cloth
+{
+    	substance 		= "cloth"
+}
+
+atom substance_hair : substance noun_hair
+{
+	substance		= "hair"
+}
+atom substance_metal : substance noun_metal
+{
+    	substance 		= "metal"
+	smell_msg		= "It smells of nothing in particular."
+}
+
+atom substance_marble : substance noun_marble
+{
+    	substance 		= "marble"
+	smell_msg		= "It smells of nothing in particular."
+	taste_msg		= "It tastes of nothing in particular."
+}
+
+atom substance_paper : substance noun_paper
+{
+    	substance 		= "paper"
+}
+
+atom substance_rubber : substance noun_rubber
+{
+	substance 		= "rubber"
+}
+
+
+atom substance_stone : substance noun_stone
+{
+	substance		= "stone"
+	smell_msg		= "It smells of nothing in particular."
+}
+
+
+atom substance_wood : substance noun_wood
+{
+    	substance 		= "wood"
+}
+
+
+
+
+
+## ------------------------------ Simply Liquids -------------------------------------#
+
+## Liquid is a liquid
+atom substance_liquid : substance
+{	
+	## the type name of the substance
+	substance		= "liquid"
+
+	## this is the weight of one measure of liquid. Note that this is different from
+	## weight, which would be the overall mass of possibly several measures together.
+	## This property is also constant for all liquids
+	measure			= 5
+
+	get			= "Unsuprisingly, you find that your fingers slip through {-t substance}."
+}
+
+
+atom substance_poison : substance_liquid noun_poison
+{
+	name			= "poison"
+
+	substance		= "poison"
+}
+
+atom substance_water : substance_liquid noun_water
+{
+	name			= "water"
+
+	substance 		= "water"
+}
+
+atom wine : substance_liquid noun_wine
+{
+	name			= "wine"
+
+	substance		= "wine"
+}
+
+## Liquid Containers are able to hold liquids, as well as
+##  the normal container functions.
+atom liquid_container : container
+{
+	## default pour action for things
+	#$thing.pour		= "You can't pour {-t name}."
+
+	## default pour action for portables
+	#$portable.pour		= "There is nothing to pour from {-t name}."
+
+	## default pour action
+	#pour			= !Pour
+
+	## default drink action for thing
+	#$thing.drink		= "You can't drink from {-t name}."
+
+	## default drink action
+	#drink			= !Drink
+
+	## default fill action
+	#thing.fill		= "You can't fill {-t name}."
+
+	## default filling action for container
+	#$container.fill		= !Fill
+	
+	## The liquid type is the atom of what is actually contained within the container.
+	## The liquid type, as a rule, must inherit from liquid. An example of a liquid
+	##  would be water.
+	#liquid_type		= [ "water-water" = $water "poison-water" = $poisoned_water ]
+
+	## used to store the outcome of mixing two liquid substances together
+	#mixture_table		= null
+
+	is_closed		= false
+
+	## displayed to the actor when the container is filled
+	#fill_msg		= "You fill {-t name} with {-t arg.name}."
+
+	## displayed to everyone else in the room, when the actor fills it.
+	#fill_omsg		= "{-u actor} fills the {name} with {-t arg.name}."
+	
+	## displayed to the actor when the container is filled
+	#is_full_msg		= "You cannot put any more into this {arg.name}."
+	
+	## displayed to the actor when the container is empty
+	#is_empty_msg		= "{-ut name} is empty."
+
+	## displayed when the actor pours a liquid into the container
+	#pour_in_msg		= "You pour {-t name} into {-t arg.name}."
+
+	## displayed to the room when an actor pours a liquid into a container
+	#pour_in_omsg		= "{-u actor.name} pours {-t name} into {-t arg.name}."
+
+	## displayed when they pour the container on something else
+	#pour_on_msg		= "You pour {-t name} onto {-t arg.name}."
+
+	## displayed to the room when an actor pours the container onto something else
+	#pour_on_omsg		= "{-u actor.name} pours {-t name} onto {-t arg.name}."
+
+	## displayed when the container is empty and the actor has tryed to drink from it
+	#empty_drink_msg		= "You find that {-t name} is empty."
+
+	## displayed when the container is drunk from
+	#drink_msg		= "You drink from {-t name}."
+
+	## displayed to the room when the actor drinks from the container
+	#drink_omsg		= "{-u actor.name} drinks from {-t name}."
+}
+

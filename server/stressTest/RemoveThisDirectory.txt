@@ -1,0 +1,4 @@
+$Id: RemoveThisDirectory.txt,v 1.2 1998/07/15 10:35:14 jim Exp $
+This directory is redundant and will be removed by the CVS
+administrator at the next housekeeping session.
+

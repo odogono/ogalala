@@ -1,0 +1,54 @@
+# $Id: misc_definitions.odl,v 1.14 1998/12/14 10:05:20 jim Exp $
+# Miscellaneous definitions
+# James Fryer, 11 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+#------------------------------------ Places ------------------------------------#
+## A place is a container for rooms. Players will never enter a place,
+##  however the place name is displayed by the LOOK command.
+atom place : container
+{
+    name 			= "unnamed place"
+    description 		= "An unnamed place."
+    list_desc 			= "{name}"
+
+    ## Places are unique.
+    is_unique 			= true
+
+    ## Places are always closed
+    is_closed 			= true
+
+    ## The image file associated with this place's map
+    url 			= null
+}
+
+## A neighbourhood is a collection of places.
+atom neighbourhood : place
+{
+    name = "unnamed neighbourhood"
+    description = "An unnamed neighbourhood."
+}
+
+## A region is a collection of neighbourhoods
+atom region : place
+{
+    name = "unnamed region"
+    description = "An unnamed region."
+}
+
+## A country is a collection of regions
+atom country : place
+{
+    name = "unnamed country"
+    description = "An unnamed country."
+}
+
+## A continent is a collection of countries
+atom continent : place
+{
+    name = "unnamed continent"
+    description = "An unnamed continent."
+}
+
+
+

@@ -1,0 +1,75 @@
+## Waterloo Place Things
+
+## Noun atoms for statues
+
+atom noun_plaque : noun
+{
+	_nouns = [ "plaque" "inscription" ]
+}
+
+atom noun_statue : noun
+{
+	_nouns = [ "statue" "figure" "memorial"]
+}
+
+atom noun_plinth : noun
+{
+	_nouns = [ "plinth" "base" "pedestal" ]
+}
+
+## Atoms for statues
+
+atom plaque : thing readable noun_plaque
+{
+	is_quiet=true
+	name = "plaque"
+	description = "inscribed tablet"
+}
+
+atom statue : thing noun_statue
+{
+	is_quiet=true
+	name = "statue"
+	description = "A statue."
+}
+
+atom plinth : thing noun_plinth readable
+{
+	description = "A plinth"
+	is_quiet=true
+	name = "plinth"
+	text = "There's no text on the plinth. Perhaps there's a plaque \
+		or something on it."
+}
+
+## Things
+
+##Scott memorial statue, plinth and plaque
+
+thing statue_s1 : statue
+{
+	description = "The statue was carved by Lady Scott, widow \
+			of the great explorer. It was erected in 1915.\
+			A plaque on the plinth bears testimony to the \
+			admiration and respect of his contemporaries."
+	_where = $by_the_scott_memorial_room
+}
+
+thing plinth_s1 : plinth
+{
+	description = "A sober marble plinth featuring a bronze plaque."
+	_where = $by_the_scott_memorial_room
+	text = "Scott's statue"
+}
+
+thing plaque_s1 : plaque
+{
+	text = "Scott's statue"
+	description = "A large bronze plaque, with an emphatic message \
+			for posterity."
+	_where = $by_the_scott_memorial_room
+}
+
+
+
+

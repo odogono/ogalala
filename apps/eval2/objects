@@ -1,0 +1,523 @@
+# $Id: objects,v 1.64 1998/08/27 09:50:38 rich Exp $
+# Object definition script for eval 2
+# James Fryer, 21 July 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+###################################################################
+############################ Flammable ############################
+###################################################################
+
+!atom flammable
+!verb burn "light current+;light current+ thing" "You cannot set light to {-t name}."
+!set flammable.light !Light
+!set flammable.burn !Light
+
+# Ignitability -- 0 means never lights; 100 means volatile (petrol etc)
+!set flammable.ignitability 10
+!set flammable.burn_msg "You light {-t name} with {-t arg.name}."
+!set flammable.burn_omsg "{-u actor.name} lights {-t name} with {-t arg.name}."
+!set flammable.burn_fail_msg "{-ut arg.name} fails to light {-t name}."
+!set flammable.burn_fail_omsg "{-ut actor.name} tries to light {-t name} but fails."
+!set flammable.burn_need_ignitor_msg "Please tell me what you want to light {-t name} with."
+!set flammable.burn_not_ignitor_msg "You can't use {-t arg.name} to light a fire!"
+!set flammable.burn_must_drop_msg "To avoid burnt fingers, you must drop {-t name} before you can set light to it."
+!set flammable.burn_quick_msg "{-ut name} burns up in brief fire. The ashes are blown away by a draught of air."
+
+# Burn rate: grams per tick
+!set flammable.burn_rate 1000
+
+###################################################################
+############################### seat ##############################
+###################################################################
+
+!atom seat container
+!noun seat "seat;chair"
+!verb sit "siton current+" "You cannot sit on that!"
+!verb sit "sit current+" "You cannot sit on that!"
+!verb stand "stand RAW" !Stand
+!set seat.name "seat"
+!set seat.put_in "You cannot do that!"
+!set seat.get_out "You cannot do that!"
+!set seat.sit !SitOn
+#!set seat.stand !Stand
+!set seat.is_transparent true
+!set seat.capacity 1
+!set seat.is_empty_msg "No one is sitting on {-t name}."
+!set seat.too_big_msg "There is not enough room to sit on {-t name}."
+!set seat.contents_suffix_msg "(on {-t name})"
+!set seat.put_in_msg "You sit on {-t name}."
+!set seat.put_in_omsg "{-u actor.name} sits on {-t name}."
+!set seat.get_out_msg "You get up from {-t Container.name}."
+!set seat.get_out_omsg "{-u actor.name} stands up from {-t container.name}."
+!set seat.stand_fail_msg "You are not sitting on anything."
+!set seat.go_n "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_s "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_e "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_w "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_ne "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_nw "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_sw "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_se "You are sitting on the {container.name}, you should stand before moving."
+!set seat.go_up "You are sitting on the {container.name}, you should stand before moving." # Should map to STAND ...
+!set seat.go_down "You are sitting on the {container.name}, you should stand before moving." 
+
+###################################################################
+############################## sofa ###############################
+###################################################################
+
+!atom sofa seat flammable
+!noun sofa "sofa"
+!set sofa.name "sofa"
+!set sofa.description "sofa"
+!set sofa.capacity 4
+!set sofa.long_description "Sofa that needs a description."
+
+!set sofa.ignitability 60
+!set sofa.size 1000
+!set sofa.weight 100000
+!set sofa.burn_rate 1000  # temp
+
+###################################################################
+######################## limited_Container ########################
+###################################################################
+
+!atom limited_container container
+!set limited_container.put_in !PutLimited
+!set limited_container.name "A limited container"
+!set limited_container.description "A limited container containers specific things"
+!set limited_container.long_description "A limited container containers specific things"
+!set limited_container.contains_atoms $root
+!set limited_container.too_big_msg "You can only put {contains_atoms.name} or {his} children into an {-t name}"
+
+
+###################################################################
+########################### quiet_object ##########################
+###################################################################
+
+!atom quiet_object thing
+!set quiet_object.name "A quiet object"
+!set quiet_object.is_quiet true
+!set quiet_object.name "no name needed?"
+!set quiet_object.description "no short describtion needed."
+!set quiet_object.long_description "describe me lori!! describe me!!"
+
+###################################################################
+####################### openable_with_object ######################
+###################################################################
+
+!atom openable_with_object openable
+#!set openable_with_object.close !CloseWithObject
+!set openable_with_object.open !OpenWithObject
+!set openable_with_object.key_atom $root
+!set openable_with_object.open_fail_msg "You need something to help you open this. "
+
+###################################################################
+############################# breakable ###########################
+###################################################################
+
+!atom breakable root
+#!verb break "break current+;break thing with current;" "You cannot break that."
+!verb break "break current+" "You cannot break that."
+#!verb fix "fix current+" "You cannot fix that."
+!set breakable.break !Break
+#!set breakable.fix !Fix
+!set breakable.is_broken false
+!set breakable.fixed_name  "a unbroken thing."
+!set breakable.fixed_description  "It looks you you could break it."
+!set breakable.fixed_long_description  "It looks you you could break it."
+!set breakable.broken_name  "a broken thing."
+!set breakable.broken_description  "it so broken you cannot tell what it was."
+!set breakable.broken_long_description  "it so broken up so much you don't know what it was."
+!set breakable.break_msg  "{-ut name} breaks"
+!set breakable.break_omsg  "{-ut name} breaks"
+!set breakable.fix_msg  "{-ut name} is fixed"
+!set breakable.fix_omsg  "{-ut name} is fixed"
+!set breakable.is_already_broken_msg  "{-ut name} is already broken."
+!set breakable.is_already_fixed_msg  "{-ut name} does not need fixing."
+
+###################################################################
+############################# smashable ###########################
+###################################################################
+
+!atom smashable breakable
+!verb break "smash current+" "You cannot smash that."
+!set smashable.break !Break
+!set smashable.fix "you cannot fix this, it is smashed"	
+!set smashable.smash_strength 0
+!set smashable.brokenName  "a broken thing."
+!set smashable.brokenDescription  "it so smashed up so much you don't know what it was."
+!set smashable.break_success_msg "You smash {-t name}"
+!set smashable.break_success_omsg "{actors} smashes {-t name}"
+!set smashable.break_fail_msg "Despite your efforts {-t name} remains intact."
+!set smashable.break_fail_omsg "{actors} tries and fails to smash {the/a} {name}
+
+
+###################################################################
+############################# readable ############################
+###################################################################
+
+#read-able
+!atom readable root
+!verb read "read current+;read current+ thing" "There is nothing to read on {-t name}."
+!set readable.read !Read
+!set readable.read_msg "You read {-t name}, it says:"
+!set readable.read_omsg "{-u actor.name} reads {-t name}."
+!set readable.read_isBlank true
+!set readable.read_text ""
+!set readable.read_is_blank_msg "{-ut name} is blank."
+
+###################################################################
+############################ writeable ############################
+###################################################################
+
+#write
+!atom writeable readable
+!verb write "write current+;write current+ thing" "You can't write on {-t name}."
+#!set writeable.write  !AppendText
+!set writeable.write_msg  "You write on {-t name}."
+!set writeable.write_omsg  "{-u actor.name} reads {-t name}."
+!set writeable.write_full_msg  "There is no room to write on {-t name}."
+!set writeable.write_max_charactors  255
+
+###################################################################
+############################## smelly #############################
+###################################################################
+
+!atom smelly root
+!verb smell "smell current+;smell current+ thing;sniff current+;sniff current+ thing" "{-ut name} has no smell."
+!set smelly.smell !Smell
+!set smelly.smell_msg "You smell {-t name}."
+!set smelly.smell_omsg "{-u actor.name} smells {-t name}."
+!set smelly.smell_success_msg "{-ut name} smells of {name}."
+
+
+###################################################################
+############################# tastable ############################
+###################################################################
+
+!atom tastable root
+!verb taste "taste current+;taste current+ thing;lick current+;lick current+ thing" "{-t name} has no taste."
+!set tastable.taste !Taste
+!set tastable.taste_msg "You taste {-t name}."
+!set tastable.taste_omsg "{-u actor.name} tastes {-t name}."
+!set tastable.taste_success_msg "It tastes like {name}"
+!set tastable.taste_fail_msg "You cannot place the taste"
+
+###################################################################
+############################# textured ############################
+###################################################################
+
+!atom textured root
+!verb feel "touch current+;touch current+ thing;rub current+;rub current+ thing;feel current+;feel current+ thing" "{-ut name} feels like {-a name}."
+!set textured.feel !Feel
+!set textured.textured_msg "You feel {-t name}."
+!set textured.textured_omsg "{-u actor.name} feels {-t name}."
+!set textured.textured_result_msg "{-ut name} feels like {name}."
+
+###################################################################
+############################# material ############################
+###################################################################
+
+!atom material tastable textured
+!set material.taste_success_msg "This should inherit a taste from a material"
+!set material.textured_result_msg "This should inherit a texture from a material"
+
+###################################################################
+############################## marble #############################
+###################################################################
+
+!atom marble tastable textured
+!noun marble "marble"
+!set marble.taste "You don't normally try and taste {name}, do you?"
+!set marble.taste_success_msg "This should inherit a taste from a material"
+!set marble.textured_result_msg "The marble is smooth and cool to the touch."
+
+###################################################################
+############################# leather #############################
+###################################################################
+
+!atom leather material smelly
+!set leather.smell_success_msg "A nice leathery smell fills your nose."
+!set leather.textured_result_msg "A nice quality leather feel runs under your fingers"
+!set leather.taste_success_msg "This tastes like leather"
+
+###################################################################
+########################## glazed_cotton ##########################
+###################################################################
+
+!atom glazed_cotton material
+!set glazed_cotton.textured_result_msg "{name} feels smooth and soft"
+!set glazed_cotton.taste_success_msg "Hey, now you know what glazed cotton tastes like!!!!"
+
+###################################################################
+############################# bronze ##############################
+###################################################################
+
+!atom bronze material
+!set bronze.textured_result_msg "{name} feels hard and metallic"
+!set bronze.taste_success_msg "Hey, now you know what bronze tastes like!!!!"
+
+###################################################################
+############################## glass ##############################
+###################################################################
+
+!atom glass material smashable
+!noun glass "glass"
+!set glass.textured_result_msg "{-ut name} feels cool and smooth to the touch."
+!set glass.taste_success_msg "{-ut name} feels smooth on your tongue, you feel a bit silly."
+!set glass.brokenName "cracked {name}"
+!set glass.brokenDescription  "{-ut name} has a couple of large cracks in it."
+
+###################################################################
+############################# carpet ##############################
+###################################################################
+
+!atom carpet material quiet_object 
+!noun carpet "carpet"
+!set carpet.name "carpet"
+!set carpet.description "carpet"
+!set carpet.long_description "A ordinary carpet."
+!set carpet.textured_result_msg "{-ut name} feels like good quality wool."
+!set carpet.textured_msg "You bend down and feel {-t name}."
+!set carpet.textured_omsg "{-u actor.name} bends down and feels {-t name}."
+
+###################################################################
+############################# weapon ##############################
+###################################################################
+
+!atom weapon root
+!verb attack "attack thing+ current;kill thing+ current" "You can't attack that!"
+!set weapon.name "weapon"
+!set weapon.description "A generic weapon"
+!set weapon.attack !Attack
+!set weapon.attack_success_msg "You hit {-u arg.name} with {-t name}."
+!set weapon.attack_success_smsg "{-u arg.name} hits you with {-t name}."
+!set weapon.attack_success_omsg "{-u actor.name} hits {-u arg.name} with {-t name}."
+!set weapon.attack_fail_msg "You attack {-u arg.name} with {-t name}. You miss."
+!set weapon.attack_fail_smsg "{-u arg.name} attacks you with {-t name}. {-u arg.he} misses."
+!set weapon.attack_fail_omsg "{-u actor.name} attacks {-u arg.name} with {-t name}. {-u arg.he} misses."
+!set weapon.attack_damage 0
+!set weapon.attack_finger_print "weaponed"
+
+###################################################################
+############################# knife ###############################
+###################################################################
+#
+#	Maybe this class should be call stabable, but i think that is silly
+#	so consider this knife to be a 'template' for all things that can 
+#	act like a knife.
+#
+
+!atom knife portable weapon
+!noun knife "knife"
+!verb attack_stab "stab thing+ current" "You can't stab that!"
+!set knife.name "knife"
+!set knife.attack_stab !Attack
+!set knife.attack_beat "Don't you mean stab?"
+!set knife.attack_finger_print "knifed"
+!set knife.attack_success_msg "You stab {-u arg.name} with {-t name}."
+!set knife.attack_success_smsg "{-u arg.name} stabs you with {-t name}."
+!set knife.attack_success_omsg "{-u actor.name} stabs {-u arg.name} with {-t name}."
+!set knife.attack_fail_msg "You attack {-u arg.name} with {-t name}. You miss."
+!set knife.attack_fail_smsg "{-u arg.name} attacks you with {-t name}. {-u arg.he} misses."
+!set knife.attack_fail_omsg "{-u actor.name} attacks {-u arg.name} with {-t name}. {-u arg.he} misses."
+
+###################################################################
+########################### bludgeon ##############################
+###################################################################
+#
+#	Maybe this class should be call hitable, but i think that is silly
+#	so consider this blugeon to be a 'template' for all things that can 
+# 	be used to beat someone to DEATH with.
+#
+
+!atom bludgeon portable weapon
+
+!verb attack_beat "beat thing+ current;smack thing+ current;hit thing+ current;bludgeon thing+ current" "You can't hit that!"
+!set bludgeon.attack_stab "Try hitting with {-t name}."
+!set bludgeon.attack_beat !Attack
+!set bludgeon.attack_finger_print "beaten"
+!set bludgeon.attack_success_msg "You hit {-u arg.name} with {-t name}."
+!set bludgeon.attack_success_smsg "{-u arg.name} hits you with {-t name}."
+!set bludgeon.attack_success_omsg "{-u actor.name} hits {-u arg.name} with {-t name}."
+!set bludgeon.attack_fail_msg "You attack {-u arg.name} with {-t name}. You miss."
+!set bludgeon.attack_fail_smsg "{-u arg.name} attacks you with {-t name}. {-u arg.he} misses."
+!set bludgeon.attack_fail_omsg "{-u actor.name} attacks {-u arg.name} with {-t name}. {-u arg.he} misses."
+
+###################################################################
+############################## box ################################
+###################################################################
+
+!atom box portable openable container
+!noun box box
+!set box.name box
+!set box.description "box"
+!set box.long_description "A ordinary box."
+
+###################################################################
+############################## paper ##############################
+###################################################################
+
+!atom paper readable material portable flammable
+!set paper.taste_msg "You put {-t name} in your mouth."
+!set paper.taste_omsg "{-u actor.name} puts {-t name} in their mouth."
+!set paper.taste_success_msg "It tastes like paper. (do we make the paper soggy now??)"
+!set paper.textured_msg "You gently rub the corner of {-t name}."
+!set paper.textured_omsg "{-u actor.name} gently feels a corner of {-t name}."
+!set paper.textured_result_msg "It feels like paper."
+!set paper.read_text "{-ut name} has nothing written on it."
+!set paper.ignitability 60
+!set paper.size 100
+!set paper.weight 100
+!set paper.burn_rate 10  # temp
+
+
+###################################################################
+############################# book ################################
+###################################################################
+
+!atom book portable openable readable paper
+!noun book book
+!set book.name book
+!set book.description "ordinary looking book "
+!set book.long_description "The title of the book is 'hello designers! content wanted her'."
+!set book.open !Read
+!set book.read_text "The book should have some writting in it."
+!set book.textured_result_msg "The cover of the book feels rough."
+
+###################################################################
+############################# wallet ##############################
+###################################################################
+
+!atom wallet portable openable leather
+!noun wallet "wallet;billfold"
+!set wallet.name wallet
+!set wallet.description "fat black wallet"
+!set wallet.long_description "A wallet full of money."
+!set wallet.open "{-ut name} is shut too tight to open."
+!set wallet.is_closed true
+!set wallet.stroke "Stroking {-t name} won't do you any good at all. You might try a crow-bar!"
+
+###################################################################
+############################## page ###############################
+###################################################################
+
+!atom page paper readable
+!noun page "letter;page"
+!set page.name "letter"
+!set page.description "letter"
+!set page.long_description "I, Linnet Ridgeway, being of sound mind and body do hereby bequeath all my worldly goods to........ A new will,as yet unsigned."
+!set page.text "I, Linnet Ridgeway, being of sound mind and body do hereby bequeath all my worldly goods to........ A new will,as yet unsigned."
+!set page.textured_result_msg "It feels dry and slightly rough to the touch."
+
+###################################################################
+########################## love_letter ############################
+###################################################################
+
+!atom love_letter page smelly
+!set love_letter.name "love letter"
+!set love_letter.description "a pink love letter"
+!set love_letter.long_description "a pink love letter"
+!set love_letter.read_text "Dear loved one, blah,blah,blah ..."
+!set love_letter.smelly_success_msg "A beautiful perfume fills your nose."
+!set love_letter.textured_result_msg "Feels like high quality paper."
+
+###################################################################
+############################# envelope ############################
+###################################################################
+
+!atom envelope paper openable_with_object limited_container portable
+#!noun close "seal"
+!noun envelope "envelope"
+!set envelope.name "envelope"
+!set envelope.description "envelope"
+!set envelope.long_description "A long envelope of thick cream coloured paper, sealed with black sealing wax."
+!set envelope.is_closed true
+!set envelope.key_atom $knife
+!set envelope.put_in !PutLimited
+!set envelope.read_text "Linnet Ridgeway,Wode Hall,Malton-under-Wode,Buckinghamshire,England."
+!set envelope.open_fail_msg "You should use the letter opener."
+!set envelope.contains_atoms $page
+
+###################################################################
+########################### letter_opener #########################
+###################################################################
+
+!atom letter_opener tastable textured knife smelly flammable
+!noun letter_opener "letter opener;opener"
+!set letter_opener.name "letter opener"
+!set letter_opener.description "letter opener"
+!set letter_opener.long_description "This letter opener is made of ebony and has a long slender blade which is very sharp indeed."
+!set letter_opener.smell_success_msg "You detect a faint hint of wood and spice."
+!set letter_opener.ignitability 60
+!set letter_opener.size 150
+!set letter_opener.weight 100
+
+
+
+###################################################################
+############################### mirror ############################
+###################################################################
+
+!atom mirror glass
+!noun mirror "mirror"
+!set mirror.name "mirror"
+!set mirror.look !LookMirror
+!set mirror.description "a mirror"
+!set mirror.long_description "an ordinary mirror"
+!set mirror.view_msg "You look into it and see:"
+!set mirror.view_omsg "{-u actor.name} looks into {-t name}."
+!set mirror.broken_name  "broken mirror"
+!set mirror.broken_description  "cracked mirror."
+!set mirror.broken_long_description  "This mirror is so badly damaged you can barely see yourself in it."
+!set mirror.break_msg  "You crack {-t name}, thereby ensuring 7 years of bad luck."
+!set mirror.break_omsg  "{-u actor.name} cracks {-t name}."
+!set mirror.is_already_broken_msg  "{-ut name} is already cracked."
+
+###################################################################
+########################### ornate_mirror #########################
+###################################################################
+
+!atom ornate_mirror mirror
+!noun ornate_mirror "ornate mirror"
+!set ornate_mirror.name "ornate mirror"
+!set ornate_mirror.description "an ornate mirror"
+!set ornate_mirror.long_description "This silver gilt mirror is in the grand French manner with cornucopias of fruit and flowers covering the frame."
+!set ornate_mirror.broken_name  "broken ornate mirror"
+!set ornate_mirror.broken_description  "An ugly spiders web of cracks mars the surface of this once beautiful rococo mirror.
+
+###################################################################
+########################### candlestick ###########################
+###################################################################
+
+!atom candlestick bludgeon
+!noun candlestick "candlestick;stick;candle"
+!set candlestick.name "candlestick"
+!set candlestick.description "candlestick"
+!set candlestick.long_description "This Art Nouveau candlestick is made of solid silver with a stylised pattern of grapevines twining round the stem. It's surprisingly heavy for such a delicate looking object."
+
+###################################################################
+############################## table ##############################
+###################################################################
+
+!atom table seat smelly
+!noun table "table"
+!set table.name "table"
+!set table.description "table"
+!set table.long_description "A table that needs description."
+!set table.is_empty_msg "No one is sitting at {-t name}."
+!set table.too_big_msg "the {name} is full."
+!set table.contents_suffix_msg "(at {-t name})"
+!set table.capacity 2
+!set table.put_in_msg "You sit at {-t name}."
+!set table.put_in_omsg "{-u actor.name} sits at {-t name}."
+!set table.go_n "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_s "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_e "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_w "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_ne "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_nw "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_sw "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_se "You are sitting at the {container.name}, you should stand before moving."
+!set table.go_up "You are sitting at the {container.name}, you should stand before moving." # Should map to STAND ...
+!set table.go_down "You are sitting at the {container.name}, you should stand before moving." # Should map to STAND ...

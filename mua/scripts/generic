@@ -1,0 +1,16 @@
+# $Id: generic,v 1.10 1999/03/31 11:45:40 alex Exp $
+# Generic Word definitions
+# Alexander Veenendaal, 30 September 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+!Word "the,a,an" article
+!Word "one,two,three,four,five,six,seven,eight,nine,ten,all,everything,every,once,twice,few" numeric
+!Word "biggest,smallest,least,best,largest,tiniest" superlative
+!Word "i,me,my,him,his,she,her,it,its,one" pronoun
+!Word "and,or,then" connector
+!Word "on,quickly,slowly,quietly,carefully,closely,intimatly,everything,up" adverb
+!Word "not,except,excluding,isn't,without,without" negation
+!Word "then,which,of,is,single,that,times,but" stopword
+!Word "from,into,on,under,in,inside,above,before,at,by,to,at,for,about,with" preposition
+!Word "north,south,west,east,northwest,northeast,southwest,southeast,up,down,in,out,n,s,e,w,nw,ne,se,sw,u,d" direction
+!Word "." terminator

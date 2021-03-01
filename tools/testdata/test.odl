@@ -1,0 +1,159 @@
+# The following defines an atom called Dummy that
+# inherits from other atoms called Parent1 and Parent2.
+atom Dummy : Parent1 Parent2
+{
+	# Each line inside the braces defines a property
+	# of the atom and assigns it a value. Atoms and
+	# things automatically have all the properties of
+	# all their ancestors, so properties only need to be
+	# specified if either (a) they are new to this atom,
+	# not inherited from any of its parents or (b) if the
+	# inherited value needs to be customized.
+	
+	# The value of a property can be any of the following
+	# types:
+	#
+	#   String      An ordinary text string, enclosed in
+	#               double quotation marks, eg "a string."
+	#   Integer     Any whole number, eg 12345.
+	#   Boolean     A truth value, represented by the
+	#               unquoted strings TRUE and FALSE (case
+	#               insensitive), eg True.
+	#   Action      The name of an Action class to be executed,
+	#               prefixed with an exclamation mark, eg !Eat.
+	#   Atom        The ID of a previously-defined atom or
+	#               thing, prefixed with a dollar-sign,
+	#               eg $Erics_Bicycle.
+	#   List        A list of items, which may themselves
+	#               be any of these types, enclosed in
+	#               square brackets and delimited by whitespace,
+	#               eg [1 2 3]
+	#   Dictionary  A list of key=value pairs, where the keys
+	#               are strings and the values can be any of
+	#               these types, enclosed in square brackets
+	#               and delimited by whitespace,
+	#               eg [ "name"="Kenny" "action"=!Explode ]
+	aString = "Blah blah blah"
+	anInteger = 9907
+	aBoolean = true
+	anAction = !Explode
+	anAtom = $South_Park_Savings_and_Loan
+	aList = [ "Strike one!" $Strike_Two "Strike three and out!" ]
+	 
+	
+	# A property definition may continue over multiple lines
+	# using a backslash character '\' to indicate continuation.
+	# Note that the first line ends immediately before the backslash,
+	# but all leading whitespace is trimmed from the following line.
+	# So in this case a space is left before the backslash to separate
+	# "that" from "continues".
+	aLongProperty = "This is a long string value that \
+	  continues onto the next line."
+	
+	# Some special pseudo-properties exist that are used
+	# by the tools to represent features of the created
+	# objects without actually directly equating to named
+	# "properties" in the resulting object. These are
+	# identified by a leading underscore character '_'.
+	
+	# The "_nouns" pseudo-property defines words that can
+	# be used to refer to the object or its descendants.
+	# Both atoms and things can define nouns, although in
+	# general a noun should be defined as high up the
+	# inheritance hierarchy as possible. A noun can only
+	# be defined once anywhere in the world, so it is
+	# important that it be accessible to all objects that
+	# might need it. Nouns should usually be single words,
+	# since at present that's what the parser expects.
+	# Multiple nouns can be defined for a single atom by
+	# giving _noun a list value. 
+	_nouns = [ "dummy" "pacifier" ]
+	
+	# An atom may also define properties on another atom
+	# (for instance, if it defines behaviour which another
+	# atom should specialize, such as bouncy and fragile).
+	# This also allows atoms to have circular references.
+	$Fragile.bounce = !Shatter
+}
+
+# The following defines a thing called Erics_Dummy that
+# inherits from the Dummy atom.
+thing Erics_Dummy : Dummy
+{
+	# The main distinguishing feature of things is that
+	# they can exist in the world, which generally means
+	# they'll have a location. That is, they'll be contained
+	# inside some other thing. The "_where" pseudo-property
+	# is used to specify the name of the thing which this
+	# thing is inside.
+	_where = $Erics_Mouth
+	
+	# Certain properties may be added to things (and atoms)
+	# to give them distinguishing descriptive features. These
+	# properties represent adjectives, and are defined in
+	# the adjectives script. To give a thing or atom these
+	# features, just define the relevant properties on them.
+	# (The tools, when they exist, should be able to provide
+	# a quick list of these properties and what they
+	# represent.) Eg, the "isRed" property might define whether
+	# an object can be distinguished as "red", "crimson",
+	# "vermilion", "carmine", etc.
+	isRed = true
+} 
+
+# the exits table defines connections between rooms
+# the rooms themselves have to have been defined
+# somewhere
+exits
+{
+	# an exit is specified by a declaration of the form:
+	#
+	# source_room direction [(type)] = destination_room [direction] [(type)]
+	#
+	# where the round brackets '(' and ')' are included literally
+	# in the declaration and the square brackets '[' and ']'
+	# denote parts of the statement that are optional
+	#
+	# a full definition is directly equivalent to !dig
+	# note that because rooms are always atoms, the '$'
+	# prefix is not necessary here, though it's allowed
+	bathroom s,out (door) = bedroom n (secret_door)
+
+	# various parts can be omitted
+	
+	# the destination has the same type as the source if not specified
+    bedroom w (magic_door) = closet e
+    
+    # the source has the type "exit" if none is specified
+    bedroom w = closet e
+    
+    # a string can be specified instead of an atom type
+    # (this is not currently supported by the world, but
+    # will be supported in some form or other eventually)
+    bedroom e ("A rabid dog bars your way")
+    
+    # the special type "none" means there is no corresponding
+    # exit at the destination -- this can be used on either
+    # side, but not both (obviously) (the resulting !DIG command
+    # will always be rearranged so that NONE is on the far side)
+    bathroom d (trapdoor) = oubliette none
+    
+    # test to check that 'none' is correctly swapped
+    oubliette none = bathroom d (trapdoor)
+    
+    # if no direction is given for the destination, it will
+    # default to the inverse of the source direction
+    bedroom nw = dog_basket
+    
+    # the upper_hallway is defined somewhere else and will
+    # be a dependency of this file
+    bedroom s = upper_hallway n
+    
+    # exits can be specialized once created
+    # this is much like any other property-setting
+    # it takes place in the exit table in order to
+    # ensure that the exit has already been created
+    bedroom.s.name = "main door"
+    bedroom.s.description = "An ornately carved door in \
+    						sturdy English oak."
+}

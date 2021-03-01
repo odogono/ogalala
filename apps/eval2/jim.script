@@ -1,0 +1,176 @@
+# $Id: jim.script,v 1.11 1998/08/21 14:42:56 rich Exp $
+# Jim's script file
+# James Fryer, 4 Aug 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+# Jim's office
+!container ojim room
+!set ojim.name "Jim's office"
+!set ojim.description "Jim's messy office"
+
+# A fishbowl (test for transparency)
+# !atom fishbowl container
+# !noun fishbowl fishbowl 
+# !set fishbowl.name "fishbowl"
+# !set fishbowl.description "fishbowl"
+# !set fishbowl.long_description "A small, round, fishbowl. There is no fish in sight."
+# !set fishbowl.capacity 1    # 1 fish
+# !set fishbowl.is_transparent true
+# !go hall_room
+# !container * fishbowl
+# !go limbo
+
+# Ignitor -- flints, matches, sparks etc.
+!atom ignitor
+
+# Ignition strength: 0 means feeble; 100 means will light anything
+!set ignitor.spark_strength 100
+
+# Lighter (matches are too much hassle)
+!atom lighter ignitor portable
+!noun lighter "lighter;zippo"
+!set lighter.name "lighter"
+!set lighter.description "lighter"
+!set lighter.long_description "A cigarette lighter."
+!set lighter.spark_strength 50
+
+# Flammable
+#!atom flammable
+#!verb burn "light current+;light current+ thing" "You cannot set light to {-t name}."
+#!set flammable.light !Light
+
+# Ignitability -- 0 means never lights; 100 means volatile (petrol etc)
+#!set flammable.ignitability 10
+#!set flammable.burn_msg "You light {-t name} with {-t arg.name}."
+#!set flammable.burn_omsg "{-u actor.name} lights {-t name} with {-t arg.name}."
+#!set flammable.burn_fail_msg "{-ut arg.name} fails to light {-t name}."
+#!set flammable.burn_fail_omsg "{-ut actor.name} tries to light {-t name} but fails."
+#!set flammable.burn_need_ignitor_msg "Please tell me what you want to light {-t name} with."
+#!set flammable.burn_not_ignitor_msg "You can't use {-t arg.name} to light a fire!"
+#!set flammable.burn_must_drop_msg "To avoid burnt fingers, you must drop {-t name} before you can set light to it."
+#!set flammable.burn_quick_msg "{-ut name} burns up in brief fire. The ashes are blown away by a draught of air."
+
+# Burn rate: grams per tick
+#!set flammable.burn_rate 1000
+
+#-------------------------------------
+# Fire
+!atom fire thing
+!noun fire "fire;blaze"
+!set fire.name "fire"
+!set fire.description "fire"
+!set fire.long_description "A blazing fire."
+!set fire.old_name ""
+!set fire.on_timer !FireTimer
+!set fire.get "Ow! You don't dare to touch {-t name}."
+!set fire.fire_progress_msg "{-ut name} burns brightly."
+!set fire.fire_end_msg "{-ut name} burns out."
+!set fire.start_weight 0  # What weight did we start out with?
+
+#-------------------------------------
+# Ashes
+!atom ashes thing
+!noun ashes "ash;ashes"
+!set ashes.name "ashes"
+!set ashes.description "heap of ashes"
+!set ashes.long_description "A heap of ashes."
+!set ashes.old_name ""
+!set ashes.on_timer !AshesTimer
+!set ashes.get "The ashes crumble through your fingers."
+!set ashes.ashes_end_msg "The ashes blow away in a draught of air."
+
+###################################################################
+############################ cigarette ############################ 
+###################################################################
+
+!atom cigarette portable flammable smelly tastable
+!verb smoke "smoke current" "You can't smoke {-t name}!"
+!noun cigarette "cigarette;fag;cig"
+!set cigarette.name "cigarette"
+!set cigarette.description "cigarette"
+!set cigarette.long_description "A filter tipped Balkan Sobraine."
+!set cigarette.light !LightCigarette
+!set cigarette.burn !LightCigarette
+!set cigarette.smoke "{-ut name} is not lit."
+!set cigarette.stub "{-ut name} is not lit."
+!set cigarette.burn_msg "You light {-t name}."
+!set cigarette.burn_omsg "{-u actor.name} lights {-t name}."
+!set cigarette.smell_success_msg "The aroma of fresh tobacco induces an urge to smoke it." 
+!set cigarette.smell_omsg "{-u actor.name} inhales a deep whiff of fresh tobacco."
+!set cigarette.taste "Why don't you light it?"
+
+!atom lit_cigarette cigarette
+!verb stub "stub current" "You can't stub out {-t name}!"
+!set lit_cigarette.name "lit cigarette"
+!set lit_cigarette.description "lit cigarette"
+!set lit_cigarette.long_description "A lit Balkan Sobraine."
+!set lit_cigarette.light "{-ut name} is already lit."
+!set lit_cigarette.smoke !SmokeCigarette
+!set lit_cigarette.taste !SmokeCigarette
+!set lit_cigarette.stub !StubCigarette
+!set lit_cigarette.drop "Dropping {-a name} could cause a fire."
+!set lit_cigarette.smoke_msg "You take a satisfying drag from the cigarette."
+!set lit_cigarette.smoke_omsg "{-u actor.name} takes a drag from {actor.his} cigarette."
+!set lit_cigarette.puff_msg "A wisp of smoke curls up from your cigarette."
+!set lit_cigarette.puff_omsg "A wisp of smoke curls up from {-o actor.name} cigarette."
+!set lit_cigarette.stub_msg "You stub the cigarette out."
+!set lit_cigarette.stub_omsg "{-u Actor.name} stubs the cigarette out."
+!set lit_cigarette.puff_count 10
+!set lit_cigarette.tick 30
+!set lit_cigarette.on_timer !CigaretteTimer
+!set lit_cigarette.end_msg "Your cigarette burns to the end and goes out."
+!set lit_cigarette.end_omsg "{-uo Actor.name} cigarette burns to the end and goes out."
+!set lit_cigarette.smell_msg "You smell {-t name}."
+!set lit_cigarette.smell_omsg "{-u actor.name} sniffs {actor.his} {name}."
+!set lit_cigarette.smell_success_msg "It smells of burning tobacco."
+
+!atom cigarette_butt cigarette
+!noun cigarette_butt "butt;stub"
+!set cigarette_butt.name "cigarette butt"
+!set cigarette_butt.description "cigarette butt"
+!set cigarette_butt.long_description "A cigarette butt."
+!set cigarette_butt.light "It would be foolish to smoke this butt."
+!set cigarette_butt.smoke "This is a disgusting butt end. You can't smoke it."
+!set cigarette_butt.stub "You grind {-t name} into the ground, just to make sure it is out."
+!set cigarette_butt.tick 600    # Butt will disappear in 10 mins
+!set cigarette_butt.on_timer !ButtTimer
+!set cigarette_butt.smell_msg "You smell {-t name}."
+!set cigarette_butt.smell_omsg "{-u actor.name} takes a deep whiff and enjoys the smell of tobacco."
+!set cigarette_butt.smell_success_msg "It smells disgusting."
+!set cigarette_butt.taste_msg "You lightly touch the cig with your tongue."
+!set cigarette_butt.taste_omsg "{-u actor.name} tastes {-t name}."
+!set cigarette_butt.taste_success_msg "The taste of burnt tobacco makes you feel quite sick."
+
+#------------
+# Set up some stuff in my office
+!go ojim
+!thing * lighter
+!thing * cigarette
+
+!atom splinter flammable portable
+!noun splinter splinter
+!set splinter.name splinter
+!set splinter.description splinter
+!set splinter.long_description "A tiny splinter."
+!set splinter.ignitability 50
+!set splinter.size 1
+!set splinter.weight 1
+
+!thing * splinter
+
+!atom wood_block flammable
+!noun wood_block block
+!set wood_block.name "wood block"
+!set wood_block.description "wood block"
+!set wood_block.long_description "A large block of wood."
+!set wood_block.ignitability 60
+!set wood_block.size 1000
+!set wood_block.weight 10000
+!set wood_block.burn_rate 1000  # temp
+
+!thing * wood_block
+
+# Go back to limbo
+!go limbo
+
+

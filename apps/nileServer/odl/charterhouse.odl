@@ -1,0 +1,27 @@
+##Charterhouse Square temporary location for demonstration purposes only
+
+thing charterhouse_square_place : place
+{
+	name = "Charterhouse Square"
+	description = "A scene of quiet endeavour and proven success."
+	_where = $limbo
+}
+
+thing charterhouse_square_room : room
+{
+	name = "Number 12a"
+	description = "Where we are now. Some confusion is caused \
+			by the fact that Waterloo Place appears to \
+			be close by..."
+	_where = $charterhouse_square_place
+}
+atom charter_exit : exit
+{
+	name = "an imposing but somewhat aethereal archway"
+	direction = "out"
+	list_desc = "{direction} through {name}"
+}
+exits
+{
+charterhouse_square_room out (charter_exit) = outside_the_athenaeum_room
+}

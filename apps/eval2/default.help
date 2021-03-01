@@ -1,0 +1,25 @@
+<b>Movement commands</b><br>
+<b>N, S, E, W, NE, NW, SE, SW</b>: Move in a direction.<br>
+<br>
+<b>Getting, dropping, looking</b><br>
+<b>LOOK, L</b>: <br>
+<b>INV, I</b>: See what you are carrying.<br>
+<b>GET object</b>: Pick something up.<br>
+<b>DROP object</b>: Put something down.<br>
+<b>PUTIN object container</b>: Put something you are carrying into a container.<br>
+<b>OPEN object</b>: Open something.<br>
+<b>CLOSE object</b>: Close something.<br>
+<br>
+<b>Speech and roleplay</b><br>
+<b>SAY string</b>: Speak to the room. Shortcut is double-quote.<br>
+<b>SAYTO person string</b>: Speak to a person (everyone in room can hear).<br>
+<b>WHISPER person string</b>: Speak privately to a person.<br>
+<b>EMOTE string</b>: Roleplay.<br>
+<i>Strings must start with a double quote.</i><br>
+<br>
+<b>Misc commands</b><br>
+<b>HELP</b>, <b>?</b>: Display this message. HELP MOD for moderator commands.<br>
+<b>TIME, T</b>: What time is it?<br>
+<br>
+<i>These are the basic commands; there are others which you will have to discover by playing the game.</i>
+

@@ -1,0 +1,80 @@
+# $Id: world,v 1.27 1998/08/21 14:50:04 rich Exp $
+# World script for eval 2
+# James Fryer, 21 July 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+!run jim.script
+!run lori
+!run characters
+
+!go hall_room
+!thing * cigarette
+!mobile * cat
+!thing * hallroom_bronze_statue 
+!thing * hall_room_marble_plinth
+!thing * hall_room_ball
+!thing * hall_room_stairs
+
+!go stairs_room
+!thing * stairs_room_carpet
+!thing * hall_room_stairs
+
+!go ball_room
+!thing * ornate_mirror
+!container * ballroom_fireplace
+!thing * ballroom_crystal_chandelier 
+!thing * ball_room_window
+
+!go drawing_room 
+!thing * drawing_room_cocktail_cabinet
+!thing * drawing_room_outre
+!container * drawing_room_sofa
+!thing * lighter
+
+!go dining_room
+!thing * dining_room_panelling 
+!container * dining_room_table 
+!container * dining_room_chairs 
+!thing * candlestick
+
+!go library_room
+!thing * letter_opener
+!thing * library_books 
+!container * library_table 
+!container an_envelope envelope
+
+!go an_envelope
+!thing * page
+
+!go morning_room
+!thing * newspaper
+!container * morning_room_chairs 
+!container * morning_room_chaise_longue 
+!thing * morning_room_portrait 
+!thing * morning_room_mantlepiece 
+!container * morning_room_table 
+
+!go conservatory_room
+!thing * conservatory_fan 
+!container * conservatory_bench 
+!thing * conservatory_vines
+!thing * conservatory_ferns
+!thing * conservatory_orchids
+
+!go pearl_room
+!container * pearl_room_bed
+!thing * pearl_room_mirror
+
+!go jade_room
+!container * jade_room_bed
+!container * jade_room_box
+
+####################
+### setup richie's personal space
+!run rich.script
+
+###################
+# Move administrator back to Limbo
+!go limbo
+
+

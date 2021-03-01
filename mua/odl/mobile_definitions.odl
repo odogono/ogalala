@@ -1,0 +1,93 @@
+# $Id: mobile_definitions.odl,v 1.15 1999/04/09 10:03:37 alex Exp $
+# Mobile definitions
+# Alexander Veenendaal, 2nd December 1998
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+#===============================================================================#
+#------------------------------------ Being ------------------------------------#
+#===============================================================================#
+## A being ( more specialised mobile )
+atom being : mobile
+{
+
+	#------------------ Principal Attributes -------------------#
+
+	## The age of the being in game years
+	age			= 0
+
+	## All round attribute representing Hit Points, Strength, Constitution and Dexterity.
+	physical_ability 	= 0
+
+	##A simple game that can be played with another being.
+	$thing.sps		= "{-ut name} won't respond to that."
+	sps			= !ScissorsPaperStone
+
+}
+#===============================================================================#
+#---------------------------------- Character ----------------------------------#
+#===============================================================================#
+## A Sentient Character
+atom character : being
+{
+
+	##The characters home in the game.
+	home_container		= null
+
+	##The room the character will begin in
+	start_container		= null
+
+	#------------------ Principal Attributes/Skills -------------------#
+
+	## All round attribute representing Hit Points, Strength, Constitution and Dexterity.
+	physical_skill 		= 0
+
+	##A percentage signifying the Beings skill at shooting weapons
+	shooting_weapon_skill	= 50
+
+	##A number in the range of 0-999 which represents how able to see things the character is
+	detection_skill		= 500
+
+	#-------------------- Personality Attributes ---------------#
+
+	##Amount of money in the 'bank'
+	money			= 0
+
+	##A measure of the social success of this character
+	social_skill		= 0
+
+	##A measure of the criminal success of this character
+	criminal_skill		= 0
+
+	##What this character 'does'
+	career			= null
+
+	##The school this character attended. Determined through the CGM.
+	school			= null
+
+	##The university this character attended. Determined through the CGM.
+	university		= null
+}
+
+
+#================================================================================#
+#------------------------------------ Animal ------------------------------------#
+#================================================================================#
+## Animals
+atom animal : being
+{
+	## The species of animal
+	species 		= "animal"
+
+	name 			= "{species}"
+}
+
+## "Funny" animals -- these get referred to as "Corky the Cat" instead of "a cat"
+atom character_animal : animal
+{
+	name 			= ""
+	list_desc 		= "{name} the {species}"
+}
+
+
+
+

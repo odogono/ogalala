@@ -1,0 +1,184 @@
+#source test_place.odl
+#date Tue Jul 13 09:58:29 GMT 1999
+#copyright Ogalala Ltd
+#import CHARACTER NOUN_TOAD TICKER NOUN BEING NOUN_RICHARD NOUN_PIGEON PORTABLE TRANSFORMER NOUN_CLAY NOUN_SHOOTER THING NOUN_CLIP BULLET ROOM NOUN_CIGARETTE NOUN_BUTT IGNITABLE READABLE NOUN_PACKET CONTAINER FACTORY CARD MEMBERSHIP WRITEABLE NOUN_PASS NOUN_CLUB MEMBERSHIP_EXIT NOUN_BLACKSUN
+#export TOAD NOUN_BARTLE RICHARD_BARTLE CLAY_PIGEON CLAY_SHOOTER BULLET_CLIP SWAMP CIGARETTE CIGARETTE_BUTT LIT_CIGARETTE FRESH_CIGARETTE CIGARETTE_PACKET CIGARETTE_FACTORY BLACKSUN_PASS BLACKSUN_EXIT
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom toad character noun_toad ticker
+!set toad.name "toad"
+!set toad.description "A croaky, budweiser sponsered toad."
+
+!set toad.social_skill 45
+
+##This toad croaks every ten seconds
+## Yes!! TEN SECONDS! If you don't like it go somewhere else but DON'T CHANGE THE TOAD
+!set toad.tick_time 10
+
+#	tick_msg		= "The toad croaks."
+!set toad.tick_omsg "The toad croaks."
+
+!set toad.taste_msg "You lick the bumpy back of {-t name}."
+!set toad.taste_desc "The hallucinogenic substance released by {-t name} courses through your body."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom noun_bartle noun
+!noun bartle noun_bartle
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom richard_bartle being noun_richard noun_bartle
+!set richard_bartle.name "richard bartle"
+!set richard_bartle.description "the lord of mud"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom clay_pigeon portable transformer noun_clay noun_pigeon
+!set clay_pigeon.name "clay pigeon"
+!set clay_pigeon.description "a small clay disc"
+
+## The pigeon destroys itself after 15 second
+#  	transform_time 	= 15
+
+!set clay_pigeon.transform_template null
+
+!set clay_pigeon.transform_msg null
+
+!set clay_pigeon.transform_omsg "{-ut name} falls to the ground and smashes."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+## The clay shooter will shoot a clay pigeon into the air whenever it hears the word "pull"
+!atom clay_shooter thing noun_clay noun_shooter
+!set clay_shooter.name "clay shooter"
+!set clay_shooter.description "a device for shooting clay pigeons."
+
+##The pigeon is what gets shot into the air each time
+#pigeon			= $clay_pigeon
+
+!set clay_shooter.pigeon_shot_msg "A {pigeon.name} gets shot high into the air."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom bullet_clip bullet noun_clip
+!set bullet_clip.name "bullet clip"
+!set bullet_clip.description "a clip of {ammunition_count} bullets"
+!set bullet_clip.ammunition_count 10
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Swamp Room --------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!atom swamp room
+!set swamp.name "swamp"
+!set swamp.description "a murky, bloopy, treasure eating swamp"
+
+!set swamp.on_add !SwampDrop
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom cigarette portable transformer noun_cigarette
+!set cigarette.name "cigarette"
+!set cigarette.description "A cigarette."
+
+!set cigarette.visibility 20
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom cigarette_butt cigarette noun_butt
+!set cigarette_butt.name "cigarette butt"
+!set cigarette_butt.description "A cigarette butt."
+
+## Cigarette butt disappears without message after 1 hour
+!set cigarette_butt.transform_time 3600
+!set cigarette_butt.transform_template null
+!set cigarette_butt.transform_msg null
+!set cigarette_butt.transform_omsg null
+
+!set cigarette_butt.visibility 10
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom lit_cigarette cigarette ticker
+!set lit_cigarette.description "A lit cigarette."
+
+## Cigarette lasts for 5 minutes or until the STUB command is used
+!set lit_cigarette.transform_time 30
+!set lit_cigarette.transform_template $cigarette_butt
+!set lit_cigarette.transform_msg "Your {name} goes out."
+!set lit_cigarette.transform_omsg "{-p actor.name} {name} goes out."
+
+!set lit_cigarette.tick_time 5
+!set lit_cigarette.tick_msg "Your {name} gives a puff of smoke."
+!set lit_cigarette.tick_omsg "{-p actor.name} {name} gives a puff of smoke."
+
+!set lit_cigarette.drop "Dropping a lit cigarette could cause a fire!"
+
+!set lit_cigarette.visibility 30
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom fresh_cigarette cigarette ignitable
+!set fresh_cigarette.transform_time 0
+!set fresh_cigarette.transform_template $lit_cigarette
+!set fresh_cigarette.transform_msg "You light {-t name}."
+!set fresh_cigarette.transform_omsg "{-u actor.name} lights {-t name}."
+
+## The LIGHT command simply maps to the Transform action.
+##  (We may need to change this later if we want to LIGHT WITH something)
+!set fresh_cigarette.ignite !Transform
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom cigarette_packet portable container readable noun_packet
+!set cigarette_packet.name "packet of cigarettes"
+!set cigarette_packet.description "A packet of 10 cigarettes."
+!set cigarette_packet.text "Smoking can damage your health."
+!set cigarette_packet.smell_desc "The smell of fresh tobacco wafts over your nostrils."
+
+!set cigarette_packet.visibility 40
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom cigarette_factory cigarette factory
+!set cigarette_factory.list_desc "{factory_count} cigarettes"
+!set cigarette_factory.factory_template $fresh_cigarette
+!set cigarette_factory.factory_count 10
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom blacksun_pass portable card membership noun_pass writeable
+!set blacksun_pass.name "membership card"
+!set blacksun_pass.text "Property of Hiro Protagonist."
+!set blacksun_pass.description "A very black card with a small neon sun located in the lower right corner. On closer examination, the sun appears to be rather intricately animated."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom blacksun_exit membership_exit noun_blacksun noun_club
+!set blacksun_exit.membership_pass $blacksun_pass
+!set blacksun_exit.success_msg "You flash the pass at the bouncer and pass through"
+!set blacksun_exit.failure_msg "The bouncer who, I assure you, is bigger and a lot harder than you, prevents you from entering."
+

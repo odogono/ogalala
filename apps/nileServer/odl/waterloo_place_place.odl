@@ -1,0 +1,126 @@
+# $Id: waterloo_place_place.odl,v 1.7 1999/02/25 11:06:03 lori Exp $
+# St James neighbourhood
+# James Fryer, 18 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## St. James
+thing st_james : neighbourhood
+{
+    name = "St. James"
+    description = "St James takes its name from St James Palace which occupies the southwesternmost corner of this exclusive area of London. Home to some of the most famous of London's club from the Athenaeum to the Reform, Pratts to the Pow Wow, St James is where gentlemen go to conduct gentlemen's business."
+    _where = $london
+    author = "Jim"
+}
+
+## waterloo_place_place
+thing waterloo_place_place : place
+{
+	name = "Waterloo Place"
+	description = 	"This short but imposing street in neo-Classical runs \
+			due South from Regent \
+			Street across Pall Mall. At the southern end, \
+			a grand flight of steps leads down to the Mall \
+			and St James' Park."
+			_where = $st_james
+}
+## outside_the_athenaeum_room
+thing outside_the_athenaeum_room : room
+{
+	name = "Outside the Athenaeum"
+	description = 	"You're standing outside an opulent \
+			neo-Classical building. A life-size figure \
+			of the goddess Athene - surely not of solid \
+			gold, but it gives that impression - stares \
+			down from above the entrance to your West."
+	_where = $waterloo_place_place
+}
+## by_the_scott_memorial_room
+thing by_the_scott_memorial_room : room
+{
+	name = "By the Scott Memorial"
+	description = 	"This is just one of several statues in \
+			Waterloo Place. A figure in Arctic dress stares \
+			impassively across the street toward the \
+			the Athenaeum."
+	_where = $waterloo_place_place
+}
+## west_side_room
+thing west_side_room : room
+{
+	name = "West Side"
+	description = 	"Franklin, the famous Arctic explorer, seems \
+			frozen (appropriately, perhaps) in eternal \
+			contemplation of the North West passage that \
+			claimed his life in 1847. Railings on either \
+			side bar your entry to the gardens of \
+			the Athenaeum beyond."
+	_where = $waterloo_place_place
+}
+## the_statue_of_edward_vii_room
+thing the_statue_of_edward_vii_room : room
+{
+	name = "The statue of Edward VII"
+	description = 	"You're standing in the middle of Waterloo \
+			Place on the southern side of Pall Mall. \
+			Edward VII is urging his steed northwards \
+			towards Regent Street."
+	_where = $waterloo_place_place
+}
+## east_side_room
+thing east_side_room : room
+{
+	name = "East Side"
+	description = 	"The gardens of Carlton House Terrace lie \
+			behind railings to the East. A bronze likeness \
+			of Field Marshal Lord Clyde shows some concern \
+			at the sight of Britannia sprawled beneath his \
+			feet."
+	_where = $waterloo_place_place
+}
+## by_the_lawrence_memorial_room
+thing by_the_lawrence_memorial_room : room
+{
+	name = "By the Lawrence memorial"
+	description = 	"No matter how often you enter this quiet \
+			corner of the street, you are forced to reflect \
+			uncomfortably on the past excesses of British \
+			imperialism. Above you, the man who presided \
+			over the Punjab mutiny prepares to administer \
+			the rule of law with a depressingly large sword."
+	_where = $waterloo_place_place
+}
+## junction_with_carlton_house_terrace_room
+thing junction_with_carlton_house_terrace_room : room
+{
+	name = "Junction with Carlton House Terrace"
+	description = 	"Waterloo Place ends here, where Carlton House \
+			Terrace runs east-west across the bottom of the \
+			street. Over the road to the South, steps run \
+			down to St James' Park and the Mall."
+	_where = $waterloo_place_place
+}
+
+## junction_with_pall_mall_room
+thing junction_with_pall_mall_room : room
+{
+	name = "Junction with Pall Mall"
+	description = "Taxis, cars and buses jockey for position on this busy road which runs from Trafalgar Square in the east down past a number of well known gentlemen's clubs to the west."
+	_where = $waterloo_place_place
+}
+
+
+##Waterloo Place exits
+exits
+{
+	junction_with_pall_mall_room s = outside_the_athenaeum_room
+	outside_the_athenaeum_room se = by_the_scott_memorial_room nw
+	outside_the_athenaeum_room sw = west_side_room ne
+	outside_the_athenaeum_room s = the_statue_of_edward_vii_room n
+	the_statue_of_edward_vii_room s = junction_with_carlton_house_terrace_room n
+	by_the_scott_memorial_room s = east_side_room n
+	west_side_room e = the_statue_of_edward_vii_room w
+	west_side_room se = junction_with_carlton_house_terrace_room nw
+	east_side_room w = the_statue_of_edward_vii_room e
+	east_side_room s = by_the_lawrence_memorial_room n
+	by_the_lawrence_memorial_room sw = junction_with_carlton_house_terrace_room ne
+}

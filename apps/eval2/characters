@@ -1,0 +1,208 @@
+# $Id: characters,v 1.21 1998/08/27 09:50:38 rich Exp $
+# 
+# Richard Morgan, 12 August 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+###################################################################
+############################# bodies ##############################
+###################################################################
+
+!atom corpse smelly textured
+!noun corpse "corpse"
+!set corpse.name "corpse"
+!set corpse.description "corpse"
+!set corpse.long_description "Looking at the corpse you realise that it is {old_name}. {-u he} appears to have been {cause_of_death} to death."
+!set corpse.old_name "no-one you know"
+!set corpse.cause_of_death "bored"
+!set corpse.textured_result_msg "It feels cold and clammy."
+!set corpse.smell_success_msg "It smells rather unpleasant."
+!set corpse.taste "You can't do that."
+
+!atom person smelly material
+!set person.taste "You can't do that."
+!set person.textured_msg "You feel {name}."
+!set person.textured_omsg "{-u actor.name} feels {-t name}."
+!set person.textured_result_msg "{-u he} feels like {name}."
+!set person.smell_msg "You smell {-u name}."
+!set person.smell_omsg "{-u actor.name} smells {-u name}."
+!set person.smell_success_msg "{-u name} smells like {-u name}."
+
+
+###################################################################
+######################### Internal Staff ##########################
+###################################################################
+
+!mobile steve male person
+!noun steve "steve"
+!set steve.name Steve
+!set steve.description "an ex-hippy"
+!set steve.long_description "Friendly looking ex-hippy with a friendly smile."
+
+!mobile jim male person
+!noun jim "jim"
+!set jim.name Jim
+!set jim.description "a friendly looking chap."
+!set jim.long_description "Friendly looking chap, wearing a hat."
+
+!mobile rich male person
+!noun rich "rich"
+!set rich.name Rich
+!set rich.is_mortal false
+!set rich.description "a friendly looking chap."
+!set rich.long_description "Friendly looking chap, wearing a large nose"
+!set rich.textured_result_msg "{-u he} feels fine, and thanks you for feeling him."
+!set rich.smell_success_msg "{-u name} smells a bit like a software developer."
+
+!mobile john male person
+!noun john "john"
+!set john.name John
+!set john.description "a tight financial ."
+!set john.long_description "A comfort hater. This man hates spending money. He despises the thought on spending money on comfort. He is probably looking for a fag ..."
+
+!mobile matt male person
+!noun matt "matt"
+!set matt.name Matt
+!set matt.description "a unfriendly looking chap"
+!set matt.long_description "A right git stands before you"
+!set matt.death_room $hell_room
+
+!mobile craig male person
+!noun craig "craig"
+!set craig.name Craig
+!set craig.description "a friendly looking chap"
+!set craig.long_description "Friendly looking chap, unless you are a mudder ..."
+
+!mobile alex male person
+!noun alex "alex"
+!set alex.name Alex
+!set alex.description "a funny looking chap"
+!set alex.long_description "Funny looking chap, that's all we know."
+
+!mobile lori female person
+!noun lori "lori"
+!set lori.name Lori
+!set lori.description "a friendly looking gal"
+!set lori.long_description "Friendly looking girl, wearing pants on her head."
+
+###################################################################
+####################### Game personalities ########################
+###################################################################
+
+##### HACK ATTACK!!!!
+!atom stapleton person
+!noun stapleton "stapleton"
+
+!mobile major_stephens male person
+!noun major_stephens "major;stephens;"
+!set major_stephens.name "Major Stephens"
+!set major_stephens.description "Major Stephens"
+!set major_stephens.long_description "a tall thin man with a grey clipped moustache."
+
+!mobile george_clitheroe male person
+!noun george_clitheroe "george;clitheroe;sir"
+!set george_clitheroe.name "Sir George Clitheroe KC"
+!set george_clitheroe.description "Sir George Clitheroe KC"
+!set george_clitheroe.long_description "a large pompous man with a flushed face."
+
+!mobile charles_hampton male person
+!noun charles_hampton "charles;hampton"
+!set charles_hampton.name "Charles Hampton"
+!set charles_hampton.description "Charles Hampton"
+!set charles_hampton.long_description "a handsome but rather shifty looking young man."
+
+!mobile quentin_lovelace male person
+!noun quentin_lovelace "quentin;lovelace"
+!set quentin_lovelace.name "Quentin Lovelace"
+!set quentin_lovelace.description "Quentin Lovelace"
+!set quentin_lovelace.long_description "a tall good looking blonde chap."
+
+!mobile abe_hamilton male person
+!noun abe_hamilton "abe;hamilton;rogers"
+!set abe_hamilton.name "Abe Hamilton Rogers"
+!set abe_hamilton.description "Abe Hamilton Rogers"
+!set abe_hamilton.long_description "a robust middle aged man who is running to fat."
+
+!mobile tom_atkins  male person
+!noun tom_atkins "tom;atkins"
+!set tom_atkins.name "Tom Atkins"
+!set tom_atkins.description "Tom Atkins"
+!set tom_atkins.long_description "a nice young man."
+
+!mobile hamish_dalgleish   male person
+!noun hamish_dalgleish "hamish;dalgleish"
+!set hamish_dalgleish.name "Hamish Dalgleish"
+!set hamish_dalgleish.description "Hamish Dalgleish"
+!set hamish_dalgleish.long_description "an extraordinary looking man with a very pale complexion and extremely bright hair."
+
+!mobile arthur_stapleton   male stapleton
+!noun arthur_stapleton "rev;arthur"
+!set arthur_stapleton.name "Rev Arthur Stapleton"
+!set arthur_stapleton.description "Rev Arthur Stapleton"
+!set arthur_stapleton.long_description "a desiccated old stick of a man, with wild white hair."
+
+!mobile michael_montague    male person
+!noun michael_montague "michael;montague"
+!set michael_montague.name "Michael Montague"
+!set michael_montague.description "Michael Montague"
+!set michael_montague.long_description "a tall good looking athletic chap who moves with an easy grace."
+
+!mobile francesca_brocklehurst  female person
+!noun francesca_brocklehurst "francesca;brocklehurst"
+!set francesca_brocklehurst.name "Francesca Brocklehurst"
+!set francesca_brocklehurst.description "Francesca Brocklehurst"
+!set francesca_brocklehurst.long_description "an attractive girl bursting with vitality."
+
+!mobile millicent_caldicott  female person
+!noun millicent_caldicott "millicent;caldicott"
+!set millicent_caldicott.name "Millicent Caldicott"
+!set millicent_caldicott.description "Millicent Caldicott"
+!set millicent_caldicott.long_description "a fearsome grey haired old lady."
+
+!mobile phoebe_blythe   female person
+!noun phoebe_blythe "lady;phoebe;blythe"
+!set phoebe_blythe.name "Lady Phoebe Blythe"
+!set phoebe_blythe.description "Lady Phoebe Blythe"
+!set phoebe_blythe.long_description "an exceptionally beautiful willowy young thing."
+
+
+!mobile boopsie_attwater  female person
+!noun boopsie_attwater "boopsie;attwater"
+!set boopsie_attwater.name "Boopsie Attwater"
+!set boopsie_attwater.description "Boopsie Attwater"
+!set boopsie_attwater.long_description "an utterly charming vision of loveliness."
+
+
+!mobile gwendolyn_thomas   female person
+!noun gwendolyn_thomas "gwendolyn;thomas"
+!set gwendolyn_thomas.name "Gwendolyn Thomas"
+!set gwendolyn_thomas.description "Gwendolyn Thomas"
+!set gwendolyn_thomas.long_description "a smart chic young woman." 
+
+
+!mobile cecilia_stapleton   female stapleton
+!noun cecilia_stapleton "cecilia;"
+!set cecilia_stapleton.name "Cecilia Stapleton"
+!set cecilia_stapleton.description "Cecilia Stapleton"
+!set cecilia_stapleton.long_description "a sweet little grey haired lady." 
+
+
+!mobile jane_montgomery   female person
+!noun jane_montgomery "jane;montgomery"
+!set jane_montgomery.name "Jane Montgomery"
+!set jane_montgomery.description "Jane Montgomery"
+!set jane_montgomery.long_description "an auburn haired stunner." 
+ 
+!mobile avril_strathen    female person
+!noun avril_strathen "avril;strathen;hunt;strathen-hunt"
+!set avril_strathen.name "Avril Strathen-Hunt"
+!set avril_strathen.description "Avril Strathen-Hunt"
+!set avril_strathen.long_description "an unusually attractive woman with a deep tan."
+  
+!mobile sarah_tisdale   female person
+!noun sarah_tisdale "sarah;tisdale"
+!set sarah_tisdale.name "Sarah Tisdale"
+!set sarah_tisdale.description "Sarah Tisdale"
+!set sarah_tisdale.long_description "a wiry athletic woman with a stern expression."
+
+  
+

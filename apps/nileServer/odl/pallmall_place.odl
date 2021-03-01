@@ -1,0 +1,28 @@
+## Pall Mall - the street that runs east west in the southern part of St James - off of which hang a number of clubs
+
+## pall_mall_place
+thing pall_mall_place : place
+{
+	name = "Pall Mall"
+	description = 	"This busy street is home to some of St James most popular gentlemen's clubs."
+			_where = $st_james
+}
+
+
+## outside_the_traveller_room
+thing outside_the_traveller_room : room
+{
+	name = "Outside the Travellers Club"
+	description = "An understated painted stucco facade distinguishes the Travellers Club from the overblown classicism of its neighbours and brings a whiff of Florence to Pall Mall."
+	_where = $pall_mall_place
+}
+
+
+
+
+##Pall Mall Place exits
+exits
+{
+	junction_with_pall_mall_room w = outside_the_traveller_room 
+	outside_the_traveller_room s = travellers_steps_room
+}

@@ -1,0 +1,702 @@
+# $Id: behaviours.odl,v 1.47 1999/04/13 09:17:06 alex Exp $
+# Behaviour definitions
+# James Fryer, 30 Oct 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+
+#------------------------------------ Openable ------------------------------------#
+atom openable : thing
+{
+	## Trap attempts to open things
+	$thing.open 		= "You can't open {-t name}"
+
+	## Trap attempts to close things
+	$thing.close 		= "You can't close {-t name}"
+
+	## OPEN command
+	open 			= !Open
+
+	## CLOSE command
+	close 			= !Close
+
+	## Displayed to actor by OPEN
+	open_msg 		= "You open {-t name}."
+
+	## Displayed to room by OPEN 
+	open_omsg 		= "{-u actor.name} opens {-t name}."
+
+	## Displayed by EXAMINE ???
+	is_open_msg 		= "{-tu name} is open."
+
+	## Displayed to actor when OPEN is used on an open thing
+	already_open_msg 	= "{-tu name} is already open."
+
+	## Displayed to actor by CLOSE
+	close_msg 		= "You close {-t name}."
+
+	## Displayed to room by CLOSE
+	close_omsg 		= "{-u actor.name} closes {-t name}."
+
+	## Displayed to actor when CLOSE is used on a closed thing
+	already_closed_msg 	= "{-ut name} is already closed."
+}
+
+
+#------------------------------------ Lockable ------------------------------------#
+## The ancestor of all keys
+atom key : portable noun_key
+{
+	name			= "key"
+	description		= "A generic key."
+
+	## The code number of this key. 0 means master key for this lock type
+	key_code = 0
+}
+
+## Lockable
+atom lockable : openable
+{
+	open			= !OpenLock
+	open_with		= !OpenWithKey
+
+	## The lock command
+	lock			= !Lock
+
+	## The unlock command
+	unlock			= !Unlock
+
+	## Is this thing locked?
+	is_locked		= false
+
+	## The type of key required to open this lock
+	key 			= $key
+
+	## The code number of this lock.
+	key_code = 0
+	
+	## Displayed by LOCK
+	lock_msg		= "You lock {-t name}."
+
+	## Displayed by LOCK
+	lock_omsg		= "{-u actor.name} locks {-t name}."
+
+	## Displayed when UNLOCK used on a locked thing
+	already_unlocked_msg 	= "{-ut name} is already unlocked."
+
+	## Displayed when LOCK used on a locked thing
+	already_locked_msg 	= "{-ut name} is already locked."
+
+	## Displayed by UNLOCK
+	unlock_msg 		= "You unlock {-t name}."
+
+	## Displayed by UNLOCK
+	unlock_omsg 		= "{-u actor.name} unlocks {-t name}."
+
+	## Displayed when OPEN fails due to locked state
+	open_fail_msg 		= "You cannot open {-t name}, it is locked."
+
+	## Displayed when the wrong key is used
+	wrong_key_msg 		= "{-ut arg.name} does not fit {-t name}."
+}
+
+atom door : exit openable noun_door
+{
+
+	name			= "door"
+	description		= "A door leading {direction}."
+	is_closed		= true
+	list_desc		= "{direction}"
+
+	open			= !OpenDoor
+	close			= !CloseDoor
+
+	enter_omsg		= "{-u actor.name} enters from the {direction}."
+	exit_omsg		= "{-u actor.name} goes {direction}."
+}
+
+atom lockable_door : door lockable
+{
+	open			= !OpenLockableDoor
+	unlock			= !UnlockDoor
+	lock			= !LockDoor
+
+	is_closed		= true
+}
+
+
+#---------------------------------- Membership Exits ---------------------------------#
+atom membership_exit : exit
+{
+	go			= !RequiredItemGo
+
+	# If null then no membership is needed. Membership passes should inherit from
+	# the atom membership.
+	required_item		= null
+
+	# Displayed as the actor passes through the exit
+	success_msg		= "You successfully pass."
+
+	# Displayed as the actor is denyed access through the exit
+	failure_msg		= "You are not permitted to enter."
+}
+
+#---------------------------------- Membership Atom ---------------------------------#
+## An atom that signifies a membership of something
+atom membership : thing
+{
+	# The membership may expire after a set time, afterwhich it is useless.
+	# -1 Signifies no expiry.
+	expiry_time		= -1
+
+	# The owner of this membership. -1 signifies infinite capacity, 0 is none.
+	guest_capacity		= 0
+}
+
+
+#--------------------------------- Disallow Item Exits --------------------------------#
+atom disallow_item_exit : exit
+{
+	go			= !DenyItemGo
+	denyed_item		= null
+
+	success_msg		= null
+	failure_msg		= "You are not allowed to pass with that {disallowed_item.name}."
+}
+
+
+
+#-------------------------------------- Ticker ---------------------------------------#
+
+## An atom that emits stuff every set period of time
+atom ticker : thing
+{
+	##executed when this atom is created
+	on_create		= !CreateTicker
+	
+	##executed every time this ticker ticks
+	on_tick			= !OnTick
+
+	##the interval in seconds between ticks
+	tick_time		= 0
+	
+	##the message to display every tick
+	tick_msg		= null
+}
+
+#------------------------------------ Transformer ------------------------------------#
+## An atom that can change into another atom
+atom transformer : thing
+{
+	## executed when this atom is created
+	on_create		= !CreateTransformer
+
+   	## This action will cause the thing to be replaced by a new one instantiated from 'target'.
+   	on_transform 		= !Transform
+
+	## The time till the transformation, in seconds
+	transform_time		= 0
+
+	## The atom which will be used to instantiate the new thing.
+   	transform_template	= null
+
+   	## Message sent to actor before transform
+   	transform_msg 		= null
+
+   	## Message sent to room before transform
+   	transform_omsg 		= null
+    	
+}
+
+
+#--------------------------------- Switchable (button) -----------------------------#
+
+## When a button is activated, it alters the state of all its listeners (which must be
+## switchable also) to the opposite of what they previously were. This could be used to 
+## implement a light switch, for example.
+atom switchable : thing
+{
+	$thing.switch		= "Nothing seems to happen."
+	switch			= !Switch
+
+	## Which position this switch is in
+	state			= false
+	## Use this handler to assign an action to handle the switch itself.
+	on_changestate		= true
+
+	## listeners are a list of atoms which have a state and a on_changestate handler
+	listeners		= null
+
+	switch_msg		= "You switch {-t name}."
+	switch_omsg		= "{-ut actor.name} switches {-t name}."
+	switch_fail_msg		= "Nothing seems to happen."
+}
+
+#------------------------------------ Illuminatable ------------------------------------#
+## Something that is able to be turned on and off (using a switchable?), and that when
+##  switched on, will emit light - causing an increase in the enclosing containers
+##  ambient light level.
+## To begin with, it will be preferable to have lights fixed in the room, as the exit
+##  calculations could be messy.
+## The light is also not directly activeatable - it needs a switch.
+atom illuminatable : thing switchable
+{
+	light_emitted		= 50
+	on_changestate		= !Illuminate
+	
+	#inherits state from switchable
+	#state			= false
+
+	illuminate_on_msg	= "{-ut name} is turned on."
+	illuminate_off_msg	= "{-ut name} is turned off."
+}
+
+#------------------------------- Ignitable, Lightable --------------------------------#
+## Things that are lightable are able to be lit by something that is already alight.
+## Burnable objects must be lit <b>with</b> something else.
+atom burnable : thing
+{
+	$thing.burn		= "You can't burn {desc}."
+	burn			= !Burn
+	ignite			= !Burn
+
+	## Flammability is the level of heat that the ignitor needs to provide in order
+	##  for the burnable thing to be set alight.
+	## Flammability may be affected by a liquid being poured on it, and also the prescence
+	##  of other burning/energy emitting things around it
+	flammability		= 50
+
+	## A measure of the amount of flame/heat energy this burnable thing gives out when lit
+	flame_energy		= 50
+}
+
+## Things that are ignitable automatically (kind of) light themselves. Examples include
+##  lighters and matches
+atom ignitable : thing
+{
+	$thing.ignite		= "You can't ignite {desc}."
+	ignite			= !Ignite
+	burn			= !Ignite
+
+	## When this is true, the thing is alight.
+	flame_on		= false
+
+	## A measure of the amount of flame/heat energy this ignitor gives out when lit
+	flame_energy		= 0
+}
+
+#------------------------------------ Camera ---------------------------------------#
+## A photograph. Produced from the camera (taking a picture).
+atom photograph : portable noun_photograph noun_picture 
+{
+	name			= "photograph"
+	description		= "A blank photo."
+
+}
+
+
+## A camera that you can take photographs of things with
+atom camera : portable noun_camera
+{
+	name			= "camera"
+	author			= "AV"
+	description		= "A camera."
+	
+	photograph		= !Photograph
+	use			= !Photograph
+
+	thing.photograph	= "You cannot take a photograph with a {name}."
+
+	#The object that the camera produces the image on...
+	film			= $photograph
+
+	photograph_self_msg	= "You cannot take a photograph of {-t name} with {-t current.name}."
+	photograph_msg		= "You take a photograph of {-t arg.name}."
+	photograph_omsg		= "{-u actor.name} takes a photograph of {-t arg.name}."
+}
+
+#------------------------------------ Smellable ------------------------------------#
+## Smellable
+atom smellable : thing
+{
+	## Called on typing 'smell'
+	$thing.smell 		= !Smell
+	
+	## Called on typing 'sniff' directs to smell
+	$thing.sniff 		= !Smell
+
+	## message for !smell
+	$thing.smell_msg 	= "You smell {-t name}."
+
+	## message for !smell
+	$thing.smell_omsg 	= "{-u actor.name} smells {-t name}."
+
+	## message for !smell
+	$thing.smell_desc 	= "You notice nothing special."
+
+	## hook for smell
+	$thing.on_smell 	= null
+
+}
+
+#------------------------------------ Eatable ------------------------------------#
+## Atoms that inherit from this are eatable and bestow some
+## form of nutrition on the eater
+atom eatable : thing
+{
+	##default eat action for 
+	$thing.eat		= "You can't eat {-t name}."
+	eat			= !Eat
+	eat_msg			= "You eat {-t name}. Yum."
+	eat_omsg		= "{-u actor.name} eats {-t name}."
+
+	nutrition		= 0
+
+	taste_desc      	= "It tastes like it could be good to eat."
+	smell_desc      	= "It smells like it could be good to eat."
+
+	## called on typing taste
+	$thing.taste 		= !Taste
+
+	## called by taste
+	$thing.taste_msg 	= "You taste {-t name}."
+
+	## message for taste
+	$thing.taste_omsg 	= "{-u actor.name} tastes {-t name}."
+
+	## message for taste
+	$thing.taste_desc 	= "You notice nothing special."
+
+	## called by typing 'lick' redirects to taste
+	$thing.lick 		= !Taste
+
+	### Temporary home for these particular properties....
+
+	## called on typing feel
+	$thing.feel 		= !Touch
+
+	## called by touch
+	$thing.touch_msg 	= "You touch {-t name}."
+
+	## message for feel
+	$thing.touch_omsg 	= "{-u actor.name} touches {-t name}."
+
+	## message for feel
+	$thing.touch_desc 	= "You notice nothing special."
+
+	## called by typing 'rub' 
+	$thing.rub 		= !Touch
+
+	## called by typing 'touch' 
+	$thing.touch 		= !Touch
+
+}
+
+
+#------------------------------------ Liquids ------------------------------------#
+
+
+
+#------------------------------------ Readable ------------------------------------#
+## READ command
+atom readable : thing
+{
+	$thing.read		= "There is nothing written on {-t name}."
+	read 			= !Read
+	
+	## The contents of this book. Is displayed to the actor when they Read this
+	##  object.
+	text 			= ""
+	
+	## Displayed when the value of text is empty.
+	read_fail_msg		= "There is nothing written on {-t name}."
+	## Displayed when you read this object.
+	read_msg		= "You read {-t name}. It says: {text}"
+	## Displayed to everyone in the vicinity when you red this object.
+	read_omsg		= "{-u actor.name} reads {-t name}."
+}
+
+
+#------------------------------------ Writing/erasing Implements ------------------------------------#
+## Basic form of writing implement
+atom writing_implement : portable
+{
+}
+
+atom eraser : portable
+{
+}
+
+#------------------------------------ Writeable ------------------------------------#
+## WRITE command
+atom writeable : readable
+{
+	## Default action for write.
+	$root.write		= "You cannot write on {-t name}."
+	
+	## The action that handles this command.
+	write 			= !Write
+
+	implement		= $writing_implement
+
+	## Used by write to inform the actor of the action
+	write_msg		= "You write on {-t name}."
+
+	## Used by write to inform the room of the action
+	write_omsg		= "{-u actor.name} writes on {-t name}."
+
+	implement_missing_msg	= "You have nothing to write on {-t name} with."
+	
+	message_missing_msg	= "What would you like to write on {-t name}?"
+
+	## Used by write to inform the actor that there choice of writing implement was not suitable
+	implement_unsuitable_msg = "You cannot write on {-t name} with {-a arg.name}."
+}
+
+#------------------------------------ Eraseable ------------------------------------#
+## ERASE command. allows readable objects messages to be erased. Such an object might
+## be a blackboard or something.
+atom eraseable : writeable
+{
+	## Default action for erase
+	$root.erase		= "You cannot erase {-t name}."
+
+	##The action that handles this command.
+	erase			= !Erase
+
+	eraser			= $eraser
+
+	## Used by erase to inform the actor of the abscence of a message on the eraseable object.
+	erase_no_msg		= "There is no message to erase on {-t name}."
+
+	## Used by erase to inform the actor of the action
+	erase_msg		= "You erase the message on {-t name}."
+
+	## Used by erase to inform the room of the action
+	erase_omsg		= "{-u actor.name} erases a message on {-t name}."
+
+	eraser_missing_msg	= "You have nothing to erase {-t name} with."
+
+	## Used by erase to inform the actor that there choice of eraser was not suitable
+	eraser_unsuitable_msg	= "You cannot erase with {-t arg.name}."
+	
+}
+
+
+
+#------------------------------------ Addressable ------------------------------------#
+## ADDRESSABLE property
+atom addressable : writeable
+{
+	$thing.address		= "You cannot address {-t name}."
+	address 		= !Write
+}
+
+
+
+#------------------------------------ Weapons ------------------------------------#
+## Basic attack functions
+atom weapon : thing portable noun_weapon
+{
+	attack_character_msg	= "You go to attack {arg.name}, but you find no reason to."
+
+	attack_being_msg	= "You attack {arg.name} with {-t name}."
+	attack_being_omsg	= "{-u actor.name} attacks {arg.name} with {-t name}."
+	attack_being_smsg	= "{-u actor.name} attacks you with {-tname}."
+
+	attack_thing_msg	= "You attack {-t arg.name} with {-t name}."
+	attack_thing_omsg	= "{-u actor.name} attacks {-t arg.name} with {-t name}."
+	attack_thing_omsg	= "{-u actor.name} attacks you with {-tname}."
+
+	being_die_msg		= "You kill {arg.name} with {-t name}."
+	being_die_omsg		= "{-u actor.name} kills {arg.name} with {-t name}."
+	being_die_smsg		= "You have been killed with a {name} by {actor.name}."
+
+	thing_die_msg		= "You destroy {-t arg.name} with {-t name}."
+	thing_die_omsg		= "{-u actor.name} destroys {-t arg.name} with {-t name}."
+}
+
+## CUT things and people
+atom cutting_weapon : weapon
+{
+}
+
+## STAB
+atom stabbing_weapon : weapon
+{
+}
+
+##Used for shooting
+atom bullet : thing portable noun_bullet
+{
+	name			= "bullet"
+	description		= "a bullet"
+	ammunition_count	= 1
+	damage			= 5
+}
+
+## SHOOT
+atom shooting_weapon : weapon 
+{
+	$thing.shoot		= "You cannot shoot {-t name}."
+	shoot			= !Shoot
+	attack			= !Shoot
+	
+	$thing.load		= "You cannot load {-t name}."	
+	
+	not_a_being_msg		= "You find that you can't work {-t name}."
+
+	##A way to load bullets into the weapon
+	load			= !Load
+
+	load_msg		= "You load {-t name} with {-t arg.name}."
+	load_omsg		= "{-u actor.name} loads {-t name} with {-t arg.name}."
+
+	load_arg_missing_msg	= "What do want to load {-t name} with ?"
+
+	##The type of ammunition this weapon will accept	
+	ammunition_taken	= $bullet
+	
+	wrong_ammo_type_msg	= "You can't load {-t name} with {-t arg.name}."
+	
+	##The type of ammunition currently loaded in the weapon
+	ammunition_type		= null
+	
+	wrong_existing_ammo_msg	= "You can't load {-t name} with a differing ammo type to {ammunition_type.name}."
+
+	##The amount of ammunition left in the weapon
+	ammunition_count	= 0
+
+	##Shown if they didn't specifiy a target
+	shoot_arg_missing_msg	= "What do you want to shoot ?"
+	
+	##Shown if the actor trys to attack a Character, which is forbidden without a motive.
+	attack_character_msg	= "You pull up {-t name}, and put your finger on the trigger. Nothing more happens. You put down {-t name}."
+
+	attack_msg		= "You shoot {arg.name}."
+	attack_omsg		= "{-u actor.name} shoots {arg.name}."
+	attack_smsg		= "You are shot by {actor.name}."
+
+	out_of_ammo_msg		= "{-ut name} is out of ammo."
+}
+
+## HIT, most other attacks on inanimate objects
+atom hitting_weapon : weapon
+{
+}
+
+
+#------------------------------------ Messaging ------------------------------------#
+## Transmit and receive messages 
+atom tranceiver : thing
+{
+}
+
+## ???
+atom noticeboard : thing
+{
+}
+
+
+#------------------------------------ Tearable ------------------------------------#
+## TEAR, RIP etc
+atom tearable : thing
+{
+}
+
+#------------------------------------ Fragile ------------------------------------#
+## For things that break easily (alternative to hitpoint based damage)
+atom fragile : thing
+{
+}
+
+#------------------------------------ Meltable ------------------------------------#
+## MELT command? I dunno, Rich had this one in so I kept it...
+atom meltable : thing
+{
+}
+
+
+#------------------------------------ Ass Functions ------------------------------------#
+## SIT / SEAT
+atom seat : container_on noun_seat noun_chair
+{
+	name 			= "seat"
+	description 		= "comfortable seat"	
+	sit_on 			= !SitOn
+	is_transparent 		= true
+	capacity 		= 1
+	is_empty_msg 		= "No one is sitting {position} {-t name}."
+	contents_suffix_msg 	= "({position} {-t name})"
+	
+	seat_full_msg 		= "There is not enough room to sit {position} {-t name}."
+	seat_sit_msg 		= "You sit {position} {-t name}."
+	seat_sit_omsg 		= "{-u actor.name} sits {position} {-t name}."
+	
+	$root.stand		= !Stand
+	stand_msg 		= "You get up from {-t Container.name}."
+	stand_omsg 		= "{-u actor.name} stands up from {-t container.name}."
+#	stand_fail_msg 		= "You are not sitting on anything."
+}
+
+
+## LIE ON 
+atom bed : thing
+{
+}
+
+
+#------------------------------------ Wearable ------------------------------------#
+## things can be made wearable.
+atom wearable : thing
+{
+	#wear		= !Wear
+	warmth		= 0
+}
+
+#-------------------------- Factory --------------------------#
+
+## A factory is an object which creates other objects, based on a <b>template</b>
+##  object. The current implementation allows the GET command to be used to create
+##  new objects; other commands can be implemented by overriding the Java class
+##  <i>FactoryAction</i>.
+
+### There are two creation methods: the GET command and the specialised
+###  <i>factory_make</i> action. GET is useful for collections of things; the action
+###  is used if you need a factory that is activated with some other command.
+
+##  <p>
+## Note that factories cannot be picked up unless they are in a portable container.
+##  <p>
+## To inhibit the GET command, set the <i>get</i> property to a suitable message
+##  such as "You can't get {-t name}."
+atom factory : portable
+{
+    ## The template is the atom which this factory will instantiate when requested
+    factory_template = null
+
+###    ## The destination is where objects created with <i>factory_make</i> will be placed
+###    factory_destination = null
+
+    ## The number of objects which can be created by this factory. The default
+    ##  is effectively infinite. Don't set this property to less than two or
+    ##  things won't work properly.
+    factory_count = 1000000000
+
+    ## Specialised GET command. When an attempt is made to get something from a
+    ##  factory, this action will be called. The template object must inherit
+    ##  from <i>portable</i> for this to work properly.
+    get = !FactoryGet
+
+###    ## This action creates a new Thing based on the template and places it in the container <i>factory_destination</i>.
+###    factory_make !FactoryMake
+
+    ## Message displayed to the actor by <i>factory_make</i>
+    factory_msg = null
+
+    ## Message displayed to the room by <i>factory_make</i>
+    factory_omsg = null
+
+    ## Message displayed to all after 'make' is called for the last time
+    factory_end_msg = null
+}
+

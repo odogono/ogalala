@@ -1,0 +1,25 @@
+<b>Moderator commands</b><br>
+<br>
+<b>Creation and deletion</b><br>
+<b>!ATOM atomID [parents...]</b>: Create an atom<br>
+<b>!THING atomID [parents...]</b>: Create a Thing<br>
+<b>!CONTAINER atomID [parents...]</b>: Create a Container<br>
+<b>!MOBILE atomID [parents...]</b>: Create a Mobile<br>
+<b>!CLONE atomID</b>: Duplicate an atom<br>
+<b>!DELETE atomID</b>: Delete an atom (Thing, etc.)<br>
+<b>!INHERIT atomID1 atomID2</b>: Make atomID2 a parent of atomID1<br>
+<b>!UNINHERIT atomID1 atomID2</b>: Stop atomID2 being a parent of atomID1<br>
+<br>
+<b>Moderator movement and object manipulation</b><br>
+<b>!GO containerID</b>: Go to any container<br>
+<b>!GET atomID</b>: Get any object (must be Thing or higher)<br>
+<b>!DROP atomID</b>: Drop any object<br>
+<br>
+<b>Misc</b><br>
+<b>!SAVE</b>: Save the database<br>
+<b>!EXAM atomID[.property]</b>: Examine an atom or atom property <br>
+<b>!SET atomID.property value</b>: Set an atom property.<br>
+<b>!RUN filename</b>: Run a script file<br>
+<br>
+<i>At present there are no restrictions on who can run moderator commands, so please take care.</i>
+

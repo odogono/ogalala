@@ -1,0 +1,8 @@
+#! /bin/bash
+# $Id: run,v 1.2 1999/04/14 12:09:34 jim Exp $
+# Script file for Session Server
+# James Fryer, 3 July 98
+# Copyright (C) Ogalala ltd <info@ogalala.com>
+
+jre -cp Server.jar:/misc/ODI/pse.jar:com com.ogalala.server.Main -start:server.conf $* &
+

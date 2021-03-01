@@ -1,0 +1,14 @@
+# $Id: st_james_neighbourhood.odl,v 1.1 1998/11/18 10:59:57 jim Exp $
+# St James neighbourhood
+# James Fryer, 18 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## St. James
+thing st_james : neighbourhood
+{
+    name = "St. James"
+    description = "St. James."
+    _where = $london
+    author = "Jim"
+}
+

@@ -1,0 +1,295 @@
+#source generic_objects.odl
+#date Tue Jul 13 16:29:05 GMT 1999
+#copyright Ogalala Ltd
+#import NOUN_BOWL PORTABLE LIQUID_CONTAINER NOUN_BOX OPENABLE CONTAINER NOUN_CARD SEAT NOUN_CHAIR SUBSTANCE_CHALK NOUN_DIAMOND NOUN_RAIL THING NOUN_HANDRAIL NOUN_JUG NOUN_MAILBOX NOUN_CLUB PLACE DOOR SUBSTANCE_WOOD WRITING_IMPLEMENT NOUN_PENCIL SUBSTANCE_STONE NOUN_ROCK NOUN_SHELF CONTAINER_ON NOUN_SHOTGUN NOUN_GUN SHOOTING_WEAPON NOUN_TELEPHONE
+#export BOWL BOX CARD CHAIR CHALK DIAMOND FOUNTAIN HANDRAIL JUG MAILBOX MEMBERS_CLUB OPEN_DOOR PENCIL ROCK SHELF SHOTGUN TELEPHONE WOODEN_CHAIR
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# $Id: generic_objects.odl,v 1.24 1999/03/26 17:06:10 alex Exp $
+# Template objects
+# James Fryer, 11 Nov 98
+# Copyright (C) 1998 Ogalala Ltd. <www.ogalala.com>
+
+#=======================================================================#
+#---------------------------------- A ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- B ----------------------------------#
+#=======================================================================#
+!atom bowl portable liquid_container noun_bowl
+!set bowl.name "bowl"
+!set bowl.description "A lovely bowl."
+
+!set bowl.liquid_volume 0
+!set bowl.max_volume 3
+
+!set bowl.visibility 90
+
+!set bowl.concealment 30
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+## A generic box
+!atom box container portable openable noun_box
+!set box.name "box"
+!set box.description "A box."
+!set box.capacity 1
+
+!set box.visibility 90
+
+!set box.concealment 50
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+#=======================================================================#
+#---------------------------------- C ----------------------------------#
+#=======================================================================#
+## Its a card !
+!atom card portable noun_card
+!set card.name "card"
+!set card.author "AV"
+!set card.description "A card."
+!set card.is_revealing false
+
+!set card.visibility 80
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+## A generic chair
+!atom chair seat noun_chair
+!set chair.name "chair"
+
+!set chair.visibility 99
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom chalk portable substance_chalk
+!set chalk.name "chalk"
+!set chalk.description "a small stick of chalk"
+
+!set chalk.visiblility 70
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- D ----------------------------------#
+#=======================================================================#
+!atom diamond portable noun_diamond
+!set diamond.name "diamond"
+!set diamond.description "a captivating diamond the size of a fist"
+
+!set diamond.visibility 100
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- E ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- F ----------------------------------#
+#=======================================================================#
+!atom fountain liquid_container
+!set fountain.name "fountain"
+!set fountain.author "AV"
+!set fountain.description "A lovely fountain spouting out water high into the stratosphere."
+
+!set fountain.size 1000
+!set fountain.weight 60000
+
+!set fountain.pour " {-ut name} is slightly to large and fixed to the ground to pour."
+
+!set fountain.liquid_volume -1
+
+!set fountain.concealment 70
+
+!set fountain.visibility 100
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+#=======================================================================#
+#---------------------------------- G ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- H ----------------------------------#
+#=======================================================================#
+## a generic handrail
+!atom handrail thing noun_handrail noun_rail
+!set handrail.name "handrail"
+!set handrail.author "LM"
+!set handrail.description "A rail that you can hold onto, usually found on stairs."
+!set handrail.size 120
+!set handrail.weight 10000
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- I ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- J ----------------------------------#
+#=======================================================================#
+
+!atom jug portable liquid_container noun_jug
+!set jug.name "jug"
+!set jug.description "A lovely jug."
+
+!set jug.visibility 90
+
+!set jug.liquid_volume 4
+!set jug.max_volume 10
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- K ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- L ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- M ----------------------------------#
+#=======================================================================#
+## A mailbox
+!atom mailbox container openable noun_mailbox
+!set mailbox.name "mailbox"
+!set mailbox.capacity 5
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+## A generic members club
+!atom members_club place noun_club
+!set members_club.name "club"
+!set members_club.author "LM"
+!set members_club.description "A place with a membership list"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- N ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- O ----------------------------------#
+#=======================================================================#
+## A door that is open by default
+!atom open_door door
+!set open_door.is_closed false
+
+!set open_door.visibility 92
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- P ----------------------------------#
+#=======================================================================#
+## A pencil
+!atom pencil portable substance_wood writing_implement noun_pencil
+!set pencil.name "pencil"
+!set pencil.description "A pencil."
+!set pencil.size 150
+!set pencil.weight 10
+
+#is_obvious 		= false
+
+!set pencil.visibility 50
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+#=======================================================================#
+#---------------------------------- Q ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- R ----------------------------------#
+#=======================================================================#
+!atom rock portable substance_stone noun_rock
+!set rock.name "rock"
+!set rock.description "a lump of rock"
+!set rock.size 250
+!set rock.weight 500
+
+!set rock.visibility 50
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- S ----------------------------------#
+#=======================================================================#
+## A shelf
+!atom shelf container_on noun_shelf
+!set shelf.name "shelf"
+!set shelf.description "A shelf."
+!set shelf.is_revealing false
+!set shelf.size 500
+!set shelf.capacity 5
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom shotgun thing noun_gun noun_shotgun shooting_weapon
+!set shotgun.name "shotgun"
+!set shotgun.author "AV"
+!set shotgun.description "A fairly capable piece of weaponary."
+!set shotgun.size 100
+
+!set shotgun.visibility 80
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- T ----------------------------------#
+#=======================================================================#
+## a generic telephone
+!atom telephone noun_telephone thing
+!set telephone.name "telephone"
+!set telephone.author "LM"
+!set telephone.description "A telephone."
+!set telephone.size 200
+!set telephone.weight 2000
+
+!set telephone.visibility 60
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#=======================================================================#
+#---------------------------------- U ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- V ----------------------------------#
+#=======================================================================#
+
+#=======================================================================#
+#---------------------------------- W ----------------------------------#
+#=======================================================================#
+## A wooden chair
+!atom wooden_chair chair substance_wood
+!set wooden_chair.description "A wooden chair."
+

@@ -1,0 +1,228 @@
+# $Id: rooms,v 1.24 1998/08/20 19:44:16 rich Exp $
+# Rooms script for eval 2
+# James Fryer, 29 July 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+##################################################
+### create rooms
+
+!container wode_hall
+!set wode_hall.is_closed true
+!go wode_hall
+
+!container ball_room room
+!container dining_room room
+!container drawing_room room
+!container library_room room
+!container morning_room room
+!container conservatory_room room
+!container hall_room room
+!container back_passage_room room
+#!container west_passage_room room
+#!container east_passage_room room
+!container stairs_room room
+
+## upstairs 
+
+!container corridor_room room
+!container west_corridor_room room
+!container east_corridor_room room
+!container jade_room room
+!container pearl_room room
+
+!go limbo
+
+##################################################################
+#### connecting and describing the rooms
+
+#################################################################################
+################################### hall_room ###################################
+#################################################################################
+
+# the hall room
+!set hall_room.name "The Hall"
+!set hall_room.description "hall"
+!set hall_room.long_description "This marble entrance forms a suitably imposing introduction to Wode Hall. A marble plinth with a gleaming statue on it stands in  the centre. At the far end of the room, a sweeping double staircase leads to the upper levels of the Hall."
+#!set hall_room.go_ne $east_passage_room
+#!set hall_room.go_nw $west_passage_room
+!set hall_room.go_w $drawing_room
+!set hall_room.go_e $ball_room
+!set hall_room.go_up $stairs_room
+!set hall_room.go_s "You cannot leave Wode Hall in Eval2"
+
+#################################################################################
+################################# drawing_room ##################################
+#################################################################################
+
+!set drawing_room.name "The Drawing Room"
+!set drawing_room.description "drawing room"
+!set drawing_room.long_description "You gasp in amazement at the elegant simplicity of this room. Completely white, except for the pale wood and chrome of the sofas, the effect of the diffused light is dazzling. In one corner stands a cocktail cabinet lined with mirrored glass."
+!set drawing_room.go_e $hall_room
+!set drawing_room.go_n $dining_room
+
+#################################################################################
+################################## dining_room ##################################
+#################################################################################
+
+!set dining_room.name "The Dining Room"
+!set dining_room.description "dining room"
+!set dining_room.long_description "The dining room at Wode Hall is one of the few rooms to retain any original features. The heavy oak panelling seems at odds with the rest of the house, especially since Linnet's refurbishment. A vast mahogany dining table and chairs dominates the centre of the room."
+!set dining_room.go_n $library_room
+!set dining_room.go_s $drawing_room
+#!set dining_room.go_e $
+
+#################################################################################
+################################### ball_room ###################################
+#################################################################################
+
+!set ball_room.name "The Ballroom"
+!set ball_room.description "ballroom"
+!set ball_room.long_description "A polished parquet floor, an enormous crystal chandelier and a large white marble fireplace give an air of elegance to this beautifully proportioned ballroom. Casement windows stretch from floor to ceiling giving a view of the gardens beyond."
+!set ball_room.go_n $morning_room
+!set ball_room.go_w $hall_room
+
+#################################################################################
+################################# library_room ##################################
+#################################################################################
+
+!set library_room.name "The Library"
+!set library_room.description "library"
+!set library_room.long_description "The library walls are lined with countless volumes of leather bound books, few of whose gold embossed covers are ever likely to be opened. The main purpose of this room is defined by the graceful proportions of a Sheraton writing table."
+!set library_room.go_s $dining_room
+!set library_room.go_e $back_passage_room
+
+#################################################################################
+################################# morning_room ##################################
+#################################################################################
+
+!set morning_room.name "The Morning Room"
+!set morning_room.description "morning room"
+!set morning_room.long_description "The first thing you notice is the portrait of Linnet Ridgeway hanging over the mantlepiece, radiating health and vitality. Once you drag your eyes away from her, the pale green armchairs, chaise longue and delicate occasional table make a restful change.
+!set morning_room.go_s $ball_room
+!set morning_room.go_e $conservatory_room
+!set morning_room.go_w $back_passage_room
+
+#################################################################################
+############################### conservatory_room ###############################
+#################################################################################
+
+!set conservatory_room.name "The Conservatory"
+!set conservatory_room.description "conservatory"
+!set conservatory_room.long_description "A fan rotates lazily overhead, but it makes little impact on the humid air. Vines cover the exposed metal struts of this beautifully restored conservatory while orchids and ferns spill from their baskets. A painted metal bench sits in the centre of the room, ideally placed for admiring the luxuriant greenery.   
+!set conservatory_room.go_w $morning_room
+
+#################################################################################
+############################### back_passage_room ###############################
+#################################################################################
+
+# the back_passage_room
+!set back_passage_room.name "The North Corridor"
+!set back_passage_room.description "north corridor"
+!set back_passage_room.long_description "You're in a plain service corridor which runs the length of the house."
+!set back_passage_room.go_w $library_room
+!set back_passage_room.go_e $morning_room
+#!set back_passage_room.go_se $west_passage_room
+#!set back_passage_room.go_sw $east_passage_room
+
+
+#################################################################################
+################################## stairs_room ##################################
+#################################################################################
+
+!set stairs_room.name "The Stairs"
+!set stairs_room.description "stairs"
+!set stairs_room.long_description "You are standing on a grand sweeping staircase. Thick carpet silences your footsteps."
+!set stairs_room.go_s "You can only go up or down on the stairs."
+!set stairs_room.go_down $hall_room
+!set stairs_room.go_up $corridor_room
+!set stairs_room.go_n "You can only go up or down on the stairs."
+
+#################################################################################
+################################## corridor_room ################################
+#################################################################################
+
+!set corridor_room.name "The Upstairs Corridor"
+!set corridor_room.description "upstairs corridor"
+!set corridor_room.long_description "This is the main corridor leading to the bedrooms on this floor."
+!set corridor_room.go_e $east_corridor_room
+!set corridor_room.go_w $west_corridor_room
+!set corridor_room.go_down $stairs_room
+
+#################################################################################
+############################### west_corridor_room ##############################
+#################################################################################
+
+!set west_corridor_room.name "The Upstairs Corridor (West)"
+!set west_corridor_room.description "upstairs corridor"
+!set west_corridor_room.long_description "This is the main corridor leading to the bedrooms on this floor."
+!set west_corridor_room.go_e $corridor_room
+!set west_corridor_room.go_s $jade_room
+
+#################################################################################
+############################### east_corridor_room ##############################
+#################################################################################
+
+!set east_corridor_room.name "The Upstairs Corridor (East)"
+!set east_corridor_room.description "upstairs corridor"
+!set east_corridor_room.long_description "This is the main corridor leading to the bedrooms on this floor."
+!set east_corridor_room.go_w $corridor_room
+!set east_corridor_room.go_s $pearl_room
+
+#################################################################################
+################################# pearl_room ####################################
+#################################################################################
+
+!set pearl_room.name "The Pearl Room"
+!set pearl_room.description "pearl room" 
+!set pearl_room.go_n $east_corridor_room
+!set pearl_room.long_description "An enormous round bed covered in a white satin bedspread gives the Pearl Room its name. More Manhattan than Malton-under-Wode this room is the last word in comfort and luxury."
+
+#################################################################################
+################################### jade_room ###################################
+#################################################################################
+
+!set jade_room.name "The Jade Room"
+!set jade_room.description "jade room"
+!set jade_room.go_n $west_corridor_room
+!set jade_room.long_description "If this wasn't a minor stately home, you might be forgiven for thinking you'd entered an opium den. Green lacquered walls and a daybed of red embroidered silk contrive to be both decadent and opulent. Pushed up against the north wall is large red lacquered chest."
+
+#################################################################################
+################################## death_room ###################################
+#################################################################################
+
+!container polite_death_room
+!set polite_death_room.name ""
+!set polite_death_room.description ""
+!set polite_death_room.long_description ""
+!set polite_death_room.go_down $hall_room
+
+#################################################################################
+############################## internal death_rooms #############################
+#################################################################################
+
+!container rom room
+!container hell_room room
+!container heaven_room room
+!container death_room room
+
+!set death_room.name "Limbo between heaven, hell, earth."
+!set death_room.description "Limbo"
+!set death_room.long_description "This is the place all good dogs go to die."
+!set death_room.go_up $heaven_room
+!set death_room.go_down $hell_room
+
+!set heaven_room.name "Heaven"
+!set heaven_room.description "Heaven"
+!set heaven_room.long_description "Big, White, fluffy place. You are in the beard of GOD!!"
+!set heaven_room.go_up "You can't go up and just talk to God ..."
+!set heaven_room.go_down $death_room
+
+!set hell_room.name "Hell"
+!set hell_room.description "Hell"
+!set hell_room.long_description "Hot, streamy, hairy, terrible smell. You are in the arm pit of the DEVIL!!"
+!set hell_room.go_up $death_room
+!set hell_room.go_down "You can't become more damned."
+
+### Setup the default death room for mobiles
+
+!set mobile.death_room $death_room

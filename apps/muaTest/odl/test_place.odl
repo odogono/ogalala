@@ -1,0 +1,575 @@
+# $Id: test_place.odl,v 1.40 1999/04/29 09:42:08 alex Exp $
+# Generic Word definitions
+# James Fryer, 11 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+thing test_place : place
+{
+	name			= "test place"
+	description		= "a place to test all sorts of things"
+
+	_where			= $limbo
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Test Room ---------------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing entrance_room : room
+{
+	name			= "entrance hall"
+	description		= "the general purpose entrance hall into the game. It is suggested that \
+				  players depart South to the East Side of Waterloo place."
+
+	_where			= $test_place
+}
+
+## An actual NPC
+thing npc_test_2 : npc_test noun_man noun_marvin male
+{
+	name = "Marvin"
+	_where = $entrance_room
+
+	walk_scripts = null
+}
+
+thing cupboard : room
+{
+	name 			= "Cupboard"
+	description 		= "A small but not uncomfortable cupboard. A good place to go to quickly test something new."
+	is_unique 		= false
+	go 			= "There is only one way out."
+	look_far 		= "You see the plywood wall of the cupboard."
+	_where 			= $test_place
+}
+
+thing seat_1 : seat
+{
+	_where			= $entrance_room
+}
+
+atom toad : character noun_toad ticker
+{
+	name			= "toad"
+	description		= "A croaky, budweiser sponsered toad."
+
+	social_skill		= 45
+
+	##This toad croaks every ten seconds
+	## Yes!! TEN SECONDS! If you don't like it go somewhere else but DON'T CHANGE THE TOAD
+	tick_time		= 10
+
+#	tick_msg		= "The toad croaks."
+	tick_omsg		= "The toad croaks."
+
+	taste_msg		= "You lick the bumpy back of {-t name}."
+	taste_desc		= "The hallucinogenic substance released by {-t name} courses through your body."
+}
+
+thing test_toad : toad
+{
+	_where			= $entrance_room
+}
+
+#-----------------------------------------------------------------------------------------#
+#-------------------------------- Combat room --------------------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing combat_room : room
+{
+	name			= "combat foyer"
+	description		= "a room for duffing up people."
+
+	_where			= $test_place
+}
+
+atom noun_bartle : noun
+{
+	_nouns			= [ "bartle" ]
+}
+
+
+atom richard_bartle : being noun_richard noun_bartle
+{
+	name			= "richard bartle"
+	description		= "the lord of mud"
+}
+
+thing test_richard_bartle : richard_bartle
+{
+	_where			= $combat_room
+}
+
+
+#-----------------------------------------------------------------------------------------#
+#------------------------------- The Clay Pigeon Range -----------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing shooting_room : room
+{
+	name			= "shooting room"
+	description		= "A place for shooting things."
+	_where			= $test_place
+}
+
+atom clay_pigeon : portable transformer noun_clay noun_pigeon
+{
+	name			= "clay pigeon"
+	description		= "a small clay disc"
+
+	## The pigeon destroys itself after 15 second
+ #  	transform_time 	= 15
+
+	transform_template 	= null
+
+	transform_msg 		= null
+    	
+	transform_omsg 		= "{-ut name} falls to the ground and smashes."
+}
+
+
+## The clay shooter will shoot a clay pigeon into the air whenever it hears the word "pull"
+atom clay_shooter : thing noun_clay noun_shooter
+{
+	name			= "clay shooter"
+	description		= "a device for shooting clay pigeons."
+
+	##The pigeon is what gets shot into the air each time
+	#pigeon			= $clay_pigeon
+
+	pigeon_shot_msg		= "A {pigeon.name} gets shot high into the air."
+
+	#on_create		= !ClayShooterStart
+}
+
+thing clay_shooter_1 : clay_shooter
+{
+	_where			= $shooting_room
+}
+
+
+thing shotgun_1 : shotgun
+{
+	_where			= $shooting_room
+}
+
+thing bullet_1 : bullet
+{
+	_where			= $shooting_room
+}
+
+atom bullet_clip : bullet noun_clip
+{
+	name			= "bullet clip"
+	description		= "a clip of {ammunition_count} bullets"
+	ammunition_count	= 10
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Swamp Room --------------------------------------#
+#-----------------------------------------------------------------------------------------#
+atom swamp : room
+{
+	name 			= "swamp"
+	description 		= "a murky, bloopy, treasure eating swamp"
+
+    	on_add 			= !SwampDrop
+}
+thing swamp_room : swamp
+{
+	_where			= $test_place
+}
+
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Drinking Room -----------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing drinking_room : room
+{
+	name			= "drinking room"
+	description		= "a room for pouring, drinking and getting sloshed in"
+	
+	_where 			= $test_place
+}
+
+
+thing jug_1 : jug
+{
+	name 			= "jug"
+	description 		= "A lovely jug."
+	_where 			= $drinking_room
+
+	liquid_volume 		= 4
+	max_volume 		= 10
+	liquid_type		= $substance_water
+}
+
+
+thing bowl_1 : bowl
+{
+	_where 			= $drinking_room
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Eating Room -------------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing eating_room : room
+{
+	name			= "eating room"
+	description		= "a room for eating things."
+
+	_where 			= $test_place
+}
+
+thing pie : portable noun_pie eatable
+{
+	name 			= "pie"
+	description 		= "A lovely pie."
+	_where 			= $eating_room
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Switching Room ----------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing switching_room : room
+{
+	name			= "switching room"
+	description		= "a room for switching things on and off"
+
+	_where			= $test_place
+}
+
+thing spotlight : illuminatable
+{
+	name			= "spotlight"
+	description		= "a spotlight"
+
+	is_quiet		= true
+
+	#Initially the light is off
+	state			= false
+	
+	_where			= $switching_room
+}
+
+thing desklamp : illuminatable
+{
+	name			= "desklamp"
+	description		= "a desklamp"
+	light_emitted		= 30
+
+	is_quiet		= false
+
+	#Initially the light is off
+	state			= false
+	
+	_where			= $switching_room
+}
+
+thing light_switch : switchable noun_light noun_switch
+{
+	name			= "light switch"
+	description		= "a light switch"
+	_where			= $switching_room
+	light_emitted		= 60
+
+	switch_msg		= "You switch {-t name}."
+	switch_omsg		= "{-ut actor.name} switches {-t name}."
+
+	listeners		= [ $spotlight $desklamp ]
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Reading Room ------------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing reading_room : room
+{
+	name			= "reading room"
+	description		= "a room for reading and writing"
+
+	_where			= $test_place
+}
+
+thing book : portable readable noun_book
+{
+	name 			= "book"
+	description 		= "A story book"
+	_where			= $reading_room
+
+	text			= "Consult the book to read the story.(But not yet)"
+}
+
+thing blackboard : thing eraseable noun_blackboard noun_board
+{
+	name			= "blackboard"
+	description		= "A large school blackboard"
+	_where			= $reading_room
+
+	implement		= $chalk
+}
+
+thing chalk_1 : chalk
+{
+	_where			= $reading_room
+}
+
+thing magic_marker : writing_implement noun_magic noun_marker
+{
+	name			= "magic marker"
+	description		= "a standard size magic marker. looks as if it might be red"
+	_where			= $reading_room
+}
+
+thing board_rubber : eraser noun_board noun_rubber
+{
+	name			= "board rubber"
+	description		= "slightly furry on one side"
+
+	_where			= $reading_room
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Visibility Room ---------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing visibility_room : room
+{
+	name			= "visibility room"
+	description		= "a room for viewing things"
+	
+	_where			= $test_place
+}
+
+
+thing shelf_1 : shelf
+{
+	visibility		= 100
+	concealment		= 90
+
+	_where			= $visibility_room
+}
+
+thing shoe_box : box noun_shoe
+{
+	visibility		= 100
+	concealment		= 50
+
+	_where			= $visibility_room
+}
+
+thing display_case : container portable openable noun_display noun_case
+{
+	name			= "display case"
+	description		= "a intricate and stunningly appealing display case"
+	is_revealing 		= true
+	size			= 500
+	weight			= 2000
+	capacity		= 10
+	concealment		= 10
+	visibility		= 100
+
+	_where			= $visibility_room
+}
+
+
+
+thing diamond_1 : diamond
+{
+	_where			= $visibility_room 
+}
+
+thing rock_1 : rock
+{
+	_where			= $visibility_room 
+}
+
+thing human_hair_1 : portable substance_hair
+{
+	name			= "hair"
+	description		= "a human hair"
+
+	visibility		= 1
+
+	_where			= $visibility_room 
+}
+
+
+thing diamond_2 : diamond
+{
+	_where			= $shelf_1 
+}
+
+thing rock_2 : rock
+{
+	_where			= $shelf_1
+}
+
+thing human_hair_2 : portable substance_hair
+{
+	name			= "hair"
+	description		= "a human hair"
+
+	visibility		= 1
+
+	_where			= $shelf_1
+}
+
+thing diamond_3 : diamond
+{
+	_where			= $shoe_box 
+}
+
+thing rock_3 : rock
+{
+	_where			= $shoe_box
+}
+
+thing human_hair_3 : portable substance_hair
+{
+	name			= "hair"
+	description		= "a human hair"
+
+	visibility		= 1
+
+	_where			= $shoe_box
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- Mechanics Room --------------------------------------#
+#-----------------------------------------------------------------------------------------#
+thing mechanics_room : room
+{
+	name			= "mechanics room"
+	description		= "a room for testing mechanics"
+
+	_where			= $test_place
+}
+
+atom cigarette : portable transformer noun_cigarette
+{
+	name			= "cigarette"
+	description		= "A cigarette."
+
+	visibility		= 20
+}
+
+	
+atom cigarette_butt : cigarette noun_butt
+{
+	name			= "cigarette butt"
+	description		= "A cigarette butt."
+
+   	## Cigarette butt disappears without message after 1 hour
+   	transform_time 	= 3600
+	transform_template 	= null
+	transform_msg 		= null
+	transform_omsg 		= null
+
+	visibility = 10
+}
+
+atom lit_cigarette : cigarette ticker
+{
+	description		= "A lit cigarette."
+
+   	## Cigarette lasts for 5 minutes or until the STUB command is used
+   	transform_time 	= 30
+	transform_template 	= $cigarette_butt
+	transform_msg 		= "Your {name} goes out."
+	transform_omsg 		= "{-p actor.name} {name} goes out."
+
+	tick_time 		= 5
+	tick_msg 		= "Your {name} gives a puff of smoke."
+	tick_omsg 		= "{-p actor.name} {name} gives a puff of smoke."
+
+	drop	                = "Dropping a lit cigarette could cause a fire!"
+
+	visibility		= 30
+}
+
+atom fresh_cigarette : cigarette ignitable
+{
+	transform_time		= 0
+	transform_template	= $lit_cigarette
+	transform_msg		= "You light {-t name}."
+	transform_omsg		= "{-u actor.name} lights {-t name}."
+
+    ## The LIGHT command simply maps to the Transform action.
+    ##  (We may need to change this later if we want to LIGHT WITH something)
+	ignite 			= !Transform
+}
+
+
+atom cigarette_packet : portable container readable noun_packet
+{
+   	name 			= "packet of cigarettes"
+   	description 		= "A packet of 10 cigarettes."
+   	text 			= "Smoking can damage your health."
+   	smell_desc 		= "The smell of fresh tobacco wafts over your nostrils."
+
+	visibility		= 40
+}
+
+atom cigarette_factory : cigarette factory
+{
+   	list_desc 		= "{factory_count} cigarettes"
+   	factory_template 	= $fresh_cigarette
+   	factory_count 		= 10
+}
+
+thing cigarette_packet_1 : cigarette_packet
+{
+	_where			= $mechanics_room
+}
+
+thing cigarette_factory_1 : cigarette_factory
+{
+	_where			= $cigarette_packet_1
+}
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- The Blacksun ----------------------------------------#
+#-----------------------------------------------------------------------------------------#
+## a place to test memberships
+thing blacksun_club : room
+{	
+	name 			= "BlackSun"
+	description 		= "You are standing in testWorlds first and most exclusive club."
+	proprietor 		= "Hiro Protagonist"
+	_where 			= $test_place
+}
+
+atom blacksun_pass : portable card membership noun_pass writeable
+{
+	name 			= "membership card"
+	text 			= "Property of Hiro Protagonist."
+	description 		= "A very black card with a small neon sun located in the lower right corner. On closer examination, the sun appears to be rather intricately animated."
+		
+}
+
+thing blacksun_pass_1 : blacksun_pass
+{
+	_where 			= $entrance_room
+}
+
+atom blacksun_exit : membership_exit noun_blacksun noun_club
+{
+	membership_pass 	= $blacksun_pass
+	success_msg 		= "You flash the pass at the bouncer and pass through"
+	failure_msg 		= "The bouncer who, I assure you, is bigger and a lot harder than you, prevents you from entering."
+}
+
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- Exits -----------------------------------------------#
+#-----------------------------------------------------------------------------------------#
+exits
+{
+	mechanics_room e (open_door) 		= swamp_room w (open_door)
+	entrance_room w (open_door) 		= shooting_room e (open_door)
+	entrance_room nw (open_door) 		= drinking_room se (open_door)
+	entrance_room e (open_door) 		= mechanics_room w (open_door)
+	drinking_room n (open_door) 		= eating_room s (open_door)
+	entrance_room ne (open_door) 		= switching_room sw (open_door)
+	mechanics_room n (open_door) 		= reading_room s (open_door)
+	entrance_room se (open_door) 		= visibility_room nw (open_door)
+	entrance_room n (blacksun_exit) 	= blacksun_club out,s (open_door)
+	entrance_room in (lockable_door) 	= cupboard out (lockable_door)
+}
+

@@ -1,0 +1,49 @@
+#!/bin/bash
+#$Id: restart,v 1.6 1998/08/28 10:42:46 agatha Exp $
+
+# files should be created with group "misc"
+newgrp misc
+
+# local variable
+SERVERHOME=/misc/eval2
+THISFILE=/home/agatha/restart.server
+
+# log file name
+LOG=`date +/misc/log/agatha.1932.%d%b%y`
+
+# set up environment for invoked processes
+export PATH=/usr/local/java/bin:/usr/local/bin:/bin:/usr/bin
+export CLASSPATH=.:/usr/local/java/lib/classes.zip:/usr/local/share/kaffe/klasses.zip:/usr/local/share/kaffe/classes.zip
+export CVSROOT=/misc/cvsroot
+export JAVA_HOME=/usr/local/java
+export KAFFEHOME=/usr/local/share/kaffe
+export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib
+
+# kill the previous process, if any
+kill `ps aux | grep "[a]gatha.*/java/bin" | awk '{print $2}'`
+
+# move to the relevant directory
+cd $SERVERHOME
+
+# remove previous game data
+rm -f test.atom
+rm -f vocabulary
+
+# update source code
+cvs up -d
+
+# totally rebuild the system - now requires only one pass!
+make clean
+make
+
+#make
+#make
+
+# restart the server, dumping output to a log file
+./run -port:1932 &>$LOG
+
+# update this script
+mv $THISFILE ${THISFILE}.1
+cp ${SERVERHOME}/restart $THISFILE
+chown agatha $THISFILE
+chgrp misc $THISFILE

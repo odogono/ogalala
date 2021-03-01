@@ -1,0 +1,53 @@
+# $Id: world_hierarchy.odl,v 1.2 1998/11/18 11:03:13 jim Exp $
+# The containment hierarchy for the 1932.com game world.
+# James Fryer, 13 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## Container for the DOTN game world
+thing nile_game_world : container
+{
+    name = "Game World"
+    description = "The 'Death on the Nile' Game World."
+    _where = $limbo
+}
+
+## Europe
+thing europe : continent
+{
+    name = "Europe"
+    description = "The continent of Europe."
+    _where = $nile_game_world
+}
+
+## England
+thing england : country
+{
+    name = "England"
+    description = "England, a green and pleasant land."
+    _where = $europe
+}
+
+## Scotland
+thing scotland : country
+{
+    name = "Scotland"
+    description = "Scotland."
+    _where = $europe
+}
+
+## Wales
+thing wales : country
+{
+    name = "Wales"
+    description = "Wales. It is raining."
+    _where = $europe
+}
+
+## London
+thing london : region
+{
+    name = "London"
+    description = "London Town."
+    _where = $england
+}
+

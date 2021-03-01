@@ -1,0 +1,174 @@
+#source substances.odl
+#date Tue Jul 13 16:29:06 GMT 1999
+#copyright Ogalala Ltd
+#import THING NOUN_CHALK NOUN_CLOTH NOUN_HAIR NOUN_METAL NOUN_MARBLE NOUN_PAPER NOUN_RUBBER NOUN_STONE NOUN_WOOD NOUN_POISON NOUN_WATER NOUN_WINE CONTAINER
+#export SUBSTANCE SUBSTANCE_CHALK SUBSTANCE_CLOTH SUBSTANCE_HAIR SUBSTANCE_METAL SUBSTANCE_MARBLE SUBSTANCE_PAPER SUBSTANCE_RUBBER SUBSTANCE_STONE SUBSTANCE_WOOD SUBSTANCE_LIQUID SUBSTANCE_POISON SUBSTANCE_WATER WINE LIQUID_CONTAINER
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# $Id: substances.odl,v 1.7 1999/03/26 17:06:54 alex Exp $
+# Substance definitions
+# James Fryer, 30 Oct 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## The root for all substances and materials
+!atom substance thing
+
+## The name of this substance.
+!set substance.substance "stuff"
+
+## What the substance feels like.
+!set substance.touch_msg "It feels like {substance}."
+
+## What the substance smells like.
+!set substance.smell_msg "It smells of {substance}."
+
+## What the substance tastes like.
+!set substance.taste_msg "It tastes of {substance}."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom substance_chalk substance noun_chalk
+!set substance_chalk.substance "chalk"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom substance_cloth substance noun_cloth
+!set substance_cloth.substance "cloth"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom substance_hair substance noun_hair
+!set substance_hair.substance "hair"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!atom substance_metal substance noun_metal
+!set substance_metal.substance "metal"
+!set substance_metal.smell_msg "It smells of nothing in particular."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom substance_marble substance noun_marble
+!set substance_marble.substance "marble"
+!set substance_marble.smell_msg "It smells of nothing in particular."
+!set substance_marble.taste_msg "It tastes of nothing in particular."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom substance_paper substance noun_paper
+!set substance_paper.substance "paper"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom substance_rubber substance noun_rubber
+!set substance_rubber.substance "rubber"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom substance_stone substance noun_stone
+!set substance_stone.substance "stone"
+!set substance_stone.smell_msg "It smells of nothing in particular."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom substance_wood substance noun_wood
+!set substance_wood.substance "wood"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+
+
+
+## ------------------------------ Simply Liquids -------------------------------------#
+
+## Liquid is a liquid
+!atom substance_liquid substance
+
+## the type name of the substance
+!set substance_liquid.substance "liquid"
+
+## this is the weight of one measure of liquid. Note that this is different from
+## weight, which would be the overall mass of possibly several measures together.
+## This property is also constant for all liquids
+!set substance_liquid.measure 5
+
+!set substance_liquid.get "Unsuprisingly, you find that your fingers slip through {-t substance}."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+!atom substance_poison substance_liquid noun_poison
+!set substance_poison.name "poison"
+
+!set substance_poison.substance "poison"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom substance_water substance_liquid noun_water
+!set substance_water.name "water"
+
+!set substance_water.substance "water"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+!atom wine substance_liquid noun_wine
+!set wine.name "wine"
+
+!set wine.substance "wine"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+## Liquid Containers are able to hold liquids, as well as
+##  the normal container functions.
+!atom liquid_container container
+
+## default pour action for things
+#$thing.pour		= "You can't pour {-t name}."
+
+## default pour action for portables
+#$portable.pour		= "There is nothing to pour from {-t name}."
+
+## default pour action
+#pour			= !Pour
+
+## default drink action for thing
+#$thing.drink		= "You can't drink from {-t name}."
+
+## default drink action
+#drink			= !Drink
+
+## default fill action
+#thing.fill		= "You can't fill {-t name}."
+
+## default filling action for container
+#$container.fill		= !Fill
+
+## The liquid type is the atom of what is actually contained within the container.
+## The liquid type, as a rule, must inherit from liquid. An example of a liquid
+##  would be water.
+#liquid_type		= [ "water-water" = $water "poison-water" = $poisoned_water ]
+
+## used to store the outcome of mixing two liquid substances together
+#mixture_table		= null
+
+!set liquid_container.is_closed false
+

@@ -1,0 +1,65 @@
+#source world_hierarchy.odl
+#date Tue Jul 13 09:58:27 GMT 1999
+#copyright Ogalala Ltd
+#import LIMBO CONTAINER CONTINENT COUNTRY REGION
+#export NILE_GAME_WORLD EUROPE ENGLAND SCOTLAND WALES LONDON
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go limbo
+# $Id: world_hierarchy.odl,v 1.2 1998/11/18 11:03:13 jim Exp $
+# The containment hierarchy for the 1932.com game world.
+# James Fryer, 13 Nov 98
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## Container for the DOTN game world
+!new nile_game_world container
+!set nile_game_world.name "Game World"
+!set nile_game_world.description "The 'Death on the Nile' Game World."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go nile_game_world
+
+## Europe
+!new europe continent
+!set europe.name "Europe"
+!set europe.description "The continent of Europe."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go europe
+
+## England
+!new england country
+!set england.name "England"
+!set england.description "England, a green and pleasant land."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go europe
+
+## Scotland
+!new scotland country
+!set scotland.name "Scotland"
+!set scotland.description "Scotland."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go europe
+
+## Wales
+!new wales country
+!set wales.name "Wales"
+!set wales.description "Wales. It is raining."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+!go england
+
+## London
+!new london region
+!set london.name "London"
+!set london.description "London Town."
+

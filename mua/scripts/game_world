@@ -1,0 +1,5 @@
+# $Id: game_world,v 1.1 1999/07/08 14:38:07 jim Exp $
+# Game-specific world script, allows commands after ODL-generated world script
+# James Fryer, 8 July 99
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+

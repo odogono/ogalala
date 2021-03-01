@@ -1,0 +1,142 @@
+# $Id: game_dotn.odl,v 1.10 1999/04/29 09:41:16 alex Exp $
+# Top level DOTN game definitions
+# Alexander Veenendaal, 17th Feburary 1999
+# Copyright (C) HotGen Studios Ltd <www.hotgen.com>
+
+
+#=================================================================================================#
+#------------------------------------------- Game Root -------------------------------------------#
+#=================================================================================================#
+##A kind of root atom for the DOTN rules and logic
+atom game_dotn : root
+{
+	
+}
+
+
+#=================================================================================================#
+#------------------------------------- Pick Pocketing Action -------------------------------------#
+#=================================================================================================#
+## encapulates properties and utilities for pickpocketing
+atom pickpocket : game_dotn
+{
+	## The default response for pickpocketing invalid victims (i don't mean disabled people).
+	$root.pickpocket		= "Pickpocketing is best achieved when you have a victim."
+
+	## The action for pickpocketing a character
+	$character.pickpocket		= !PickPocket
+
+	## The maximum size of item that can be pickpocketed
+	item_size_threshold		= 500
+
+	## meesage displayed to actor when their attempt to pickpocket someone fails
+	attempt_failed_msg		= "Your attempt to pickpocket {current.name} fails."
+
+	## message displayed to actor when their attempt to pickpocket someone fails, and they notice.
+	victim_noticed_msg		= "{-u name} notices you trying to pick {his} pockets !"
+
+	## message displayed to victim when the actors attempt to pickpocket someone fails
+	victim_noticed_smsg		= "You notice { actor.name } trying to pickpocket you !"
+}
+
+
+#=================================================================================================#
+#------------------------------------- Item Registration -----------------------------------------#
+#=================================================================================================#
+## The registrar contains a list of all registered objects
+atom item_registrar : game_dotn
+{
+	## A table of objects which are registered, along with a reference to who there owner is
+	registered_items		= null
+
+	## the minimum value that at item may have to be registered.
+	minimum_value			= 2 
+}
+
+
+## When an item is registered (it must be over a certain value to be so), a reference to it and its 
+##  owner is contained within a registrar.
+atom registered : game_dotn
+{
+	## The default response from !REGISTER for registering something (or nothing) that can't be registered.
+	$root.register			= "You will need to specify something valuable to register."
+
+	## The default response from !UNREGISTER for trying to unregister something that can't be registered.
+	$root.unregister		= "You will need to specifiy something registered to unregister"
+
+	## The action for registering a portable object
+	$portable.register		= !Register
+	
+	## The action for unregistering a registered object
+	unregister			= !UnRegister
+
+	## the atom who owns this object
+	owner				= null
+
+	## message displayed by !REGISTER to actor when the item is not valuable enough
+	item_not_valuable_msg		= "{-ut name} is not valuable enough to register"
+
+	## message displayed by !REGISTER to actor when the item is already registered.
+	item_already_reg_msg		= "{-ut name} is already registered."
+
+	## message displayed by !REGISTER to actor when the item is successfully registed
+	item_registered_msg		= "You register {-t name} as your own."
+
+	## message displayed by !UNREGISTER to actor when the item is not registered
+	item_not_registered_msg		= "{-ut name} is not registered."
+
+	## message displayed by !UNREGISTER to actor when the item was not registered to them
+	actor_not_registrant_msg	= "{-ut name} was not registered to you."
+
+	## message displayed by !UNREGISTER to actor when the item has been successfully unregistered
+	item_unregistered_msg		= "{-ut name} has been unregistered as your own."
+
+}
+
+#=====================================================================================================#
+#---------------------------------------------- Combat -----------------------------------------------#
+#=====================================================================================================#
+
+## Encapsulates properties and logic for in game combat
+atom dotn_combat : game_dotn
+{
+	## Default action for the strike command
+	$root.strike				= "You need to specifiy someone to strike."
+
+	## the action for striking a character
+	$character.strike			= !Strike 
+
+	## Default action for the beat command
+	$root.beat				= "You need to specify someone to beat."
+
+	## the action for beating a character
+	$character.beat				= !Beat
+	
+	## Default action for the maim command
+	$root.maim				= "You need to specify someone to maim."
+
+	## the action for maiming a character
+	$character.maim				= !Maim
+
+	## Default action for the murder command
+	$root.murder				= "You need to specify someone to murder."
+
+	## the action for murdering a character
+	$character.murder			= !Murder
+
+
+	## Once an attack has been commited, the attacker may not attack anything
+	## for a certain numer of seconds. Used to prevent spam like attacks.
+	$character.combat_rest_period		= 5
+	
+	## Declares whether this being is resting after attacking something or not
+	## When this property is set to true, the being may not attack.
+	$character.combat_resting		= false
+}
+
+
+
+
+
+
+

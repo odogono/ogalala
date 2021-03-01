@@ -1,0 +1,528 @@
+# $Id: careers_schools.odl,v 1.1 1999/03/09 15:40:24 alex Exp $
+# Definitions for characters schools, universitys and careers
+# Alexander Veenendaal, 14th Feburary 1999
+# Copyright (C) HotGen Studios Ltd <www.hotgen.com>
+
+#------------------------------------ Jobs & Careers ------------------------------------#
+
+##Top level atom for a players career attribute
+atom career : game_dotn
+{
+	##The name of the career
+	name			= ""
+	
+	##The different levels of job occuring through this particular career
+	level			= null
+
+	##The amount of paid money over a year for each job level
+	salary			= null
+
+	##The amount of social status points required to achieve each job level
+	social_status		= null
+}
+
+##A career in industry
+atom career_industry : career
+{
+	##The name of the career
+	name			= "industry"
+	
+	##The different levels of job occuring through this particular career
+	level			= [ 	"worker" \
+					"supervisor" \ 
+					"manager" \
+					"middle manager" \
+					"senior manager" \ 
+					"executive" \
+					"senior executive" \
+					"chairman of the board" \ 
+					"chief executive" \
+					"captain of the industry" ]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+	
+}
+
+##A career in science
+atom career_science : career
+{
+
+	##The name of the career
+	name			= ""
+	
+	##The different levels of job occuring through this particular career
+	level			= [ 	"graduate" \
+					"research assistant" \
+					"researcher" \
+					"senior researcher" \
+					"scientist" \
+					"respected scientist" \
+					"eminent scientist" \
+					"expert" \
+					"recognised expert" \
+					"scientific genius" 	]	
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in fine art
+atom career_fine_art : career
+{
+	##The name of the career
+	name			= "fine art"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Struggling Artist" \
+					"Talented Artist" \
+					"Exhibited Artist" \
+					"Artist" \
+					"Commissioned Artist" \
+					"Admired Artist" \
+					"Important Artist" \
+					"Celebrated Artist" \
+					"Famous Artist" \
+					"Artistic Genius" 	]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in literature
+atom career_literature : career
+{
+	##The name of the career
+	name			= "literature"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Struggling Writer" \
+					"Talented Writer" \
+					"Published Writer" \
+					"Author" \
+					"Commissioned Author" \
+					"Admired Author" \
+					"Important Author" \
+					"Celebrated Author" \
+					"Famous Author" \
+					"Literary Giant"	]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in music
+atom career_music : career
+{
+	##The name of the career
+	name			= "music"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Struggling Musician" \
+					"Talented Musician" \
+					"Experienced Musician" \
+					"Musician" \
+					"Sought-after Musician" \
+					"Admired Musician" \
+					"Important Musician" \
+					"Celebrated musician" \
+					"Famous Musician" \
+					"Musical Genius" 	]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in stage
+atom career_stage : career
+{
+	##The name of the career
+	name			= "stage"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Drama Student" \
+					"Spear Carrier/Ingenue" \
+					"Budding Actor/Actress" \
+					"Experienced Actor/Actress" \
+					"Leading Actor/Actress" \
+					"Recognised Actor/Actress" \
+					"Admired Actor/Actress" \
+					"Star" \
+					"MegaStar" \
+					"National Treasure"	]	
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in the military
+atom career_military : career
+{
+	##The name of the career
+	name			= "military"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"2nd Lieutenant" \
+					"Lieutenant" \
+					"Captain" \
+					"Major" \
+					"Lieutenant Colonel" \
+					"Colonel" \
+					"Brigadier" \
+					"Major General" \
+					"Lieutenant General" \
+					"General"	]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in law
+atom career_law : career
+{
+	##The name of the career
+	name			= "law"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Law Student" \
+					"Legal Executive" \
+					"Solicitor" \
+					"Practiced Solicitor" \
+					"Valued Solicitor" \
+					"Junior Partner" \
+					"Masterful Solicitor" \
+					"Full Partner" \
+					"Superior Solicitor" \
+					"Senior Partner"	]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in medicine
+atom career_medicine : career
+{
+	##The name of the career
+	name			= "medicine"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Medical Student" \
+					"Junior Doctor" \
+					"Qualified Doctor" \
+					"Experienced Doctor" \
+					"Consultant" \
+					"Esteemed Consultant" \
+					"Senior Consultant" \
+					"Surgeon" \
+					"Gifted Surgeon" \
+					"Specialist" 		]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+##A career in finance
+atom career_finance : career
+{
+	##The name of the career
+	name			= "finance"
+	
+	##The different levels of job occuring through this particular career
+	level			= [	"Office boy" \
+					"Clerk" \
+					"Accountant" \
+					"Analyst" \
+					"Stock Broker" \
+					"Market Trader" \
+					"Fund Manager" \
+					"Banker" \
+					"Financier" \
+					"Tycoon"	]
+
+	##The amount of paid money over a year for each job level
+	salary			= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+
+	##The amount of social status points required to achieve each job level
+	social_status		= [	50 \
+					100 \
+					150 \
+					200 \
+					250 \
+					300 \
+					350 \
+					400 \
+					450 \
+					500 	]
+}
+
+
+# -------------------------- Schools ------------------------------------ #
+atom school : game_dotn
+{	
+	schools			= null
+}
+
+atom school_boys : school
+{
+	schools			= [ 	"Bedales" \
+					"Eton" \
+					"Harrow" \
+					"Haileybury" \
+					"Marlborough" \
+					"Winchester" \
+					"Manchester Grammar School" \
+					"Gordonstoun" \
+					"Bryanston" \
+					"Monkton Combe" 	]
+}
+
+atom school_girls : school
+{
+	schools			= [ 	"Abbots Bromley" \
+					"Cranborne Chase" \
+					"Haberdashers School For Girls" \
+					"Harrogate Ladies College" \
+					"Queen Ethelburga's College" \
+					"St Elphin's School" \
+					"St George's Ascot" \
+					"The Mount School" \
+					"Wychwood School" \
+					"Westonbirt School" 	]
+}
+
+
+
+# -------------------------- Universites ------------------------------------ #
+atom university : game_dotn
+{
+	##The university names
+	universites		= null
+}
+
+atom university_boys : university
+{
+	##The university names
+	universites		= [ 	"University of Bristol" \
+					"Kings Cambridge" \
+					"Magdalene Cambridge" \
+					"Pembroke Cambridge" \
+					"Trinity, Cambridge" \
+					"University of Bangor" \
+					"Merton, Oxford" \
+					"Oriel, Oxford" \
+					"University of Edinburgh" \
+					"Balliol, Oxford" \
+					"Christ Church, Oxford" 	]
+}
+
+atom university_girls : university
+{
+	##The university names
+	universites		= [ 	"Newnham College (Cambridge)" \
+					"Girton College (Cambridge)" \
+					"Lady Margaret Hall (Oxford)" \
+					"St Hilda's" \
+					"Cheltenham Ladies College" \
+					"St Hughs Hall (Oxford)" \
+					"Somerville College (Oxford)" 	]
+}
+
+

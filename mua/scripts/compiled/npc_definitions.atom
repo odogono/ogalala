@@ -1,0 +1,467 @@
+#source npc_definitions.odl
+#date Tue Jul 13 16:29:06 GMT 1999
+#copyright Ogalala Ltd
+#import BEING LIMBO NOUN_BIRD NOUN_PARROT NOUN_RICHARD NOUN_VIRUS
+#export NPC TALKER WALKER CLOCKER NPC_PARROT VIRUS
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# $Id: npc_definitions.odl,v 1.19 1999/04/28 15:51:03 matt Exp $
+# Atoms used for various NPC behaviours.
+# Matthew Caldwell, 9 April 1999
+# Copyright (c) HotGen Studios, <www.hotgen.com>
+
+#################################################################
+
+## Parent atom for all non-player characters.
+## NPCs come in three basic types, <b>talker</b>, <b>walker</b>
+## and <b>clocker</b>, all of which are children of this
+## atom. Each type responds to a different kind of stimulus,
+## but the basic scripting structures they all use are the
+## same. At some stage there will be fuller documentation of
+## these structures, but in the meantime here's a brief outline.
+## <p>
+## An NPC is scripted by <i>tables</i> stored in one or more
+## specific properties. The names of the properties involved
+## vary between the different NPC types -- refer to the docs
+## for each type for more info. A basic script table is structured
+## like this:
+## <pre>
+##   [ stimulus = script ]
+## </pre>
+## where <i>stimulus</i> is a string that specifies some event
+## or action that the NPC responds to, and <i>script</i> defines
+## what the NPC does in reponse. Again, the different NPC types
+## respond to different stimuli, see the individual docs for
+## more info.
+## <p>
+## A script generally consists of commands that might be executed
+## by player characters at the command line, together with various
+## optional control structures. The simplest script is simply a
+## single string containing a command, eg:
+## <pre>
+##   "say 'hello'"
+## </pre>
+## Pretty much any command that can be executed at the command line
+## can be used here, including moderator commands that are not
+## available to normal players, such as "!go" and "!new". However,
+## to avoid confusing the process which interprets property data, any
+## command string that starts with one of the special data characters
+## like <b>$</b> and <b>!</b> must be preceded by a tilde character
+## <b>~</b>, which has no effect on the command but notifies the
+## game that it <i>is</i> a command and not, say, an action. The main
+## case when this is an issue is when you want the NPC to execute
+## moderator commands, which should look like this: "~!go limbo".
+## <p>
+## You should also note that quotation marks inside the string must be
+## single quotes to avoid confusion with the outer double quotes that
+## contain the whole command string. This means that only a single level
+## of quote marks can be contained within the command itself, but in most
+## cases this shouldn't be a problem. (For quote marks in client output
+## you can use the special markup tags <SQ> and <DQ> for single and
+## double quotes respectively.)
+## <p>
+## There are a couple of special string commands that you can use in
+## scripts that don't have equivalents at the command line:
+## <ul>
+## <li><b>NOP</b>: The "nop" command, (short for no-operation), does
+##     nothing at all. Although this may seem useless, it can be used
+##     for "spacing out" other commands. For example, if a Walker NPC
+##     is doing something every 10 seconds, you might want to throw
+##     in a few NOPs to make it seem less mechanical. Or, you may want
+##     to include some NOPs in a random-selection script to reduce the
+##     probability of choosing the real commands.
+## <li><b>END</b>: The "end" command terminates the script execution.
+##     If there are still commands in the script that are waiting to
+##     be executed, those commands are skipped. In addition, if the
+##     script is of a sort that involves setting a timer to call the
+##     script again (as the walker and clocker NPC scripts are), the
+##     timer is not set and the script will not be called again. This
+##     command effectively switches off the whole script that it appears
+##     in, and it stays off unless some other event (such as a clock
+##     event or player action) switches it on again.
+## </ul>
+## <p>
+## When a string command is executed, the standard string substitutions
+## are performed first, so a script like:
+## <pre>
+##   "say '{ sentence }'"
+## </pre>
+## would look up the NPC's <i>sentence</i> property and say it.
+## <p>
+## As well as strings, you can use an action as a script. There
+## probably aren't many cases where you would do this, as the
+## action has to be specifically programmed by Alex or whoever, but
+## there may be cases where you need to do something complicated that
+## normal commands can't manage.
+## <p>
+## The third kind of script is made of a list of other scripts, and
+## is structured like this:
+## <pre>
+##   [ operator script script ... ]
+## </pre>
+## There can be any number of scripts in the list, and those scripts
+## may themselves be compound scripts of this kind, but the list must
+## always start with exactly one operator. The operator is a string
+## that defines how (or whether) the other scripts will be executed.
+## The following operators are currently supported:
+## <ul>
+## <li><b>ALL</b>: This operator specifies that all the subsequent
+##     scripts in the list should be executed one after another.
+## <li><b>NONE</b>: This operator specifies that nothing should be
+##     done for this script.
+## <li><b>RANDOM</b>: This operator specifies that one of the scripts
+##     in the list should be selected at random and executed. All the
+##     other scripts are just ignored.
+## <li><b>IF{<i>property</i>}</b>: This operator gets the value of the
+##     specified property and checks to see whether it is the Boolean
+##     value TRUE. If it is true, the first script in the list will be
+##     executed, otherwise the second script will be executed. If there
+##     is no script in the desired position, then nothing is done. Note
+##     that properties that contain arbitrary strings, atoms, lists
+##     tables and so on count as FALSE. Note also that, at the moment,
+##     <b>only</b> properties can be checked. You can't do checks for
+##     equality of that kind of thing with the IF operator. This may
+##     change in future, but probably not anytime soon.
+## <li><b>CASE{<i>property</i>}</b>: This operator gets the value of the
+##     specified property and checks to see whether it is a positive
+##     integer (1, 2, 3...). If so, it selects that script from the
+##     list (first, second, third...) and executes it. If there aren't
+##     that many scripts in the list, this does nothing. As with IF,
+##     note that only property lookups are allowed; it is not possible
+##     to perform a calculation here.
+## <li><b>INC{<i>property</i>}</b>: This operator acts in the same way as
+##     CASE{property}, but when it is finished it adds one to the value
+##     stored in the property. This allows you to go through a list of
+##     possible actions and do a different one each time the script
+##     is called. When the value in the property exceeds the number of
+##     scripts in the list, it just keeps on going: from then on, no
+##     script will be executed by this operator.
+## <li><b>LOOP{<i>property</i>}</b>: This operator acts in the same way as
+##     INC{property}, but when it gets to the end of the list, it
+##     goes back and starts again at the beginning.
+## <li><b>{<i>property</i>}</b>: When you use a property reference on
+##     its own, it is treated as either a CASE{} operator or an IF{}
+##     operator depending on whether the value in the property is
+##     a number or a boolean. In general, you should preferably use
+##     CASE{} or IF{} explicitly to avoid confusion. If the value is
+##     neither type, the NPC will attempt to execute the value
+##     explicitly, so you could use this to execute the contents of
+##     a property. There are usually better ways of doing this, though.
+## </ul>
+## If the operator doesn't match any of the above, the NPC will attempt
+## to execute it directly as a script (and ignore any other scripts in
+## the list). It's a bad idea to rely on this behaviour, since it is
+## likely to change if new operators or behaviours are added.
+## <p>
+## Because scripts can be nested, they can quickly become rather
+## unwieldy. Hopefully there will eventually be some extensions to
+## the building tools to make scripts more manageable. At some stage
+## in the future, most of these scripting structures may also be
+## incorporated into the string substitution system. In the meantime,
+## good luck!
+!atom npc being
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#################################################################
+
+## The talker atom is an NPC that responds to speech and
+## other events that occur in its vicinity. By default, all
+## messages are treated the same, and handled by keyword
+## matching with a single script table in the property
+## <b>talk_scripts</b>. However, this can be changed via the
+## property <b>response_scripts</b>. See the description of
+## that property for details.
+## <p>
+## Details of the message received are recorded in various
+## properties on the NPC so as to be accessible from the
+## scripts. See the properties <b>message</b>, <b>message_source</b>
+## <b>message_source_id</b>, <b>message_target</b>,
+## <b>message_target_id</b>, <b>is_departure</b> and <b>direction</b>.
+!atom talker npc
+
+## A table detailing the names of properties
+## containing the script tables that should be used
+## when dealing with the content of different kinds
+## of packets received. Four packet types are currently
+## defined:
+## <ul>
+## <li><b>misc</b>: for general text messages
+## <li><b>loose_talk</b>: for chat messages not specifically
+##     directed at the NPC itself; what this refers to may
+##     be modified by the <b>will_overhear</b> property. See
+##     the notes on that property for more information.
+## <li><b>direct_talk</b>: for chat messages specifically
+##     directed at the NPC itself
+## <li><b>room_update</b>: for comings and goings in the
+##     current room
+## </ul>
+## If any packet type is omitted from this table, packets
+## of that type are simply ignored.
+## <p> By default, all four packet types are handled by the
+## same script table, stored in the property <b>talk_scripts</b>.
+!set talker.response_scripts [ misc = "talk_scripts" loose_talk = "talk_scripts" direct_talk = "talk_scripts" room_update = "talk_scripts" ]
+
+## Whether or not the talker reacts to speech that is directed
+## at someone else. If this is FALSE, the LOOSE_TALK scripts
+## will only be executed if the speech is undirected. Note
+## that the NPC's ability to recognize its own name is
+## currently fairly limited, so setting this to FALSE may
+## result in it ignoring speech directed at itself. This
+## situation will hopefully improve eventually.
+!set talker.will_overhear TRUE
+
+## A table of scripts in which the <i>keys</i> are fragments
+## to be matched against the text content of received messages,
+## and the <i>values</i> are the actions to be performed if a
+## match is found.
+## <p>If multiple keys match, only the first one found is executed,
+## and the matching order is not guaranteed. Keyword matching is
+## performed case-insensitively, but no other fuzziness is allowed:
+## matches must be exact. The special value "unknown" will match
+## any string. At some point in the future, regular-expression
+## matching may be added, but don't hold your breath.
+## <p> By default, this table will be used for matching against
+## all messages regardless of their type, but this can be changed
+## using the <b>response_scripts</b> property.
+!set talker.talk_scripts NULL
+
+## Whether talking is disabled for this NPC. If this is TRUE,
+## all received messages will be ignored rather than being
+## matched and responded to.
+!set talker.talk_disabled FALSE
+
+## Create the Watcher for this talker and add it. This is called
+## when the talker is instantiated, and also when the talker is
+## reloaded from a saved world (since Watchers are transient).
+!set talker.on_start !StartTalker
+
+## Act on messages received. The message is passed in the
+## event's argument list. This is called from the NPC's Watcher
+## and probably shouldn't ever be invoked directly.
+!set talker.on_do_talk !DoTalk
+
+#### properties that give details of the message
+
+## The message received. For speech commands, this will be what
+## the person said. For misc commands, this will be the miscellaneous
+## message ("You drop the rock"). For room update commands this
+## will probably be NULL.
+!set talker.message null
+
+## The name of the person who spoke or entered or left the room.
+## For misc messages, this will always be NULL.
+!set talker.message_source null
+
+## The atom ID of the person who spoke or entered or left the room.
+## For misc messages, this will always be NULL.
+!set talker.message_source_id null
+
+## The name of the person to whom speech was addressed. For
+## misc and room_update messages this should be NULL.
+!set talker.message_target null
+
+## The atom ID of the person to whom speech was addressed. For
+## misc and room_update messages this should be NULL.
+!set talker.message_target_id null
+
+## Whether the message was someone leaving. For misc and talk
+## messages this will always be NULL (which will manifest as
+## FALSE in an IF{} statement). For room_update messages it will
+## be TRUE if the person left, false if they arrived
+!set talker.is_departure null
+
+## The direction in which the person left or from which the
+## person arrived. If the message was not a ROOM_UPDATE, this
+## will always be NULL.
+!set talker.direction null
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#################################################################
+
+## The walker atom is an NPC that can perform actions under
+## its own "volition". It requests and receives regular timer
+## events, and on receipt of each event it performs an
+## action based on its current location. This may commonly
+## be used to move to another location, hence the name.
+!atom walker npc
+
+## A table of scripts in which the <i>keys</i> are the
+## atom IDs of rooms or places, and the <i>values</i>
+## are the actions to be performed if a match is found.
+## The table is searched for matches against the NPC's
+## current container (usually a room, though it could
+## be a sofa, wardrobe, chest etc); that container's
+## container; and so on up the containment hierarchy to
+## limbo. If no match is found for any of these, the
+## special key UNKNOWN is tried as well.
+## The first matching key found will be used to determine
+## the appropriate action.
+!set walker.walk_scripts NULL
+
+## The number of seconds gap between the timer events
+## this NPC requests. The smaller this number, the more
+## frequently the NPC will act, and the greater its demands
+## on the system as a whole. The default value of 31622400
+## requests a timer event once per year. This is unlikely
+## to be useful in most cases, but it does impose only a
+## tiny processing burden on the system. Since the default
+## script table is empty, even this may be a bit wasteful.
+!set walker.walk_interval 31622400
+
+## Whether walking is disabled for this NPC. If this is TRUE,
+## all received messages will be ignored rather than being
+## matched and responded, and will not cause further timer
+## events to be queued.
+!set walker.walk_disabled FALSE
+
+## An action to generate the initial timer event that starts
+## the walker going. As a side effect, this causes
+## <b>walk_disabled</b> to be set to TRUE.
+!set walker.on_start_walking !StartWalker
+
+## An action to switch off the walker and stop it from
+## acting on timer events. As a side effect, this causes
+## <b>walk_disabled</b> to be set to TRUE.
+!set walker.on_stop_walking !StopWalker
+
+## The action which handles the walk timer events. This
+## is distinguished from the standard <b>on_timer</b> so
+## that walkers can also have other timer-driven features.
+!set walker.on_do_walk !DoWalk
+
+## A record of the last place the walker was in. This is
+## used to allow the NPC to backtrack if it gets lost, and
+## to filter random choices so that the NPC does not, if
+## it can help it, immediately go back to where it just
+## came from.
+!set walker.last_place $limbo
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#################################################################
+
+## The clocker atom is an NPC that performs actions at
+## specified times. This is different from a walker, which
+## performs actions at regular intervals.
+!atom clocker npc
+
+## A table of scripts in which the <i>keys</i> are
+## strings specifying the time and date at which an
+## action should be taken, and the <i>values</i> are
+## the actions to be performed if a match is found.
+## <p>
+## The time string format is as follows:
+## <pre>
+##   "month-date-day-hour-minute"
+## </pre>
+## where:
+## <ul>
+## <li>month is a value in the range 0 to 11
+## <li>date is a value in the range 1-31
+## <li>day is a value in the range 0-6 where 0 is Friday;
+## or the first three letters of the name of a weekday
+## (Mon, Tue, Wed etc); or the full name of a weekday
+## (Thursday, Friday, etc)
+## <li>hour is a value in the range 0 to 23
+## <li>minute is a value in the range 0 to 59
+## </ul>
+## Commas or spaces can be used to separate the entries
+## instead of hyphens. An asterisk "*" can be substituted for
+## any of the fields, in which case the time is taken as
+## matching any value for that field. When the string is
+## interpreted, a timer event is set to trigger the appropriate
+## script at the next minute that matches all the non-asterisk
+## fields. After that script is executed, a new timer is
+## set from the same string, and so ad infinitum unless an
+## END command is executed.
+## <p>
+## NB: if the DATE field and DAY field are both set, the
+## match is made solely on the DATE and the DAY is ignored. The
+## system does not currently support specifying both day and date,
+## so it isn't possible to say, eg, do something every Friday 13th.
+## <p>
+## Some examples to hopefully clarify this:
+## <ul>
+## <li><tt>"*-*-Mon-9-30"</tt>: runs the script every
+##     Monday at 9.30 am
+## <li><tt>"0-15-*-*-30"</tt>: runs the script at half-past
+##     every hour on the 15th of January
+## <li><tt>"*-*-*-*-*"</tt>: runs the script every minute
+## <li><tt>"0-1-Monday-12-00": runs the script at noon every
+##     year on the 1st of January. Note that this is a Friday
+##     in 1932, not a Monday. As noted above, the date takes
+##     precedence over the day.
+## </ul>
+!set clocker.clock_scripts NULL
+
+## Whether clock events are enabled for this NPC. If this
+## is TRUE, received timer events will be ignored
+!set clocker.clock_disabled FALSE
+
+## Create the initial timer events for all the date
+## specifications in the <b>time_scripts</b> table. Note that
+## this depends on the script table being stored in the parent,
+## since it is called when the atom is created and before any
+## of its local fields are set.
+!set clocker.on_create !CreateClocker
+
+## The action which handles clock timer events. This
+## is distinguished from the standard <b>on_timer</b> so
+## that clockers can also have other timer-driven features.
+!set clocker.on_do_clock !DoClock
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#################################################################
+
+## An NPC scripted to be a parrot. The parrot speaks from
+## time to time, and will sometimes repeat the last thing
+## that was said directly to it.
+!atom npc_parrot walker talker noun_parrot noun_bird
+
+# walker stuff
+!set npc_parrot.walk_interval 30
+!set npc_parrot.walk_scripts [ unknown = [ "loop{loop_count}" "say 'Pretty Polly'" "NOP" "emote 'squawks'" "say 'Who<sq>s a pretty boy, then?'" "NOP" "emote 'squawks <sq>{parrot_msg}<sq>'" ] ]
+!set npc_parrot.loop_count 1
+
+# talker stuff
+!set npc_parrot.response_scripts [ misc = "misc_scripts" loose_talk = "misc_scripts" direct_talk = "parrot_scripts" room_update = "misc_scripts" ]
+
+!set npc_parrot.misc_scripts [ "parrot" = [ "random" "emote 'squawks'" "NOP" "say '{parrot_msg}'" ] "pretty polly" = "say 'Pretty Polly yourself, bozo!'" ]
+
+!set npc_parrot.parrot_scripts [ "unknown" = "~!set parrot_msg '{message}'" ]
+
+!set npc_parrot.parrot_msg "Polly wants a cracker"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+#################################################################
+
+## The Richard Morgan virus demonstrates the terrifying
+## insecurity of the NPC system. All it does is roam around
+## at random, replicating. Instantiate one of these little
+## critters and watch the world die horribly!
+!atom virus walker noun_virus noun_richard
+
+# okay, the name's a bit unkind -- so sue me.
+!set virus.name "Richard Morgan"
+
+# acts every 10 seconds
+!set virus.walk_interval 10
+
+# walk, talk, breed
+!set virus.walk_scripts [ UNKNOWN = [ "all" "~!new * virus" "emote 'breeds virulently'" ] ]
+
+# starts as soon as it's created, not waiting for an
+# explicit start command
+!set virus.on_create !StartWalker
+

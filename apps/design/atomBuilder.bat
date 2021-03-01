@@ -1,0 +1,1 @@
+jre -cp designTools.jar com.ogalala.tools.AtomBuilder -d doc.db -s .

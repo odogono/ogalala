@@ -1,0 +1,27 @@
+# $Id: characters.odl,v 1.2 1999/02/24 17:25:46 alex Exp $
+# Admin Mobile definitions
+# Alexander Veenendaal, 22nd Feburary 1998
+# Copyright (C) HotGen Ltd <www.hotgen.com>
+
+#----------------------------------- Admin Characters ----------------------------#
+thing steve : character noun_steve noun_admin
+{
+	name			= "steve"
+
+	home_container		= $charterhouse_square_room
+}
+
+thing lori : character noun_lori noun_admin
+{
+	name			= "lori"
+
+	home_container		= $charterhouse_square_room
+}
+
+thing will : character noun_william noun_admin
+{
+	name			= "will"
+
+	home_container		= $charterhouse_square_room
+}
+

@@ -1,0 +1,23 @@
+#source test_place.odl
+#date Tue Jul 13 09:58:29 GMT 1999
+#copyright Ogalala Ltd
+#import SHOOTING_ROOM ENTRANCE_ROOM DRINKING_ROOM VISIBILITY_ROOM LOCKABLE_DOOR MECHANICS_ROOM EATING_ROOM SWAMP_ROOM OPEN_DOOR CUPBOARD BLACKSUN_EXIT READING_ROOM SWITCHING_ROOM BLACKSUN_CLUB
+
+
+
+
+
+#-----------------------------------------------------------------------------------------#
+#----------------------------------- Exits -----------------------------------------------#
+#-----------------------------------------------------------------------------------------#
+!dig "e-w" mechanics_room swamp_room open_door open_door
+!dig "w-e" entrance_room shooting_room open_door open_door
+!dig "nw-se" entrance_room drinking_room open_door open_door
+!dig "e-w" entrance_room mechanics_room open_door open_door
+!dig "n-s" drinking_room eating_room open_door open_door
+!dig "ne-sw" entrance_room switching_room open_door open_door
+!dig "n-s" mechanics_room reading_room open_door open_door
+!dig "se-nw" entrance_room visibility_room open_door open_door
+!dig "n-out,s" entrance_room blacksun_club blacksun_exit open_door
+!dig "in-out" entrance_room cupboard lockable_door lockable_door
+

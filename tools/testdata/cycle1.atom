@@ -1,0 +1,8 @@
+#source test.odl
+#date Tue Sep 29 14:49:57 GMT+00:00 1998
+#copyright Ogalala Ltd
+#import CYCLE_2
+#export CYCLE_1
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

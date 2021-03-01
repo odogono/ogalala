@@ -1,0 +1,535 @@
+# $Id: inner_core,v 1.118 1999/04/28 12:53:39 jim Exp $
+# Inner core script for game world
+# James Fryer, 29 July 1998
+# Copyright (c) 1998 Ogalala Ltd. <info@ogalala.com>
+
+#-------------------------- Limbo --------------------------#
+
+## Limbo is the container that <B>must</B> exist; all Things are created here.
+!set limbo.name "Limbo"
+## Limbo is always called "Limbo" in lists.
+!set limbo.list_desc "Limbo"
+!set limbo.description "The Limbo container: all objects begin life here"
+
+
+#-------------------------- Administrator --------------------------#
+
+## The system administrator
+!noun "administrator;admin" admin
+!set admin.name "Administrator"
+!set admin.description "The system administrator."
+!set admin.detection_skill 9999
+
+#-------------------------- Root --------------------------#
+
+## Root atom
+
+## Who created this atom?
+!set root.author "Unknown"
+
+## Called when an atom is created.
+!set root.on_create true
+
+## Called before the atom is destroyed
+!set root.on_destroy true
+
+## Called when the game is started
+!set root.on_start true
+
+## Called when the game is stopped
+!set root.on_stop true
+
+## Default action for timer events
+!set root.on_timer true
+
+## Called when an atom is reset
+!set root.on_reset true
+
+### Move the below commands.
+
+## Called by LOOK
+!set root.look !LookRoom
+
+## Called by INVENTORY
+!set root.inventory !LookInventory
+
+## Called by SAY
+!set root.say !Say
+
+## Called by SAY ... TO ...
+#!set root.say_to !SayTo
+
+## Called by WHISPER
+!set root.whisper !Whisper
+
+## Called by EMOTE
+!set root.emote !Emote
+
+## Called by THINK
+!set root.think !Think
+
+## Displayed by EXAMINE when a container is closed
+!set root.is_closed_msg "{-ut name} is closed."
+
+## GO OUT of CONTAINER command
+!set root.go_out !GoOut
+
+## GOs in a random direction from a container
+!set root.go_random !GoRandom
+
+#-------------------------- Described --------------------------#
+
+## This atom defines an object with name and description fields.
+!atom described
+
+## The name field is used whenever the thing is referred to. It should be
+##  short, but give enough information to define the thing if disambiguation
+##  is necessary. A complete sentence is not required; this field is used to
+##  refer to a thing inside a sentence. Examples: "rock" "blue ball" "John Smith".
+##  The name should not be capitalised unless it is a proper noun.
+!set described.name "unnamed"
+
+## The description must be a complete sentence, starting with a capital letter and
+##	ending with a full stop. It is returned by the EXAMINE command in the case of
+##	most things, and by LOOK in the case of rooms.
+!set described.description ""
+
+## The long description is not currently used, but is here in case anyone ever
+##  needs it...
+!set described.long_description ""
+
+## Called by EXAMINE/LOOK AT.
+!set described.examine !LookThing
+
+## The <i>list_desc</i> property is used to describe things in list format.
+##  It is derived from the name property, but includes formatting information.
+##  The default definition is "a name", "the name" or "someone's name",
+##  depending on the thing's uniqueness and ownership.
+!set described.list_desc !DescThing
+
+
+#-------------------------- Neuter --------------------------#
+
+## The neuter atom, and its children male and female, provide
+##  the strings needed for pronoun substitution
+!atom neuter
+!set neuter.sex "neuter"
+!set neuter.he "it"
+!set neuter.him "it"
+!set neuter.his "its"
+!set neuter.his2 "its"
+!set neuter.himself "itself"
+
+
+#-------------------------- Male --------------------------#
+!atom male neuter
+!set male.sex "male"
+!set male.he "he"
+!set male.him "him"
+!set male.his "his"
+!set male.his2 "his"
+!set male.himself "himself"
+
+
+#-------------------------- Female --------------------------#
+
+!atom female neuter
+!set female.sex "female"
+!set female.he "she"
+!set female.him "her"
+!set female.his "her"
+!set female.his2 "hers"
+!set female.himself "herself"
+
+
+#-------------------------- Thing --------------------------#
+
+# We change the inheritance hierarchy as created by the database, because
+#  we want 'thing' to have the properties of 'described' and 'neuter'.
+!inherit thing described
+!inherit thing neuter
+!uninherit thing root
+
+## Size of the thing in millimeters.
+## <p>
+## (Note that this size is one-dimensional, which may not be realistic in
+##  certain cases. Also see <i>container.capacity</i>)
+!set thing.size 0
+
+## Weight of the thing in grams.
+!set thing.weight 0
+
+## The amount of damage a thing can take. 0 means 'indestructible'.
+!set thing.hit_points 0
+
+## If this flag is true, the thing will not be displayed in contents lists
+!set thing.is_quiet false
+
+## If this flag is true, the thing is assumed to be the only one of its kind (e.g. the Mona Lisa).
+!set thing.is_unique false
+
+## True if the thing is closed. Used by containers, books etc.
+!set thing.is_closed false
+
+## A measure of how easy the object is to see. ( replaces is_obvious )
+#!set thing.visibility !SetVisibility
+!set thing.visibility 50
+
+!set thing.is_transparent false
+
+## Attempts to GO THING are caught here
+!set thing.go "You can't go in {-t name}."
+
+## Attempts to PUT ... IN THING are caught here.
+#!set thing.put_in "You can't put things in {-t name}."
+!set thing.put_in !PutIn
+
+## The owner of this thing. Unowned things have a null owner.
+!set thing.owner null
+
+## Trap attempts to get a thing
+!set thing.get "You can't get {-t name}."
+
+## Trap attempts to give a thing
+!set thing.give "You can't give {-t name}."
+
+## Trap attempts to drop a thing
+!set thing.drop "You don't have {-t name}."
+
+## Called on when something is added from the thing
+!set thing.on_add true
+
+## Called on when something is removed from the thing
+!set thing.on_remove true
+
+# These are defined here so they show up in the doc compiler
+!set thing.name "unnamed"
+!set thing.description ""
+
+#-------------------------- Portable --------------------------#
+
+## The portable atom supports GET, DROP, PUT IN and GIVE.
+##  (Note that GIVE is not yet implemented.)
+!atom portable thing
+
+## Called by DROP
+!set portable.drop !Drop
+
+## Called by GET
+!set portable.get !Get
+
+## Called by GIVE
+!set portable.give !Give
+
+## Message sent to actor by GIVE
+!set portable.give_msg "You give {-t name} to {arg.name}"
+
+## Message sent to room by GIVE
+!set portable.give_omsg "{-u actor.name} gives {-t name} to {arg.name}"
+
+## Message sent to receiver by GIVE
+!set portable.receive_msg "You receive {-t name} from {actor.name}"
+
+## Message sent to actor by GET
+!set portable.get_msg "You get {-t name}."
+
+## Message sent to room by GET
+!set portable.get_omsg "{-u actor.name} gets {-t name}."
+
+## Message sent to actor by DROP
+!set portable.drop_msg "You drop {-t name}."
+
+## Message sent to room by DROP
+!set portable.drop_omsg "{-u actor.name} drops {-t name}."
+
+## Message sent to actor when object is too heavy to lift
+!set portable.too_heavy_msg "{-ut name} is too heavy to lift."
+
+# These are defined here so they show up in the doc compiler
+!set portable.name "unnamed"
+!set portable.description ""
+
+## The value (in pennies) of this item.
+!set portable.value 0
+
+## The effect that this object will have when used as a weapon
+!set portable.attack_bonus 0
+
+## The effect that this object will have when used in some sort of defensive capacity
+!set portable.defence_bonus 0
+
+#-------------------------- Container --------------------------#
+
+## Containers store everything in the world. There is a hierarchy of containers,
+##  at the top of which is the global container Limbo. There are three basic sorts
+## of containers which relate to whether they have on, in or under behavour. This
+## container has 'in' behavour eg in the box, in the room. To use 'on' for 'on the
+## shelf' or 'on the loo' use the container_on atom to inherit rather than this atom
+## container. I'm sure you can work out the under / container_under atom relationship :)<p>
+
+## The amount of things a container can hold. Also see <i>size</i>.
+!set container.capacity 1
+
+## Positional string for in, on, under
+!set container.position "in"
+
+## Message sent to actor by PUT IN
+!set container.put_in_msg "You put {-t name} {arg.position} {-t arg.name}."
+
+## Message sent to room by PUT IN
+!set container.put_in_omsg "{-u actor.name} puts {-t name} {arg.position} {-t arg.name}."
+
+## Message sent to actor, when the recepticle is closed, by PUT INT
+!set container.dest_closed_msg "You cannot put {-t name} in {-t arg.name}. {-ut arg.name} is closed."
+
+## Message sent to actor by GET OUT
+!set container.get_out_msg "You get {-t name} from {-t arg.name}."
+
+## Message sent to room by GET OUT
+!set container.get_out_omsg "{-u actor.name} gets {-t name} from {-t arg.name}."
+
+## PUT IN command
+!set container.put_in !PutIn
+
+## POUR command
+!set container.pour !Pour
+
+## Message sent to actor by POUR
+## The first (0) argument is either 'into' or 'onto' depending on whether the destination is a room or not
+## The second (1) is the destination of the pourings
+!set container.pour_msg "You pour the contents of {-t name} {0} {-t 1}."
+
+## Message sent to room by POUR
+## The first (0) argument is either 'into' or 'onto' depending on whether the destination is a room or not
+## The second (1) is the destination of the pourings
+!set container.pour_omsg "{-u actor.name} pours the contents of {-t name} {0} {-t 0}."
+
+## Message sent to actor by LOOK IN
+!set container.look_in !LookThing
+
+## Message displayed when a thing is too big to fit the container
+!set container.too_big_msg "{-ut name} is too big to fit {position} {-t arg.name}."
+
+## Message displayed when a mobile is too big to fit the container
+!set container.mobile_too_big_msg "You are too big to fit {position} {-t name}."
+
+## Message appended to thing.list_desc by LOOK command
+!set container.contents_suffix_msg "({position} {-t name})"
+
+## Message displayed when container is empty
+!set container.is_empty_msg "{-ut name} is empty."
+
+## Message displayed when container is full
+!set container.is_full_msg "{-ut name} is full."
+
+## A measure of how easy it is to see inside the container
+!set container.concealment 0
+
+!set container.examine !LookContainer
+!set container.is_closed false
+
+## GO CONTAINER command
+!set container.go_in !GoIn
+
+## Message displayed to actor when moving into a container
+!set container.go_in_msg "You go {position} {-t name}."
+
+## Message displayed to room when moving into a container
+!set container.go_in_omsg "{-ut actor.name} goes {position} {-t name}."
+
+## Message displayed to actor when moving out of a container
+!set container.go_out_msg "You come out of {-t name}."
+
+## Message displayed to room when moving out of a container
+!set container.go_out_omsg "{-ut actor.name} comes out of {-t name}."
+
+
+
+# These are defined here so they show up in the doc compiler
+!set container.name "unnamed"
+!set container.description ""
+
+## The Container's lightness level. A value of 0 signifies complete darkness
+## A level of 50 is about average for a room<p>
+## Note that this usually only applies to rooms.
+!set container.ambient_light 50
+
+## The image file associated with this container's map
+!set container.url null
+
+## The X position of this container in the map image
+!set container.xpos -1
+
+## The Y position of this container in the map image
+!set container.ypos -1
+
+## The GO command defaults to this property if no exit is found
+!set container.go "You can't go that way."
+
+## The LOOK DIRECTION command defaults to this property if no exit is found
+!set container.look_far "There is no exit in that direction."
+
+## When a container is instantiated, the contents will be initialised with
+##	atoms from this list
+!set container.create_contents null
+
+!set container.on_create !CreateContainer
+
+#----------------------- container_on ----------------------#
+## inherit from this if you want to have 'on' behaviour in messages
+!atom container_on container
+!set container_on.position "on"
+
+#---------------------- container_under --------------------#
+## inherit from this if you want to have 'under' behaviour in messages
+!atom container_under container
+!set container_under.position "under"
+
+#---------------------- container_behind -------------------#
+## inherit from this if you want to have 'behind' behaviour in messages
+!atom container_behind container
+!set container_behind.position "behind"
+
+#-------------------------- Room --------------------------#
+
+## Rooms are the building blocks of the map.
+!atom room container
+
+## Rooms must be closed. The 'place' is defined as the container of the room,
+##  which is the outermost closed container..
+!set room.is_closed true
+
+## Most rooms are unique. Change this if you want a room to be "a passage"
+##  instead of "the living room".
+!set room.is_unique true
+
+## Rooms are described by their name
+### Temporary hack!
+!set room.list_desc "{name}"
+
+## Sent by the GO command to the room when a mobile enters through an exit
+!set room.enter_omsg "{-u actor.name} has arrived."
+
+## Sent by the GO command to the room when a mobile leaves through an exit
+!set room.exit_omsg "{-u actor.name} has left."
+
+## Property called when a mobile enters through an exit
+!set room.on_enter true
+
+## Property called when a mobile leaves through an exit
+!set room.on_exit true
+
+# These are defined here so they show up in the doc compiler
+!set room.name "unnamed"
+!set room.description ""
+
+#-------------------------- Mobile --------------------------#
+
+## The meaning of this property is not properly defined...
+!set mobile.strength 10
+
+## Mobiles default to about 6'.
+!set mobile.size 1500
+
+## Mobiles default to about 10 stone
+!set mobile.weight 65000
+
+## Mobiles must be closed
+!set mobile.is_closed true
+
+!set mobile.is_mortal true
+!set mobile.death_cry_msg "You have died. "
+!set mobile.death_cry_omsg "{-u arg.name} dies. "
+!set mobile.murder_msg "You have killed {-u arg.name}."
+!set mobile.death_room $limbo
+
+!set mobile.examine !LookMobile
+
+## Displayed by INVENTORY
+!set mobile.is_empty_msg "You are not carrying anything"
+
+## Mobiles style themselves as name alone, e.g. "John Smith".
+## This could eventually become "{title name}"...
+!set mobile.list_desc "{name}"
+
+## Mobiles are always visible from revealing containers
+#!set mobile.is_obvious true
+!set mobile.visibility 100
+
+## Mobiles have an average ability to see things
+!set mobile.detection_skill 250
+
+# These are defined here so they show up in the doc compiler
+!set mobile.name "unnamed"
+!set mobile.description ""
+
+## Mobiles may be 'frozen' so that its interactions are denied.
+!set mobile.is_active true
+
+#-------------------------- Exit --------------------------#
+
+## An atom which enables movement between containers
+!atom exit thing
+
+## GO command
+!set exit.go !Go
+
+## GO EXIT command
+!set exit.go_in !Go
+
+## LOOK EXIT command
+!set exit.look_far !LookExit
+
+## Name is set to "exit"
+!set exit.name "exit"
+
+## Description is blank by default
+!set exit.description ""
+
+!set exit.list_desc "{direction}"
+
+## Destination is the container which this exit will lead to
+!set exit.destination null
+
+## The exit which is on the other side of this one
+!set exit.other_side null
+
+## The label of the direction this exit points in ("North" etc)
+!set exit.direction null
+
+## Message displayed to "you" when the exit is used
+!set exit.go_msg "You go {direction}."
+
+## Optional message sent to room when a mobile enters. If this is
+##	non-null then it will be displayed instead of the equivalent
+##	message in 'container'.
+!set exit.enter_omsg null
+
+## Optional message sent to room when a mobile leaves. If this is
+##	non-null then it will be displayed instead of the equivalent
+##	message in 'container'.
+##	<p> (Would it be better to call these 'enter' and 'leave' messages, rather
+##	that 'enter' and 'exit' messages which could be potentially confusing?)
+!set exit.exit_omsg null
+
+## An object which is blocking the exit
+!set exit.block null
+
+## Indicates that an object is blocking some exit
+!set portable.is_blocking false
+
+## Exits should not be seen from within sub-containers? At any rate,
+##	the way this is currently handled looks awful (try it).
+#!set exit.is_obvious false
+
+## Exits are visible at all times.
+!set exit.visibility 100
+
+#-------------------------- Quiet Exit --------------------------#
+
+## An exit which is not displayed by LOOK
+!atom quiet_exit exit
+!set quiet_exit.is_quiet true
+
+
+

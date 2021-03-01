@@ -1,0 +1,426 @@
+# $Id; lori,v 1.29 1998/08/20 18;19;21 rich Exp $
+# 
+# Richard Morgan, 11 August 98
+# Copyright (C) Ogalala ltd <info@ogalala.com>
+
+###################################################################
+################### ballroom_crystal_chandelier ###################
+###################################################################
+
+!atom ballroom_crystal_chandelier quiet_object
+!noun ballroom_crystal_chandelier "chandelier;light;crystal"
+!set ballroom_crystal_chandelier.name "crystal chandelier"
+!set ballroom_crystal_chandelier.long_description "Hundreds of crystal drops catch and break up the light from the gardens outside."
+
+###################################################################
+##################### hallroom_bronze_statue ######################
+###################################################################
+
+!atom hallroom_bronze_statue bronze quiet_object
+!noun hallroom_bronze_statue "sculpture;statue;figure"
+!set hallroom_bronze_statue.name "bronze sculpture"
+!set hallroom_bronze_statue.long_description "This athletic bronze dancer is a real beauty. She's been caught in the act of springing forward, arms outstretched, reaching for a golden ball.
+
+###################################################################
+###################### hall_room_marble_plinth ####################
+###################################################################
+
+!atom hall_room_marble_plinth quiet_object marble
+!noun hall_room_marble_plinth "plinth;column"
+!set hall_room_marble_plinth.name "marble plinth"
+!set hall_room_marble_plinth.long_description "A 4 foot high column of black veined marble."
+
+###################################################################
+######################### drawing_room_sofa #######################
+###################################################################
+
+!atom drawing_room_sofa quiet_object sofa thing
+!noun drawing_room_sofa "sofa;white"
+!set drawing_room_sofa.name "white sofa"
+!set drawing_room_sofa.long_description "Long and low, this sleek sofa was specially imported from New York. Its soft rounded contours bound in wood and chrome are the epitome of modern design."  
+!set drawing_room_sofa.capacity 4
+
+###################################################################
+################### drawing_room_cocktail_cabinet #################
+###################################################################
+
+!atom drawing_room_cocktail_cabinet quiet_object
+!noun drawing_room_cocktail_cabinet "cabinet;cocktail;cock"
+!set drawing_room_cocktail_cabinet.name "cocktail cabinet"
+!set drawing_room_cocktail_cabinet.long_description "No self-respecting modern household should be without one of these. It stands about four feet high and contains a dazzling array of cocktail glasses of all shapes and sizes, along with swizzle sticks, mixers, droppers and shakers, not to mention the more outre items, comprehensible only to connoisseur of the cocktail hour."
+
+###################################################################
+####################### dining_room_panelling #####################
+###################################################################
+
+!atom dining_room_panelling quiet_object
+!noun dining_room_panelling "panel;panelling"
+!set dining_room_panelling.name "panelling"
+!set dining_room_panelling.long_description " What tales this intricate linen fold panelling could tell if it had the power of speech! From stories of stables and bloodstock back in old Sir George's day to the the witty and amusing anecdotes of London's bright young things.
+
+###################################################################
+######################### dining_room_table #######################
+###################################################################
+
+!atom dining_room_table quiet_object table
+!noun dining_room_table "dining"
+!set dining_room_table.capacity 40
+!set dining_room_table.name "dining table"
+!set dining_room_table.long_description "Linnet clearly entertains on a lavish scale because this dining table could easily seat 40 people. Hours of laborious polishing have buffed the surface to a warm lustrous shine."
+
+###################################################################
+####################### dining_room_sideboard #####################
+###################################################################
+
+#!atom dining_room_sideboard quiet_object
+#!noun dining_room_sideboard "sideboard;side;board"
+#!set dining_room_sideboard.name "mahogany sideboard"
+#!set dining_room_sideboard.long_description "You can imagine what this huge sideboard will look like groaning with dishes at one of  the weekend house parties for which Linnet is justly renowned. One of the doors seems to be slightly ajar."
+
+###################################################################
+########################### library_books #########################
+###################################################################
+
+!atom library_books quiet_object smelly
+!noun library_books "books;volumes:book"
+!set library_books.name "library books"
+!set library_books.long_description "Volumes like this, with thick leather covers and marbled end papers, are clearly intended to create an illusion of literacy.  They could do with a little wear and tear in order to be more convincing."
+!set library_books.smell_success_msg "They smell crisp and new."
+
+###################################################################
+########################### library_table #########################
+###################################################################
+
+!atom library_table quiet_object table
+!noun library_table "writing"
+!set library_table.name "writing table"
+!set library_table.long_description "The table of someone who doesn't undertake a great deal of correspondence as the bright french polished surface is unmarked.
+
+###################################################################
+######################## morning_room_chairs ######################
+###################################################################
+
+!atom morning_room_chairs quiet_object seat
+!noun morning_room_chairs "chairs;armchair;chair"
+!set morning_room_chairs.name "armchair"
+!set morning_room_chairs.long_description "This straight backed armchair,covered in pale green damask,is an ideal place to take morning tea."
+
+###################################################################
+###################### morning_room_portrait ######################
+###################################################################
+
+!atom morning_room_portrait quiet_object
+!noun morning_room_portrait "picture;portrait;painting;Linnet;Ridgeway"
+!set morning_room_portrait.name "portrait"
+!set morning_room_portrait.long_description "Painted by the renowned society artist, Sir Reginald Conway, this life size portrait of Linnet in tennis whites perfectly captures her dynamic eager confidence."
+
+###################################################################
+######################### morning_room_table ######################
+###################################################################
+
+!atom morning_room_table quiet_object table
+!noun morning_room_table "occasional"
+!set morning_room_table.name "occasional table"
+!set morning_room_table.long_description "A small maple topped occasional table."
+
+###################################################################
+######################### conservatory_fan ########################
+###################################################################
+
+!atom conservatory_fan quiet_object 
+!noun conservatory_fan "fan;overhead"
+!set conservatory_fan.name "conservatory fan"
+!set conservatory_fan.feel "You can't reach the fan from here."
+!set conservatory_fan.long_description " A large brass and mahogany fan spins slowly above your head making a gentle whirring noise."
+
+###################################################################
+##################### conservatory_heating_pipes ##################
+###################################################################
+
+!atom conservatory_heating_pipes quiet_object
+!noun conservatory_heating_pipes "heat;heating;pipes"
+!set conservatory_heating_pipes.name "heating pipes"
+!set conservatory_heating_pipes.long_description "White lagged heating pipes circle the conservatory.  They feel slightly warm but it's impossible to see how they actually work."
+
+###################################################################
+######################## conservatory_bench #######################
+###################################################################
+
+!atom conservatory_bench quiet_object seat
+!noun conservatory_bench "bench;painted;metal"
+!set conservatory_bench.name "painted bench"
+!set conservatory_bench.name "painted bench"
+!set conservatory_bench.long_description "This white wrought iron bench is a fine example of Victorian fern motif garden furniture.
+!set conservatory_bench.capacity 2
+
+###################################################################
+######################### conservatory_tap ########################
+###################################################################
+
+#!atom conservatory_tap quiet_object
+#!noun conservatory_tap "tap"
+#!set conservatory_tap.name "tap"
+#!set conservatory_tap.long_description "Nestled amongst the glossy foliage, stands a small brass tap."
+
+###################################################################
+######################## conservatory_plants ######################
+###################################################################
+
+!atom conservatory_plants quiet_object
+!noun conservatory_plants "plant;plants"
+!set conservatory_plants.name "plants"
+!set conservatory_plants.long_description "The clinging tendrils of Macrocarpus fortunei cloak the metal struts 
+
+###################################################################
+########################## jade_room_box ##########################
+###################################################################
+
+!atom jade_room_box box
+!noun jade_room_box "chinese;chest"
+!set jade_room_box.size 1000
+!set jade_room_box.name "Chinese chest"
+!set jade_room_box.description "Chinese chest" 
+!set jade_room_box.long_description "This T'ung dynasty chest is decorated with scenes from the Imperial Palace. In the palace gardens Empress Mei Ling plays with her pet Pekinese." 
+
+###################################################################
+########################## ball_room_window #######################
+###################################################################
+
+!atom ball_room_window quiet_object
+!noun ball_room_window "window;view;gardens;windows;garden"
+!set ball_room_window.name "window"
+!set ball_room_window.description "window"
+!set ball_room_window.long_description "Through the window you can see the magnificent Italian gardens. Designed by Linnet herself, they feature some splendid Tuscan fountains." 
+
+###################################################################
+######################## ball_room_fountain #######################
+###################################################################
+
+!atom ball_room_fountain quiet_object 
+!noun ball_room_fountain "fountain;fountains;tuscan"
+!set ball_room_fountain.name "fountain"
+!set ball_room_fountain.description "fountain"
+!set ball_room_fountain.long_description "A single jet of water arcs from the centre of a graduated series of stone urns. Their wide brims gently overflow one into the other, pattering down into a shallow stone basin."
+###################################################################
+################################ cat ##############################
+###################################################################
+
+# The cat
+!atom cat mobile male smelly textured
+!verb kick "kick current-" "You hurt your foot."
+!verb stroke "stroke current+" "Hmm. How strange. OK then."
+!noun cat "cat;puss;kitty;carruthers"
+!set cat.on_timer !CatTimer
+!set cat.on_start !CatStart
+!set cat.name "Carruthers the cat"
+!set cat.description "Carruthers the cat"
+!set cat.size 350	# About 14ins
+!set cat.weight 10000		# About 20lb?
+!set cat.long_description "A large handsome marmalade tom with a diamanté collar."
+!set cat.get "{-ut name} doesn't like to be picked up. {-u his} claws look rather sharp."
+!set cat.smoke "What a cruel idea!"
+!set cat.is_happy true
+!set cat.on_timer !CatTimer
+!set cat.kick !KickCat
+!set cat.stroke !StrokeCat
+!set cat.stroke_msg "{-u he} purrs loudly and rubs {his} head against your legs."
+!set cat.stroke_omsg "{-u actor.name} gently strokes the cat, which purrs loudly."
+!set cat.kick_msg "You kick the cat,who lets out an earsplitting yowl."
+!set cat.kick_omsg "{-u actor.name} aims a viscous kick at the cat, who lets out an earsplitting yowl."
+!set cat.purr_msg "<b>Carruthers</b> purrs quietly."
+!set cat.mewel_msg " A plaintive mew comes from Carruthers."
+!set cat.scratch_msg "<b>Carruthers</b> sits on the floor and scratches behind {his } ear."
+#!set cat.smell_msg "You smell the cat."
+#!set cat.smell_omsg "{-u actor.name} smells the cat."
+!set cat.smell_success_msg "{-u he} smells distinctly catlike."
+#!set cat.taste_msg "You grab {-t name} and give it a good long lick."
+#!set cat.taste_omsg "{-u actor.name} grabs {-t name} and gives it a good long lick."
+#!set cat.taste_success_msg "It tastes of ... cat fur. ? which is now all over your tongue. Why on earth did you think that would be a good idea?"
+!set cat.textured_msg "You reach out and gently feel {-t name}s fur."
+!set cat.textured_omsg "{-u actor.name} reaches out and gently feels {-t name}s fur."
+!set cat.textured_result_msg "{-u his} fur is soft and silky."
+
+###################################################################
+##################### morning_room_chaise_longue ##################
+###################################################################
+
+!atom morning_room_chaise_longue quiet_object seat
+!noun morning_room_chaise_longue "chaise;longue;chaise longue"
+!set morning_room_chaise_longue.name "chaise longue"
+!set morning_room_chaise_longue.description "chaise longue"
+!set morning_room_chaise_longue.long_description "Upholstered in the same pale green as the armchairs, this elegant chaise longue is where Linnet usually gathers her thoughts in the morning before setting the world to rights."
+!set morning_room_chaise_longue.capacity 2
+
+###################################################################
+############################### bed ###############################
+###################################################################
+
+!atom bed seat
+!noun bed "bed"
+!verb lie_on "lie current+" "You cannot lie on that!"
+!set bed.name "bed"
+!set bed.description "bed"
+!set bed.long_description "a bed that needs a description" 
+!set bed.lie_on !SitOn
+!set bed.capacity 2
+!set bed.is_empty_msg "There's no one on {-t name}."
+!set bed.too_big_msg "There's no room on {-t name}."
+!set bed.contents_suffix_msg "(on {-t name})"
+!set bed.put_in_msg "You get on {-t name}."
+!set bed.put_in_omsg "{-u actor.name} gets on {-t name}."
+!set bed.get_out_msg "You get off {-t Container.name}."
+!set bed.get_out_omsg "{-u actor.name} get off {-t name}."
+!set bed.go_n "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_s "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_e "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_w "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_ne "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_nw "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_sw "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_se "You are sitting on the {container.name}, you should stand before moving."
+!set bed.go_up "You are sitting on the {container.name}, you should stand before moving." # Should map to STAND ...
+!set bed.go_down "You are sitting on the {container.name}, you should stand before moving." # Should map to STAND ...
+
+
+###################################################################
+######################### pearl_room_bed ##########################
+###################################################################
+
+!atom pearl_room_bed bed quiet_object 
+!noun pearl_room_bed "bed"
+!set pearl_room_bed.long_description "On closer inspection you can see that satin spread is liberally sewn with tiny seed pearls. Despite this, the bed looks extremely inviting. You feel you could just sink into it and float away." 
+
+###################################################################
+########################### jade_room_bed #########################
+###################################################################
+
+!atom jade_room_bed bed quiet_object 
+!noun jade_room_bed "bed"
+!set jade_room_bed.long_description "The scarlet silk of this sumptuous daybed is embroidered in gold and white with the classic 'Dragon Chasing the Pearl' pattern." 
+
+###################################################################
+######################## ballroom_fireplace #######################
+###################################################################
+
+!atom ballroom_fireplace container quiet_object marble
+!noun ballroom_fireplace "fireplace"
+!set ballroom_fireplace.name "fireplace;fire"
+!set ballroom_fireplace.description "fireplace"
+!set ballroom_fireplace.long_description "Simple columns of Italian marble hold up a large mantlepiece carved with garlands of white roses." 
+
+###################################################################
+######################## morning_room_mantlepiece #################
+###################################################################
+
+!atom morning_room_mantlepiece  quiet_object 
+!noun morning_room_mantlepiece "mantlepiece"
+!set morning_room_mantlepiece.name "mantlepiece"
+!set morning_room_mantlepiece.long_description "A plain regency style oak mantlepiece." 
+
+###################################################################
+########################### dining_room_chairs ####################
+###################################################################
+
+!atom dining_room_chairs quiet_object seat
+!noun dining_room_chairs "chair;chairs"
+!set dining_room_chairs.name "dining room chairs"
+!set dining_room_chairs.description "dining room chairs"
+!set dining_room_chairs.long_description "Made to match the table, the chairs are solid and straight, with curved legs and ball claw feet."
+
+
+###################################################################
+########################### hall_room_ball ########################
+###################################################################
+
+!atom hall_room_ball quiet_object 
+!noun hall_room_ball "ball;golden"
+!set hall_room_ball.name "golden ball"
+!set hall_room_ball.description "golden ball"
+!set hall_room_ball.long_description "A gleaming golden ball."
+
+
+###################################################################
+########################### stairs_room_carpet ####################
+###################################################################
+
+!atom stairs_room_carpet carpet 
+!set stairs_room_carpet.name "carpet"
+!set stairs_room_carpet.description "carpet"
+!set stairs_room_carpet.long_description "This wool carpet is unbelievably thick and soft. Your feet sink into it as you walk."
+
+###################################################################
+############################ hall_room_stairs #####################
+###################################################################
+
+!atom hall_room_stairs quiet_object
+!set hall_room_stairs.name "stair;staircase;stairs"
+!set hall_room_stairs.description "the stairs"
+!set hall_room_stairs.long_description "An impressive staircase with polished wooden bannisters stretches out before you."
+
+###################################################################
+##################### conservatory_orchids ########################
+###################################################################
+
+!atom conservatory_orchids quiet_object smelly
+!noun conservatory_orchids "orchids;orchid"
+!set conservatory_orchids.name "orchids"
+!set conservatory_orchids.description "orchids"
+!set conservatory_orchids.long_description "High overhead you notice  arching boughs dotted with pale blue and succeed in identifying the delicate flowers of a rare Vanda caerulea 'Hennisiana',or heavenly blue orchid. 
+!set conservatory_orchids.smell_success_msg "A sweet and delicate fragrance wafts towards you."
+
+
+###################################################################
+###################### conservatory_ferns #########################
+###################################################################
+
+!atom conservatory_ferns quiet_object smelly
+!noun conservatory_ferns "ferns;fern"
+!set conservatory_ferns.name "ferns"
+!set conservatory_ferns.description "ferns"
+!set conservatory_ferns.long_description "A handsome specimen of Platycerium wilheminae-reginae hangs directly above you,its gleaming fronds covered in silvery felt."
+!set conservatory_ferns.smell_success_msg "They smell of damp earth." 
+
+###################################################################
+###################### conservatory_vines #########################
+###################################################################
+
+!atom conservatory_vines quiet_object smelly
+!noun conservatory_vines "vines;vine:greenery"
+!set conservatory_vines.name "Allamanda"
+!set conservatory_vines.description "Allamanda"
+!set conservatory_vines.long_description "It's fortunate that the conservatory is so large because this Allamanda cathartica 'Grandiflora' would soon outgrow all but the largest of greenhouses. But what a pleasure it will be once the large yellow flowers open to the sun."
+!set conservatory_vines.smell_success_msg "Sadly, you will have to wait until it blooms to experience that intoxicating aroma."
+
+###################################################################
+###################### drawing_room_outre #########################
+###################################################################
+
+!atom drawing_room_outre quiet_object 
+!noun drawing_room_outre "outre;items;outré"
+!set drawing_room_outre.name "outré items"
+!set drawing_room_outre.description "outré items"
+!set drawing_room_outre.long_description "There's a Tiffany champagne whisk,a four strip lemon zester and a brown square shouldered bottle of Kümmel, a German caraway liqueur."
+
+
+###################################################################
+########################### pearl_room_mirror #####################
+###################################################################
+
+!atom pearl_room_mirror mirror
+!noun pearl_room_mirror "mirror"
+!set pearl_room_mirror.name "mirror"
+!set pearl_room_mirror.description "mirror"
+!set pearl_room_mirror.long_description "A full length mirror."
+
+###################################################################
+############################### newspaper #########################
+###################################################################
+
+!atom newspaper paper portable
+!noun newspaper "news;newspaper;daily;blague;the daily blague"
+!set newspaper.read_isBlank false
+!set newspaper.read_text "'Among those supping at Chez Ma Tante I noticed the beautiful Linnet Ridgeway. The lovely Linnet is the sensation of the moment and it is rumoured that an engagement may be announced shortly.'"
+!set newspaper.name "newspaper"
+!set newspaper.description "newspaper"
+!set newspaper.long_description "A crisply folded copy of this morning's Daily Blague."
+

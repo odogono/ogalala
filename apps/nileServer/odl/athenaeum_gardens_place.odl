@@ -1,0 +1,288 @@
+## Athenaeum Gardens place. Steve:2/12/98
+
+thing athenaeum_gardens_place : place
+{
+	name = "The Athenaeum Gardens"
+	description = 	"A tangled mass of undergrowth has taken over this \
+			space ever since Old Jarvie died."
+	_where = $st_james
+}
+thing athenaeum_garden_maze1_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = "These gardens were once the pride and glory \
+			of the Club, but they have gone extravagantly \
+			to seed ever since Old Jarvie, the gardener, \
+			had a heart attack while pulling up bindweed. \
+			Impenetrable undergrowth looms up in all \
+			directions.<p><p>You're taking a bit of risk \
+			entering these gardens. Perhaps it would be \
+			wise to head straight back in the direction you just \
+			came.<p><p>"
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze2_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze3_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze4_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze5_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze6_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze7_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze8_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze9_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze10_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze11_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze12_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze13_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze14_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze15_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze16_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze17_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze18_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze19_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze20_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze21_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze22_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze23_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+thing athenaeum_garden_maze24_room : room
+{
+	name = "Somewhere in the Athenaeum Gardens"
+	description = 	"Old Jarvie's tender care is sorely \
+			missed and 'jungle' is an inadequate term to \
+			describe the gardens in their present state. \
+			Impenetrable undergrowth looms up in all \
+			directions."
+	_where = $athenaeum_gardens_place
+}
+## Athenaeum Gardens exits
+## Solution = n e n w s w e w
+exits
+{
+	west_side_room w = athenaeum_garden_maze1_room	
+	athenaeum_garden_maze1_room n = athenaeum_garden_maze11_room none
+	athenaeum_garden_maze1_room s = athenaeum_garden_maze18_room none
+	athenaeum_garden_maze1_room w = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze2_room n = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze2_room s = athenaeum_garden_maze18_room none
+	athenaeum_garden_maze2_room e = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze2_room w = athenaeum_garden_maze19_room none
+	athenaeum_garden_maze3_room n = athenaeum_garden_maze16_room none
+	athenaeum_garden_maze3_room s = athenaeum_garden_maze17_room none
+	athenaeum_garden_maze3_room e = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze3_room w = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze4_room n = athenaeum_garden_maze23_room none
+	athenaeum_garden_maze4_room s = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze4_room e = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze4_room w = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze5_room n = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze5_room s = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze5_room e = athenaeum_garden_maze24_room none
+	athenaeum_garden_maze5_room w = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze6_room n = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze6_room s = athenaeum_garden_maze16_room none
+	athenaeum_garden_maze6_room e = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze6_room w = athenaeum_garden_maze19_room none
+	athenaeum_garden_maze7_room n = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze7_room s = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze7_room e = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze7_room w = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze8_room n = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze8_room s = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze8_room e = athenaeum_garden_maze10_room none
+	athenaeum_garden_maze8_room w = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze9_room n = athenaeum_garden_maze16_room none
+	athenaeum_garden_maze9_room s = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze9_room e = athenaeum_garden_maze18_room none
+	athenaeum_garden_maze9_room w = athenaeum_garden_maze1_room none
+	athenaeum_garden_maze10_room n = athenaeum_garden_maze21_room none
+	athenaeum_garden_maze10_room s = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze10_room e = athenaeum_garden_maze23_room none
+	athenaeum_garden_maze10_room w = athenaeum_garden_maze4_room none
+	athenaeum_garden_maze11_room n = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze11_room s = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze11_room e = athenaeum_garden_maze14_room none
+	athenaeum_garden_maze11_room w = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze12_room n = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze12_room s = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze12_room e = athenaeum_garden_maze18_room none
+	athenaeum_garden_maze12_room w = athenaeum_garden_maze4_room none
+	athenaeum_garden_maze13_room n = athenaeum_garden_maze20_room none
+	athenaeum_garden_maze13_room s = athenaeum_garden_maze19_room none
+	athenaeum_garden_maze13_room e = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze13_room w = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze14_room n = athenaeum_garden_maze15_room none
+	athenaeum_garden_maze14_room s = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze14_room e = athenaeum_garden_maze21_room none
+	athenaeum_garden_maze14_room w = athenaeum_garden_maze20_room none
+	athenaeum_garden_maze15_room n = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze15_room s = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze15_room e = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze15_room w = athenaeum_garden_maze3_room none
+	athenaeum_garden_maze16_room n = athenaeum_garden_maze20_room none
+	athenaeum_garden_maze16_room s = athenaeum_garden_maze4_room none
+	athenaeum_garden_maze16_room e = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze16_room w = athenaeum_garden_maze10_room none
+	athenaeum_garden_maze17_room n = athenaeum_garden_maze10_room none
+	athenaeum_garden_maze17_room s = athenaeum_garden_maze20_room none
+	athenaeum_garden_maze17_room e = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze17_room w = athenaeum_garden_maze5_room none
+	athenaeum_garden_maze18_room n = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze18_room s = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze18_room e = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze18_room w = athenaeum_garden_maze23_room none
+	athenaeum_garden_maze19_room n = athenaeum_garden_maze4_room none
+	athenaeum_garden_maze19_room s = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze19_room e = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze19_room w = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze20_room n = athenaeum_garden_maze4_room none
+	athenaeum_garden_maze20_room s = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze20_room e = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze20_room w = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze21_room n = athenaeum_garden_maze22_room none
+	athenaeum_garden_maze21_room s = athenaeum_garden_maze13_room none
+	athenaeum_garden_maze21_room e = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze21_room w = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze22_room n = athenaeum_garden_maze12_room none
+	athenaeum_garden_maze22_room s = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze22_room e = athenaeum_garden_maze6_room none
+	athenaeum_garden_maze22_room w = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze23_room n = athenaeum_garden_maze2_room none
+	athenaeum_garden_maze23_room s = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze23_room e = athenaeum_garden_maze13_room none
+	athenaeum_garden_maze23_room w = athenaeum_garden_maze10_room none
+	athenaeum_garden_maze24_room n = athenaeum_garden_maze9_room none
+	athenaeum_garden_maze24_room s = athenaeum_garden_maze8_room none
+	athenaeum_garden_maze24_room e = athenaeum_garden_maze7_room none
+	athenaeum_garden_maze24_room w = outside_the_athenaeum_room none
+}

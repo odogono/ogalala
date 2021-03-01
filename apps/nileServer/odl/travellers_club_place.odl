@@ -1,0 +1,348 @@
+# $Id: travellers_club_place.odl,v 1.5 1999/02/24 16:42:14 lori Exp $
+# Travellers Club Definition
+# Lori Miller, 30th November 1998
+# Copyright (C) Ogalala Ltd <www.ogalala.com>
+
+## A club for people who have travelled 500 miles outside of Britain
+
+thing travellers_club : members_club place
+{
+	name="The Traveller's Club"
+	description="One of the better known London clubs."
+	_where = $st_james
+	url = "http://www.ogalala.com/images/club-map.gif"
+}
+
+## The steps of the Travellers Club
+
+thing travellers_steps_room : room
+{
+	name = "steps"
+	description = "In keeping with the sober Italianate exterior of the building, the entrance to the club is suitably modest. A set of wide grey stone steps sweep up to a pair of brass bound wooden doors."
+	_where =$travellers_club
+	xpos = 94
+	ypos = 90
+}
+
+
+## "The foyer of the Traveller's Club"
+
+thing travellers_foyer_room : room
+{
+	name = "foyer"
+	description= "Warm light spills from the carriage lamp overhead and brings a dull shine to the marble patterned floor and the rich mahogany of the panelled walls.  You can just about see into the porters lodge through a half glazed door to your east."   
+	_where = $travellers_club
+	xpos = 94
+	ypos = 90
+}
+
+## "The porters lodge in the Travellers Club"
+
+thing travellers_porter_room : room
+{
+	name = "porter's lodge"
+	description = "A snug little cubicle."
+	_where = $travellers_club
+}
+
+## "The Hall of the Traveller's Club"
+
+thing travellers_hall_room : room
+{
+	name = "hall"
+	description = "The first thing you notice on entering the hall is the handsome barrel vaulted ceiling held up by large pink and grey Tuscan pilasters. Along one wall are gleaming brass and mahogany coat racks, thoughtfully affixed with alphabetical plaques for ease of recovery after late nights in the Smoking Room."
+	_where = $travellers_club
+	xpos = 94
+	ypos = 340
+}
+
+
+## "The ante-room (waiting room) in the hall of the Traveller's Club."
+
+thing travellers_wait_room : room
+{
+	name = "anteroom"
+	description ="Several leather armchairs sit in front of a black marble fireplace in this small waiting area just off the hall.  Light drifts in through high arched windows looking into the central courtyard." 
+	_where = $travellers_club
+	xpos = 188
+	ypos = 320
+}
+
+
+## The Morning room at the Travellers Club, near the door
+
+thing travellers_morndoor_room : room
+{
+	name = "morning room, near the door"
+	description = "It's remarkably quiet in this spacious high ceilinged room, despite the view over Pall Mall.  A number of comfortable red Chesterfields and small tables with current periodicals are scattered around. Arranged around the walls on two sides of the room are 2 drawer wooden filing cabinets with brown bakelite lables."
+	_where = $travellers_club
+	xpos = 316
+	ypos = 320
+}
+
+
+## The Morning room at the Travellers Club, by the windows
+
+thing travellers_mornwin_room : room
+{
+	name = "morning room, near the windows"
+	description = "Sitting here at one of the handsome leather topped writing desks tucked into a window embrasure is such a pleasure as the world scurries along outside."
+	_where = $travellers_club
+	xpos = 316
+	ypos = 320
+}
+
+
+## The Morning room at the Travellers Club, under the tapestry
+
+thing travellers_morntap_room : room
+{
+	name = "morning room, under the tapestry"
+	description = "An enormous hunting tapestry in the Aubusson style completely covers the wall on this side of the room. A large Chesterfield sofa sits directly beneath it."
+	_where = $travellers_club
+	xpos = 316
+	ypos = 320
+}
+
+
+## The Morning room at the Travellers Club, in front of the fireplace
+
+thing travellers_mornfire_room : room
+{
+	name = "morning room, near the door"
+	description = "Plain dark marble chimneypieces are a feature of all the ground floor rooms in the club, but in this room they are particularly effective, setting off the gilt mirrors which sit above them and the original brass oil lamps that hang low from the simple coffered ceiling." 
+	_where = $travellers_club
+	xpos = 316
+	ypos = 320
+}
+
+
+## Behind the stairs at the Travellers Club
+
+thing travellers_behind_stair_room : room
+{
+	name = "behind the stairs"
+	description = "Engravings of illustrious club members look down from the warm panelled walls. There is a private telephone cabin next to some elaborate wrought iron gates."
+	_where = $travellers_club
+}
+
+## In the hall by the stairs at the Travellers Club
+
+thing travellers_by_stair_room : room
+{
+	name = "In the hall by the stairs"
+	description = "High arched windows spill light from the central courtyard into the Hall. On the walls are engravings of illustrious club members and a large brass bound clock."
+	_where = $travellers_club
+}
+
+
+## The Travellers Club smoking room
+
+thing travellers_smoking_room : room
+{
+	name = "smoking room"
+	description = "It would be hard to imagine a more solidly comfortable room than this one, especially at night when the red velvet drapes are pulled and all the fireplaces are lit. During the day, dappled light filters in from the Carlton House Terrace gardens beyond. Battered leather furniture is arranged in small conversational groups. In front of the windows are leather topped writing tables with all the necessaries."
+	_where = $travellers_club
+	xpos = 165
+	ypos = 608
+}
+
+## The Travellers Club smoking room far end
+
+thing travellers_smoking_far_room : room
+{
+	name = "far end of the smoking room"
+	description = "Here in the farthest corner of the room are low bookshelves containing all the candidates books for the club, dating back to 1819. Sitting on the mantlepiece is a wooden stand on which is the current list of candidates for membership."
+	_where = $travellers_club
+	xpos = 165
+	ypos = 608
+}
+
+
+## The Travellers Club stairs
+
+thing travellers_stair_room : room
+{
+	name = "Grand Staircase"
+	description = "This staircase is large enough for 5 men to walk comfortably abreast. Affixed to one side of the thick wooden bannisters is a brass handrail and a small plaque."
+	_where = $travellers_club
+}
+
+
+## The travellers club stair landing
+
+thing travellers_landing_room : room
+{
+	name = "landing"
+	description = "Here at the top of the Grand Staircase you have a better view of the colourful Renaissance inspired oval saucer dome above you. Fat putti flutter their wings and gaze soulfully down over the edges of fluffy clouds. A set of elaborate wrought iron gates and a small stair continue upwards."
+	_where = $travellers_club
+}
+
+
+## The stairs to the bedrooms in the Traveller's Club
+
+thing travellers_stair2_room : room
+{
+	name = "bedroom stairs"
+	description = "This small winding stair makes a tight curve around the lift shaft and disappears to the bedrooms above."
+	_where = $travellers_club
+}
+
+## The 1st floor corridor in the Traveller's Club
+
+thing travellers_corridor_room : room
+{
+	name = "corridor"
+	description = "The chief advantage to the Italian manner of arranging rooms around a central courtyard is the quantity of light it allows into the centre. This is particularly noticable here in this bright corridor which runs the length of the building."
+	_where = $travellers_club
+	xpos = 643
+	ypos = 437
+}
+
+
+## The library near the door  in the Travellers Club
+
+thing travellers_libent_room : room
+{
+	name = "library, near the door"
+	description = "Long considered to be one of the most beautiful rooms in London, the library is certainly one of the finest rooms in the Traveller's Club.  Pale persian rugs cover the floors and the walls are lined with fitted bookcases grained to resemble light oak. It is divided into 3 compartments by Corinthian columns."
+	_where = $travellers_club
+	xpos = 785
+	ypos = 620
+}
+
+## The library central compartment in the Travellers Club
+
+thing travellers_libcent_room : room
+{
+	name = "library, central section"
+	description = "The dominant feature in this part of the library is the deep plaster frieze between the tops of the bookcases and the ceiling. It was cast from the original at the Temple of Apollo at Bassae as discovered by one of the founder members. Leather chairs with bookrests are positioned discreetly around the room."
+	_where = $travellers_club
+	xpos = 785
+	ypos = 620
+}
+
+## The library end compartment in the Travellers Club
+
+thing travellers_libend_room : room
+{
+	name = "library, end section"
+	description = "In this quarter of the library, a large round mahogany table sits in front of the black marble fireplace. Rising like a castle in the centre is the club stationery roundel, topped by a bakelite calendar and an integral table lamp."
+	_where = $travellers_club
+	xpos = 785
+	ypos = 620
+}
+
+
+## The coffee room at the Travellers Club
+
+thing travellers_coffdoor_room : room
+{
+	name = "coffee room, near the door"
+	description = "Magnificent is the only word to describe the Coffee Room, with its 3 glittering drop crystal chandeliers, huge gilt mirrors and white marble chimneypieces. As usual the tables are set for dining with white damask cloths and silver."
+	_where = $travellers_club
+	xpos = 778
+	ypos = 275
+}
+
+## The coffee room at the Travellers Club
+
+thing travellers_coffclub_room : room
+{
+	name = "coffee room, at the Club table"
+	description = "This large oval table looks as if it was made for conversation.  If you choose to sit here be prepared to converse with your fellow diners."
+	_where = $travellers_club
+	xpos = 778
+	ypos = 275
+}
+
+## The coffee room at the Travellers Club
+
+thing travellers_coffsing_room : room
+{
+	name = "coffee room, at the Single table"
+	description = "To cater to all tastes, the convivial and the solitary, this long thin table has been designated for those who prefer to dine in silence."
+	_where = $travellers_club
+	xpos = 778
+	ypos = 275
+}
+
+
+## The traveller's lift
+
+thing travellers_lift_room : room
+{
+	name = "lift"
+	description = "The lift doors clang slowly shut."
+	_where = $travellers_club
+}
+
+## The traveller's lift 1st floor
+
+thing travellers_lift1_room : room
+{	
+	name = "1st floor lift"
+	description = "The lift doors open slowly."
+	_where = $travellers_club
+}
+
+## The phone cabinet in the Travellers club
+
+thing travellers_phone_room : room
+{
+	name = "telephone cabinet"
+	description = "There's a small comfortable stool in here and a wooden shelf just below the telephone."
+	_where = $travellers_club
+}
+
+	
+## The telephone in the cabinet at the travellers club
+
+thing telephone1 : telephone 
+{
+	name = "telephone"
+	description = "The latest bakelite wall mounted model. Unfortunately, it doesn't appear to be working."
+	_where = $travellers_phone_room
+}
+
+
+
+
+
+
+
+
+
+exits
+{
+travellers_steps_room s,in (door) = travellers_foyer_room 
+travellers_foyer_room s,in (exit) = travellers_hall_room n,out
+travellers_foyer_room e,in (lockable_door) = travellers_porter_room
+$travellers_foyer_room.e.is_locked = true
+travellers_hall_room s (exit) = travellers_by_stair_room
+travellers_hall_room e (exit) = travellers_wait_room w
+travellers_wait_room e (exit) = travellers_morndoor_room 
+travellers_morndoor_room ne (exit) = travellers_mornwin_room
+travellers_morndoor_room e = travellers_morntap_room
+travellers_mornwin_room s = travellers_morntap_room
+travellers_morntap_room e = travellers_mornfire_room
+travellers_mornwin_room se = travellers_mornfire_room
+travellers_mornfire_room s = travellers_behind_stair_room
+travellers_phone_room w (door) = travellers_behind_stair_room
+travellers_behind_stair_room s,in (lockable_door) = travellers_lift_room
+travellers_behind_stair_room sw (exit) = travellers_by_stair_room
+travellers_by_stair_room u (exit) = travellers_stair_room
+travellers_by_stair_room s  = travellers_smoking_room
+travellers_stair_room u (exit) = travellers_landing_room
+travellers_landing_room e,in (lockable_door) = travellers_lift1_room
+travellers_lift_room u = travellers_lift1_room
+travellers_landing_room u (exit) = travellers_stair2_room
+travellers_landing_room w (exit) = travellers_corridor_room
+travellers_corridor_room s  = travellers_libent_room
+travellers_libent_room e = travellers_libcent_room 
+travellers_libcent_room e = travellers_libend_room
+travellers_corridor_room n  = travellers_coffdoor_room
+travellers_coffdoor_room e = travellers_coffclub_room
+travellers_coffclub_room s = travellers_coffsing_room
+travellers_smoking_far_room w = travellers_smoking_room
+}

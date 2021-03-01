@@ -1,0 +1,258 @@
+# $Id: sample.odl,v 1.1 1998/11/06 17:04:23 matt Exp $
+# A sample ODL file demonstrating all ODL constructs
+# Matthew Caldwell, 28 October 1998
+# Copyright BTP Ltd <info@ogalala.com>
+
+##########################################################################
+
+# COMMENTS & DOCUMENTATION COMMENTS
+
+# Any lines whose first non-whitespace character is '#' are comments
+# Comments beginning with exactly two '#' characters are documentation
+# comments. All doc comments preceding an atom definition are
+# added to the documentation file for that atom as a general commentary
+# on the atom itself. Doc comments preceding  a property assignment are
+# added to the documentation file for the property's atom as a
+# commentary on that property. Property comments are inherited just
+# like the properties themselves, so comments need not be added if
+# a parent already says all there is to say.
+
+# Documentation comments have the leading '##' stripped off and are
+# interpreted as HTML. They may contain any markup tags, although
+# the safest are <b> </b> <i> </i> <u> </u> <p>, which are also
+# supported by the simple markup language used by the StyledText
+# component (which is likely to be used in the building tools).
+
+##########################################################################
+
+# GENERAL STRUCTURE
+
+# An ODL file can contain any number of atom, thing and exits blocks,
+# in any order. Within a single ODL file, atoms that depend on one
+# another and things that depend on one another should be defined
+# in order of their dependencies (ie, an atom must first be defined
+# before it can be the parent of another atom or the value of another
+# atom's properties). Exits blocks can be defined anywhere.
+
+# When an ODL file is compiled using the ODL compiler, up to three
+# script files will be generated, one each for the atoms, things
+# and exits defined in the file. If the original file is called
+# "name.odl", these files will be called "name.atom", "name.thing"
+# and "name.exit". These files will contain the moderator commands
+# to create the objects the ODL file describes, along with some other
+# automatically generated information. To create the documentation
+# for these objects, run the DocCompiler on these generated scripts.
+
+##########################################################################
+
+# ATOMS
+
+# An atom block defines the inheritance and properties
+# of an atom, using the syntax:
+# "atom" atomID ":" parentAtomID [ more parent atoms ] newLine
+# "{" newLine
+# [ atomID "." ] propertyName "=" propertyValue [ "\" ] newLine
+# "}" newLine
+# The following is an example atom block:
+
+atom someAtom : oneParent anotherParent
+{
+	# The contents of an atom block are usually
+	# indented for legibility, though this is not required.
+	
+	# Properties can be of the following types:
+	
+	# Strings: contained within double quotes.
+	aString = "Blah blah blah"
+	
+	# Integers
+	anInteger = 9907
+	
+	# Booleans: "true" or "false"
+	aBoolean = true
+	
+	# Actions: begin with an exclamation mark, and are
+	# the name of the class that implements the action.
+	# Unlike atom and property names, actions are case-sensitive.
+	anAction = !Explode
+	
+	# Atoms: begin with a dollar sign.
+	anAtom = $someOtherAtom
+	
+	# Lists: enclosed in square brackets, with separate items
+	# delimited by white space, these can contain any of the
+	# types listed here, including other lists.
+	aList = [ true $yetAnotherAtom 2000 ]
+	
+	# Tables: like a list, but each item in the table is
+	# given a (string) name by which it can be identified,
+	# using the syntax name = value.
+	aTable = [ firstName = "A string value" secondName = $anAtomValue ]
+	
+	# A property assignment is normally terminated by the end of the line,
+	# but if the property long, the line can be continued by putting a
+	# backslash at the end. Note that the subsequent line has all leading
+	# whitespace trimmed before being appended to the preceding line, so
+	# if you want there to be space in between it must be included before
+	# the backslash (as here).
+	aLongProperty = "This is a long string value that needs to be \
+	                 continued onto the next line."
+	
+	# A property assignment normally applies to the atom being
+	# defined by the block, but it is also possible to make
+	# assignments to the properties of other atoms within any
+	# block. In this case, the property must be fully specified
+	# in the form atomName.propertyName. One possible use for this
+	# is to set *this* atom as the value of another atom (which couldn't
+	# be done before, since this atom didn't previously exist). The
+	# atom on the left hand side of the assignment does not need to
+	# have a leading '$' sign, although it won't cause problems if
+	# it does.
+	aDifferentAtom.someProperty = $someAtom
+	
+	# It is even possible to set properties on atoms that are themselves
+	# properties of other atoms, using the syntax
+	# atomName.propertyName.propertyName (etc). However, in this case
+	# the dependency compiler is not usually able to ensure that the
+	# relevant atoms are created in the right order, so this should
+	# only be done in very specific circumstances (for one of these,
+	# see the discussion of exit blocks below).
+	aDifferentAtom.someAtomProperty.someProperty = "Whatever"
+	
+	# There is a special pseudo-property that can be defined for any
+	# atom or thing that doesn't actually map to a real property
+	# value but instead defines how the atom can be referred to in
+	# the world. This property is called "_nouns", and has a list value.
+	# Any atom that inherits from this atom can be referred to by any
+	# of the words contained in the _nouns list.
+	_nouns = [ someName someOtherName ]
+	
+	# This is the end of the "someAtom" atom block.
+}
+
+##########################################################################
+
+# THINGS
+
+# A thing block is structured in exactly the same way as an atom block
+# except that it is introduced by the keyword "thing". Things differ
+# from atoms only in that they are actually manifest objects in the world,
+# whereas ordinary atoms are mere abstractions. The following is an
+# example thing block:
+
+thing someThing : someAtom
+{
+	# Because it inherits from someAtom, someThing automatically
+	# has all of the properties defined above. Often, these will
+	# need to be specialized for a particular thing. This is done
+	# by just assigning a new value to the property.
+	aString = "Tiddly om pom pom"
+	
+	# There is a special pseudo-property that can be defined for
+	# things that, like _nouns, does not equate to an actual
+	# thing property but is used to locate the thing in the
+	# world. This property is called "_where", and must take an
+	# atom value. This will often be a room, but it could also
+	# be any other container, including the larger-scale
+	# geographical containers like places and neighbourhoods.
+	# Things should almost always define _where, since having a
+	# location is one of the things that makes them things.
+	_where = $someContainer
+
+	# The most common and important properties of a thing are
+	# its name and description, which give it some substance in
+	# the world. In some cases these may be inherited, and
+	# occasionally they may be omitted for effect, but I'll
+	# include them here as they will be used pretty often.
+	name = "Something"
+	description = "An object with no definite appearance"
+	
+	# This is the end of the "someThing" thing block.
+}
+
+# ROOMS
+
+# Rooms are just standard things which inherit from "Room" or one
+# of its descendants (or occasionally perhaps from "Container").
+# There is no special syntax for rooms.
+
+thing bedroom : room
+{
+	name = "master bedroom"
+	description = "An ugly room with red flock wallpaper."
+	
+	# Note that rooms have a location just like other things.
+	# For rooms, this location is the "place" the rooms are
+	# part of.
+	_where = $WodeHall
+}
+
+##########################################################################
+
+# EXITS
+
+# An exit block defines the connections between rooms (and
+# potentially other containers) and the properties of the
+# atoms that represent those connections. It uses the syntax:
+# "exits" newLine
+# "{" newLine
+# roomID direction ["(" type ")"] = roomID [direction] ["(" type ")"] newLine
+# roomID direction "(" quoted-string ")" newLine
+# roomID.direction.property = value newLine
+# "}" newLine
+
+# Directions are strings consisting of one or more of:
+#   north, northeast, east, southeast, south, southwest
+#   west, northwest, in, out, up, down
+# (or abbreviated as: n, ne, e, se, s, sw, w, nw, i, o, u, d)
+# separated by commas and no spaces, or one direction
+# can be specified as "none" provided some other direction
+# is specified for the other side.
+
+# An exits block can be used to set arbitrary properties on any
+# atoms that may or may not have been defined yet. Assignments in
+# exits blocks always take place after everything else.
+
+# The following is an example exits block:
+
+exits
+{
+	# A full exit declaration specifies details of both
+	# ends of the connection. Rooms and types are atom
+	# IDs, but they do not require a leading '$' sign.
+	bathroom s,out (door) = bedroom n (secret_door)
+	
+	# A minimal exit declaration uses the default type
+	# "exit" and makes the direction at the far side
+	# the inverse of near side direction. Thus, the following
+	# is equivalent to "bedroom w (exit) = closet e (exit)"
+	bedroom w = closet
+	
+	# If no far side type is specified, the near side type is
+	# used for both sides.
+	bedroom e (window) = garden
+	
+	# Instead of a type and destination, a quoted string
+	# can be specified instead. In this case, there is no
+	# corresponding exit, but the string is displayed when
+	# someone tries to go in that direction.
+	forest e,ne,n ("A rabid dog bars your way.")
+	
+	# The special direction "none" means there is no
+	# corresponding exit on the specified side, ie there
+	# is no direct way back. This can appear on either side,
+	# but not both, and there must be a valid direction on
+	# the other side.
+	bathroom d (trapdoor) = oubliette none
+	
+	# Exits themselves can be specialized with descriptions
+	# and such if the defaults provided by the various exit
+	# atoms are not adequate.
+	bedroom.e.name = "bedroom window"
+	bedroom.e.description = "An elaborate leaded stained-glass \
+	                         window just large enough to crawl through."
+
+	# This is the end of this exits block.
+}
+
+##########################################################################
